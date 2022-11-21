@@ -91,7 +91,6 @@ class AuthController extends Controller
             'password'          => Hash::make($request->password),
 
         ]));
-
         return json_encode(array('status' => 1, 'redirect' => route('homepage')));
     }
 
@@ -107,7 +106,7 @@ class AuthController extends Controller
         return redirect()->route('user-auth');
     }
 
-    public function signin(LoginRequest $request){
+    public function signin(loginRequest $request){
        
         
         $request->authenticate();

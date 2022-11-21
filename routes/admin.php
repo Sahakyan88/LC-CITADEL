@@ -13,7 +13,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\MasterController;
 use App\Http\Controllers\Admin\ImageController;
 use App\Http\Controllers\Admin\MaintenanceController;
-use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\FaqController;
 
 use Illuminate\Support\Facades\App;
@@ -45,13 +45,13 @@ Route::group(['middleware' => 'adminauth'], function () {
     Route::get('settings',[SettingsController::class, 'settings'])->name('adminSettings');
     Route::post('settings',[SettingsController::class,'updateSettings'])->name('updateSettings');
     Route::post('update-settings-price',[SettingsController::class,'updateSettingsPrice'])->name('updateSettingsPrice');
-    //slider
-    Route::get('slider',[SliderController::class, 'slider'])->name('adminSlider');
-    Route::get('slider-data',[SliderController::class, 'sliderData'])->name('aSliderData');
-    Route::get('slider-get',[SliderController::class, 'getSlider'])->name('aGetSlider');
-    Route::post('slider-save',[SliderController::class, 'saveSlider'])->name('adminSliderSave');
-    Route::post('slider-remove',[SliderController::class, 'removeSlider'])->name('aRemoveSlider');
-    Route::post('slider-ordering',[SliderController::class, 'reorderingSlider'])->name('aSliderSort');
+    //home
+    Route::get('home',[HomeController::class, 'home'])->name('adminHome');
+    Route::get('home-data',[HomeController::class, 'homeData'])->name('aHomeData');
+    Route::get('home-get',[HomeController::class, 'getHome'])->name('aGetHome');
+    Route::post('home-save',[HomeController::class, 'saveHome'])->name('adminHomeSave');
+    Route::post('home-remove',[HomeController::class, 'removeHome'])->name('aRemoveHome');
+    Route::post('home-ordering',[HomeController::class, 'reorderingHome'])->name('aHomeSort');
 
 
     Route::post('save-profile',[AuthController::class, 'saveProfile'])->name('adminSaveProfile');
@@ -96,26 +96,6 @@ Route::group(['middleware' => 'adminauth'], function () {
     Route::post('services-save',[ServicesController::class, 'saveServices'])->name('adminServicesSave');
     Route::post('services-remove',[ServicesController::class, 'removeServices'])->name('aRemoveServices');
     Route::post('services-ordering',[ServicesController::class, 'reorderingServices'])->name('aServicesSort');
-    
-    Route::get('services-type-data',[ServicesController::class, 'servicesTypeData'])->name('aServicesTypeData');
-    Route::get('services-type-get',[ServicesController::class, 'getServicesType'])->name('aGetServicesType');
-    Route::post('services-type-remove',[ServicesController::class, 'removeServicesType'])->name('aRemoveServicesType');
-    Route::post('services-type-save',[ServicesController::class, 'saveServicesType'])->name('adminServicesTypeSave');
-    
-    Route::get('services-replacement-data',[ServicesController::class, 'servicesReplacementData'])->name('aServicesReplacementData');
-    Route::get('services-replacement-get',[ServicesController::class, 'getServicesReplacement'])->name('aGetServicesReplacement');
-    Route::post('services-replacement-remove',[ServicesController::class, 'removeServicesReplacement'])->name('aRemoveServicesReplacement');
-    Route::post('services-replacement-save',[ServicesController::class, 'saveServicesReplacement'])->name('adminServicesReplacementSave');
-
-    //Customers
-    Route::get('customers',[UserController::class, 'customerIndex'])->name('aCustomer');
-    Route::get('customers-data',[UserController::class, 'customerData'])->name('aCustomerData');
-    Route::get('customer-get',[UserController::class, 'customerGet'])->name('aGetCustomer');
-    Route::post('customer-save',[UserController::class, 'customerSave'])->name('aCustomerSave');
-    Route::get('suppliers',[UserController::class, 'supplierIndex'])->name('aSupplier');
-    Route::get('suppliers-data',[UserController::class, 'supplierData'])->name('aSupplierData');
-    Route::get('supplier-get',[UserController::class, 'supplierGet'])->name('aGetSupplier');
-    Route::post('supplier-save',[UserController::class, 'supplierSave'])->name('aSupplierSave');
 
     Route::get('users',[UserController::class, 'usersIndex'])->name('ausers');
     Route::get('user-get',[UserController::class, 'userGet'])->name('aGetUser');
@@ -124,38 +104,8 @@ Route::group(['middleware' => 'adminauth'], function () {
     Route::post('user-vierfy',[UserController::class, 'verify'])->name('aUserSaveVerify');
     Route::post('user-upload-avatar',[ImageController::class, 'upload'])->name('uploadAvatar');
 
-    Route::get('masters',[MasterController::class, 'index'])->name('adminMasters');
-    Route::get('masters-data',[MasterController::class, 'data'])->name('adminMastersData');
-    Route::get('master-get',[MasterController::class, 'get'])->name('adminMastersGet');
-    Route::post('master-save',[MasterController::class, 'save'])->name('adminMastersSave');
-    //Maintenance
-    Route::get('maintenance',[MaintenanceController::class, 'index'])->name('adminMaintenance');
-    Route::get('maintenance-data',[MaintenanceController::class, 'data'])->name('adminMaintenanceData');
-    Route::get('maintenance-get',[MaintenanceController::class, 'get'])->name('adminMaintenanceGet');
-
-    Route::get('requests',[RequestsController::class, 'index'])->name('adminRequests');
-    Route::get('requests-data',[RequestsController::class, 'data'])->name('adminRequestsData');
-    Route::get('requests-get',[RequestsController::class, 'get'])->name('adminRequestsGet');
-    Route::post('requests-save',[RequestsController::class, 'save'])->name('adminRequestsSave');
-
-
-    // Route::get('user-data',[UserController::class, 'userData'])->name('aUserData');
-    // Route::post('user-vierfy',[UserController::class, 'verify'])->name('aUserSaveVerify');
-    // Route::post('user-upload-avatar',[ImageController::class, 'upload'])->name('uploadAvatar');
-
     Route::post('upload-image',[ImageController::class, 'upload'])->name('aUpload');
     Route::post('remove-image',[ImageController::class, 'remove'])->name('aRemoveImage');
-
-    // Route::get('get-services',[UserController::class, 'getService'])->name('AGetServices');
-    // Route::post('save-services',[UserController::class, 'saveServices'])->name('saveServices');
-
-
-    // Route::get('faq',[ContentController::class, 'indexFaq'])->name('adminFaq');
-    // Route::get('faq-data',[ContentController::class, 'dataFaq'])->name('adminFaqData');
-    // Route::get('faq-publish',[ContentController::class, 'publishFaq'])->name('adminFaqPublish');
-    // Route::get('faq-get',[ContentController::class, 'getFaq'])->name('adminFaqGet');
-    // Route::post('faq-save',[ContentController::class, 'saveFaq'])->name('adminFaqSave');
-    // Route::post('faq-remove',[ContentController::class, 'removeFaq'])->name('adminFaqRemove');
 
     //clear all cache
     Route::get('/clear', function() {

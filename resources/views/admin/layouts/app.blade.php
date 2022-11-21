@@ -86,41 +86,19 @@
                                 <div class="nav-link-icon"><i data-feather="activity"></i></div>
                                 Dashboard
                             </a>
-                            <a class="nav-link @if(isset($menu) && $menu == 'orders') active @endif" href="{{ route('adminOrder') }}">
-                                <div class="nav-link-icon"><i data-feather="dollar-sign"></i></div>
-                                Orders
+                            <a class="nav-link @if(isset($menu) && ($menu =='slider')) active @endif" href="{{ route('adminHome') }}">
+                                <div class="nav-link-icon"><i data-feather="tool"></i></div>
+                                Home Page
                             </a>
-                            <a class="nav-link @if(isset($menu) && $menu == 'Maintenance') active @endif" href="{{ route('adminMaintenance') }}">
-                                <div class="nav-link-icon"><i data-feather="dollar-sign"></i></div>
-                                Maintenance
-                            </a>
-                            <a class="nav-link @if(isset($menu) && $menu == 'requests') active @endif" href="{{ route('adminRequests') }}">
-                                <div class="nav-link-icon"><i data-feather="dollar-sign"></i></div>
-                                Requests
-                            </a>
-
-{{--                            /////--}}
-{{--                            <a class="nav-link @if(isset($menu) && $menu == 'Slider') active @endif" href="{{ route('adminSlider') }}">--}}
-{{--                                <div class="nav-link-icon"><i data-feather="dollar-sign"></i></div>--}}
-{{--                                Slider--}}
-{{--                            </a>--}}
-
-
-{{--                            /////--}}
                             <a class="nav-link @if(isset($menu) && $menu == 'users') active @endif" href="{{ route('ausers') }}">
                                <div class="nav-link-icon"><i data-feather="users"></i></div>
                                Users
                             </a>
-                            <a class="nav-link @if(isset($menu) && $menu == 'masters') active @endif" href="{{ route('adminMasters') }}">
-                               <div class="nav-link-icon"><i data-feather="users"></i></div>
-                               Masters
-                            </a>
-
-                            <?php /*
-                            <a class="nav-link @if(isset($menu) && $menu == 'categories') active @endif" href="{{ route('adminCategories') }}">
-                                <div class="nav-link-icon"><i data-feather="folder"></i></div>
-                                Categories
-                            </a> */ ?>
+                            <a class="nav-link @if(isset($menu) && $menu == 'users') active @endif" href="{{ route('ausers') }}">
+                                <div class="nav-link-icon"><i data-feather="users"></i></div>
+                                About us
+                             </a>
+                    
                             <?php $contectMenuItems = array('services','dictionary','settings','slider','faq');?>
                             <a class="nav-link @if(isset($menu) && !in_array($menu,$contectMenuItems)) collapsed @endif" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="true" aria-controls="collapseUsers">
                                 <div class="nav-link-icon"><i data-feather="users"></i></div>
@@ -140,10 +118,6 @@
                                     <a class="nav-link @if(isset($menu) && ($menu =='settings')) active @endif" href="{{ route('adminSettings') }}">
                                         <div class="nav-link-icon"><i data-feather="tool"></i></div>
                                         Settings
-                                    </a>
-                                    <a class="nav-link @if(isset($menu) && ($menu =='slider')) active @endif" href="{{ route('adminSlider') }}">
-                                        <div class="nav-link-icon"><i data-feather="tool"></i></div>
-                                        Slider
                                     </a>
                                     <a class="nav-link @if(isset($menu) && ($menu =='faq')) active @endif" href="{{ route('adminFaq') }}">
                                         <div class="nav-link-icon"><i data-feather="tool"></i></div>

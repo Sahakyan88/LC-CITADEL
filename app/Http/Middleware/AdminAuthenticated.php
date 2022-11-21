@@ -28,8 +28,8 @@ class AdminAuthenticated
         if(!Session::get('bLangs')){
 			$bLangs = array();
             $bLangs[] = array('lang'=>'en','title'=>'English');
-            // $bLangs[] = array('lang'=>'am','title'=>'Armenian');
-            // $bLangs[] = array('lang'=>'ru','title'=>'Russian');
+            $bLangs[] = array('lang'=>'am','title'=>'Armenian');
+            $bLangs[] = array('lang'=>'ru','title'=>'Russian');
             Session::put('bLangs', $bLangs);
 	    }
         $response = $next($request);

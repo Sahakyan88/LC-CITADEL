@@ -550,15 +550,7 @@ section {
   font-size: 34px;
   color: #21413c;
 }
-.about{
-  margin-top: 40px;
-}
-.contact{
-  margin-top: 40px;
-}
-.services{
-  margin-top: 40px;
-}
+
 .about .icon-box {
   margin-top: 44px;
 }
@@ -1311,6 +1303,35 @@ section {
   text-align: left;
   padding: 15px;
   font-weight: 600;
+}
+.contact{
+  margin-top: 50px;
+}
+.about{
+  margin-top: 50px;
+}
+.services{
+  margin-top: 50px;
+}
+.contact{
+  margin-top: 50px;
+}
+.error{
+  
+  display: block;
+	line-height: 24px;
+	padding: 5px 0px 0px;
+	margin: 0px;
+	text-transform: uppercase;
+	font-size: 12px;
+	color: #ff0000;
+	font-weight: 500;
+
+ 
+
+}
+.auth-page{
+  height: 250px;
 }
 
 .contact .php-email-form .error-message br+br {

@@ -49,11 +49,18 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto active" href="{{ route('homepage') }}">Home</a></li>
-          <li><a class="nav-link scrollto" href="{{ route('about') }}">About</a></li>
-          <li><a class="nav-link scrollto" href="{{ route('service') }}">Services</a></li>
+          <li><a class="nav-link scrollto {{ request()->is('/') ? 'active' : '' }}" href="{{ route('homepage') }}">Home</a></li>
+          <li><a class="nav-link scrollto {{ request()->is('about') ? 'active' : '' }}" href="{{ route('about') }}">About</a></li>
+          <li><a class="nav-link scrollto {{ request()->is('services') ? 'active' : '' }}" href="{{ route('service') }}">Services</a></li>
           </li>
-          <li><a class="nav-link scrollto" href="{{ route('contact') }}">Contact</a></li>
+          <li><a class="nav-link scrollto {{ request()->is('contact') ? 'active' : '' }}" href="{{ route('contact') }}">Contact</a></li>
+          @if (Auth::user())
+          <li><a class="nav-link scrollto {{ request()->is('auth') ? 'active' : '' }}" href="{{ url('/auth') }}">Profile</a></li>
+
+          @else
+          <li><a class="nav-link scrollto {{ request()->is('auth') ? 'active' : '' }}" href="{{ route('user-auth') }}">Signin</a></li>
+          @endif
+
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -145,11 +152,19 @@
   <script src="{{ asset('assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
   <script src="{{ asset('assets/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
   <script src="{{ asset('assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
-  <script src="{{ asset('assets/vendor/php-email-form/validate.js') }}"></script>
 
   <!-- Template Main JS File -->
   <script src="{{ asset('assets/js/main.js') }}"></script>
-
+  <script src="http://demo.itsolutionstuff.com/plugin/jquery.js"></script>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+  
+  @stack('script')
+  <script type="text/javascript">
+    $(document).ready(function() {
+        $( "#myaccordion" ).accordion();
+    });
+  </script>
 </body>
 
 </html>

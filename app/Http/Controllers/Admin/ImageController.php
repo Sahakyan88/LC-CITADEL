@@ -50,6 +50,7 @@ class ImageController extends Controller
             return Response::json(['status' => 0, 'message'=> $responseMessages]);
         }else{
             $model = new ImageDB();
+           
 
             if($avatar){
                 $image = $model->addAvatar($image,$avatar); 

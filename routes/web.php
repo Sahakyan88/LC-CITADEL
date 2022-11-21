@@ -21,8 +21,14 @@ use Illuminate\Http\Request;
 | contains the "web" middleware group. Now create something great!
 |
 */
+//pages
 Route::get('/', [WelcomeController::class, 'homepage'])->name('homepage');
 Route::get('/contact', [WelcomeController::class, 'contact'])->name('contact');
-Route::get('/service', [WelcomeController::class, 'service'])->name('service');
+Route::get('/services', [WelcomeController::class, 'service'])->name('service');
 Route::get('/about', [WelcomeController::class, 'about'])->name('about');
+///signin
+Route::get('/auth', [WelcomeController::class, 'auth'])->name('user-auth');
+Route::post('/signup', [AuthController::class, 'signup'])->name('signup');
+Route::post('/signin', [AuthController::class, 'signin'])->name('signin');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
