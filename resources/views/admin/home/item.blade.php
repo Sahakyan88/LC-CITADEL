@@ -17,7 +17,7 @@
                 <div class="card-header">Image</div>
                 <div class="card-body text-center">
                     <!-- Profile picture image-->
-                    {{ dd($item) }}
+                    {{-- {{ dd($item) }} --}}
                     <div class="image-upload-container" id="cover">
                         <div class="image-part">
                             <img class="thumbnail"
@@ -58,7 +58,8 @@
                     </div>
                     <div class="tab-content" id="dashboardNavContent">
                         @foreach (Session::get('bLangs') as $index => $lang)
-                            <?php $title = 'title_' . $lang['lang']; ?>
+                        <?php $title = 'title_' . $lang['lang']; ?>
+                        <?php $description = 'description_' . $lang['lang']; ?>
                             <!-- Dashboard Tab Pane 1-->
                             <div class="tab-pane fade @if ($index == 0) show active @endif"
                                 id="multi_content_{{ $lang['lang'] }}" role="tabpanel"
@@ -69,14 +70,14 @@
                                             <label class="small mb-1" for="title">Title</label>
                                             <input class="form-control" id="title" 
                                                 name="title_{{ $lang['lang'] }}" type="text" placeholder="title"
-                                                value="{{ $item->title }}" />
+                                                value="{{ $item->$title }}" />
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-12">
                                             <label class="small mb-1" for="title">Description</label>
                                             <textarea class="form-control textarea" name="description_{{ $lang['lang'] }}"
-                                                rows="12">{{ $item->description }}</textarea>
+                                                rows="12">{{ $item->$description }}</textarea>
                                         </div>
                                     </div>
                                 </div>
