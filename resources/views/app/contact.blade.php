@@ -74,7 +74,6 @@
     <script src="{{ asset('assets/js/script.js') }}"></script>
     <script>
         $('.contact-page').submit(function(event) {
-            console.log(1111);
             event.preventDefault();
             var formData = new FormData(this);
             $('.owner-form .error').remove();

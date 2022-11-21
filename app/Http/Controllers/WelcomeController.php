@@ -67,9 +67,8 @@ class WelcomeController extends Controller
     }
     public function send(Request $request)
     {
-
-      
-
+        
+    if($request->message){
         $settings = Settings::where('key','sait_settings')->first();
         $site_settings = json_decode($settings->value);
 
@@ -86,7 +85,11 @@ class WelcomeController extends Controller
             $message->to($contact_email);
         });
 
-
         return json_encode(array('status' => 1));
+    }
+    else{
+        return json_encode(array('status' => 0));
+
+    }
 }
 }
