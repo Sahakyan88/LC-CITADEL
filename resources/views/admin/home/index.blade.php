@@ -107,6 +107,7 @@
                                         break;
                                     default:
                                         status = 'error'
+                                        
                                         colorClass = 'badge-danger';
                                 }
                                 return '<div style="font-size:12px;" class="badge '+colorClass+' badge-pill">'+status+'</div>';
