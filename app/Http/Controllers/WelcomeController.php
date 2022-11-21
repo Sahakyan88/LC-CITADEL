@@ -68,12 +68,7 @@ class WelcomeController extends Controller
     public function send(Request $request)
     {
 
-        $validated = $request->validate([
-            'email' => 'email:rfc', 
-            'name' => 'string',
-            'subject' => 'string',
-            'message' => 'required|string'
-        ]);
+      
 
         $settings = Settings::where('key','sait_settings')->first();
         $site_settings = json_decode($settings->value);
