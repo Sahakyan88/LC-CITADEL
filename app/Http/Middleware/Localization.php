@@ -10,9 +10,9 @@ class Localization
 {
     public function handle(Request $request, Closure $next)
     {
-        $locale = Auth::user() ? Auth::user()->language : 'en';
+        $locale = Auth::user() ? Auth::user()->language : 'am';
         
-        if (! in_array($locale, ['en', 'ru', 'am'])) {
+        if (! in_array($locale, ['am','en', 'ru'] )) {
             abort(400);
         }
      

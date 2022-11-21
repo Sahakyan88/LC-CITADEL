@@ -77,7 +77,7 @@
                                         </div>
                                     @endif
                                     <!-- Contact Form -->
-                                    <form class="contact-form " method="POST" action="">
+                                    <form class="contact-form" method="POST" action="">
                                         @csrf
                                         <div class="row clearfix">
                                             <div class="form-group col-lg-6 col-md-6 col-sm-6">

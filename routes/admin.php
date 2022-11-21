@@ -44,7 +44,6 @@ Route::group(['middleware' => 'adminauth'], function () {
     //settings
     Route::get('settings',[SettingsController::class, 'settings'])->name('adminSettings');
     Route::post('settings',[SettingsController::class,'updateSettings'])->name('updateSettings');
-    Route::post('update-settings-price',[SettingsController::class,'updateSettingsPrice'])->name('updateSettingsPrice');
     //home
     Route::get('home',[HomeController::class, 'home'])->name('adminHome');
     Route::get('home-data',[HomeController::class, 'homeData'])->name('aHomeData');
@@ -76,9 +75,7 @@ Route::group(['middleware' => 'adminauth'], function () {
     Route::post('dictionary-save',[DictionaryController::class, 'save'])->name('adminDicionarySave');
     Route::get('dictionary-sync',[DictionaryController::class, 'sync'])->name('aSyncDictionary');
 
-    Route::get('order-data',[OrderController::class, 'data'])->name('orderData');
-    Route::get('orders',[OrderController::class, 'index'])->name('adminOrder');
-    Route::get('order',[OrderController::class, 'getOrder'])->name('aGetOrder');
+   
 
     //F.A.Q
     Route::get('faq',[FaqController::class, 'faq'])->name('adminFaq');

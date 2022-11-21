@@ -94,7 +94,7 @@
                                <div class="nav-link-icon"><i data-feather="users"></i></div>
                                Users
                             </a>
-                            <a class="nav-link @if(isset($menu) && $menu == 'users') active @endif" href="{{ route('ausers') }}">
+                            <a class="nav-link @if(isset($menu) && $menu == 'about') active @endif" href="{{ route('ausers') }}">
                                 <div class="nav-link-icon"><i data-feather="users"></i></div>
                                 About us
                              </a>

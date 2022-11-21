@@ -13,10 +13,10 @@ class DataComposer
 
     public function __construct()
     {
-        // $settings = Settings::where('key','sait_settings')->first();
-        // $site_settings = json_decode($settings->value);
-        // $this->site_settings = $site_settings;
-     
+        $settings = Settings::where('key','sait_settings')->first();
+        $site_settings = json_decode($settings->value);
+        $this->site_settings = $site_settings;
+   
     }
 
     /**
@@ -27,7 +27,7 @@ class DataComposer
      */
     public function compose(View $view)
     {
-        // $view->with('site_settings' , $this->site_settings);
+        $view->with('site_settings' , $this->site_settings);
        
     }
 }

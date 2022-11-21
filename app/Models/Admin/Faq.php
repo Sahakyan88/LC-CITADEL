@@ -12,6 +12,8 @@ class Faq extends Model
      *
      * @var string
      */
+    public $multilangualFiled = false;
+
     protected $table = 'faq';
 
 
@@ -23,8 +25,8 @@ class Faq extends Model
 
         $query->select(array(DB::raw('SQL_CALC_FOUND_ROWS faq.id'),
             'faq.id as DT_RowId',
-            'faq.question as question',
-            'faq.answer as answer',
+            'faq.question_en as question',
+            'faq.answer_en as answer',
             'faq.ordering as ordering',
             'faq.published as published'));
 

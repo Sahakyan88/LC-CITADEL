@@ -26,5 +26,12 @@ class HomepageSeeder extends Seeder
             'ordering' => '1',
            
         ]);
+        DB::table('settings')->insert([
+            'key' => 'sait_settings',
+            'value' => '{"email":"asdasd@asddddd.comiii","phone":"32423432","address":"adsfasdfadsf","fax":"adsfasdfadsf","facebook":"asdfasdfasd","twitter":"asdfadsf"}',
+            'contact_email'=>'asd@adsa@gmail.com'
+           
+        ]);
+       
     }
 }

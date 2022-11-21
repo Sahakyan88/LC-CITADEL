@@ -220,7 +220,7 @@
                         </div>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
-                        <a class="small text-white stretched-link" href="{{ route('adminOrder') }}">View Orders</a>
+                        <a class="small text-white stretched-link" href="">View Orders</a>
                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                     </div>
                 </div>
@@ -246,56 +246,5 @@
     </div>
     <!-- Main page content-->
 </main>
-@push('css')
-    <link href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
-@endpush
-@push('script')
-    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
-    <script>
-        $(document).ready(function() {
-            var itemPopup = new Popup;
-            itemPopup.init({
-                size:'modal-xl',
-                identifier:'edit-item',
-                class: 'modal',
-                minHeight: '200',
-            })
-            window.itemPopup = itemPopup;
-            $('#log-timeline').on('click', '.user_edit', function (e) {
-                editId = $(this).attr('edit_item_id');
-                page = $(this).attr('page');
-                itemPopup.setTitle('Users');
-                itemPopup.load("{{route('aGetUser')}}?id="+ editId+"&page="+page, function () {
-                    this.open();
-                });
-            });
 
-            var orderPopup = new Popup;
-            orderPopup.init({
-                size:'modal-xl',
-                identifier:'edit-item',
-                class: 'modal',
-                minHeight: '200',
-            })
-            window.orderPopup = orderPopup;
-
-            $('#log-timeline').on('click', '.order_edit', function (e) {
-                editId = $(this).attr('edit_item_id');
-                orderPopup.setTitle('Order');
-                orderPopup.load("{{route('aGetOrder')}}?id="+editId, function () {
-                    this.open();
-                });
-            });
-
-            // $('#add_item').on('click', function (e) {
-            //     Loading.add($('#add_item'));
-            //     itemPopup.setTitle('Add Users');
-            //     itemPopup.load("{{route('aGetUser')}}", function () {
-            //         this.open();
-            //     });
-            // });
-        });
-    </script>
-@endpush
 @endsection

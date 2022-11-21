@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Admin\Faq;
 use App\Http\Controllers\Controller;
 use Validator;
+use App\Helpers\Translate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Admin\ImageDB;
@@ -66,8 +67,8 @@ class faqController extends Controller
     public function saveFaq(Request $request){
 
         $validator  = Validator::make($request->all(), [
-            'question' => 'string',
-            'answer'   => 'string'
+            'question_en' => 'string',
+            'answer_en'   => 'string'
         ]);
 
         if ($validator->fails()) {
@@ -79,7 +80,6 @@ class faqController extends Controller
         $validated = $validator->validated();
 
         $data = $request->all();
-        //dd($data);
         $id = $request->input('id');
         if (!$id) {
             $item = new Faq();
@@ -89,9 +89,12 @@ class faqController extends Controller
             $item = Faq::find($id);
             if (!$item) return json_encode(array('status' => 0, 'message' => "Can't save"));
         }
+        $translateHelper = new Translate();
+        $item->multilangualFiled =  ['question','answer'];
+        $item = $translateHelper->make($item,$data);
+
         $item->published   = $data['published'];
-        $item->question    = $data['question'];
-        $item->answer      = $data['answer'];
+        
         $item->save();
         $id = $item->id;
 

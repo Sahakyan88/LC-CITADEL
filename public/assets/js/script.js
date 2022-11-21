@@ -384,6 +384,27 @@
 			}
 		});
 	}
+	//Contact Form Validation
+	if ($('#send-form').length) {
+		$('#send-form').validate({
+			rules: {
+				name: {
+					required: true
+				},
+				subject: {
+					required: true
+				},
+				message: {
+					required: true
+				},
+				email: {
+					required: true,
+					email: true
+				},
+				
+			}
+		});
+	}
 	
 
 

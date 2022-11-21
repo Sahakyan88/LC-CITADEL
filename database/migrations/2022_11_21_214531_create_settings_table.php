@@ -17,10 +17,11 @@ return new class extends Migration
             $table->id();
             $table->string('key');
             $table->string('value');
+            $table->string('contact_email');
             $table->timestamps();
         });
     }
-
+   
     /**
      * Reverse the migrations.
      *

@@ -23,10 +23,7 @@
                         <a class="nav-link active " id="users-tab" data-toggle="tab" href="#general" role="tab"
                            aria-controls="general" aria-selected="true">Info</a>
                     </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="services-tab" data-toggle="tab" href="#SettingLinks" role="tab"
-                           aria-controls="SettingLinks" aria-selected="false">General</a>
-                    </li>
+                    
                 </ul>
             </div>
             <div class="card m-3 p-1 ">
@@ -34,26 +31,6 @@
                 <div class="tab-content  ">
                     <div id="SettingLinks" class="tab-pane p-3">
                         <div class="form-row col-12 ">
-
-                            <form id="save-Price-form" class="p-3 col-12" method="post">
-                                @csrf
-                                <div class="form-row ">
-                                    <div class="form-group col-md-7">
-                                        <label class="small mb-1" for="inputPrice1">Price 1</label>
-                                        <input class="form-control" id="inputPrice1" type="number" name="inputPrice1"
-                                               placeholder="Price 1" value="{{ $price1 }}" />
-                                    </div>
-                                    <div class="form-group col-md-7">
-                                        <label class="small mb-1" for="inputPrice2">Price 2</label>
-                                        <input class="form-control" id="inputPhone" type="number" name="inputPrice2"
-                                               placeholder="Price 2" value="{{ $price2 }}"/>
-                                    </div>
-
-                                </div>
-                                <div class="form-group">
-                                    <button type="button" onclick="priceSave()" id="saveItemBtnPrice" class="btn btn-success float-right">Save</button>
-                                </div>
-                            </form>
                         </div>
                     </div>
                     <div id="general" class="tab-pane  active  p-3">
@@ -107,26 +84,6 @@
 
 <script>
 
-    function priceSave(){
-        Loading.add($('#saveItemBtnPrice'));
-        let data = $('#save-Price-form').serializeFormJSON();
-        console.log(data);
-        $.ajax({
-            type: "POST",
-            url: "{{ route('updateSettingsPrice') }}",
-            data: data,
-            dataType: 'json',
-            success: function(response) {
-                if (response.status == 0) {
-                    toastr['error'](response.message, 'Error');
-                }
-                if (response.status == 1) {
-                    toastr['success']('Saved.', 'Success');
-                }
-                Loading.remove($('#saveItemBtnPrice'));
-            }
-        });
-    }
     function save() {
         Loading.add($('#saveItemBtn'));
         var data = $('#save-item-form').serializeFormJSON();

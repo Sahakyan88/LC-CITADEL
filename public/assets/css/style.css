@@ -1326,9 +1326,17 @@ section {
 	font-size: 12px;
 	color: #ff0000;
 	font-weight: 500;
-
- 
-
+}
+.lang{
+  --bs-dropdown-min-width: 4rem;
+  padding: 0 !important;
+  background: rgba(133, 131, 131, 0.56) !important;
+}
+.lang-a{
+  color: white !important;
+}
+.lang-img {
+width: 25px;
 }
 .auth-page{
   height: 250px;
