@@ -39,7 +39,7 @@ class AuthController extends Controller
 
     public function personaIinfo(){
 
-        return view('app.auth');
+        return view('app.login');
     }
     public function  orderData(Request $request){
         $model = new Order();
@@ -103,7 +103,7 @@ class AuthController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect()->route('user-auth');
+        return redirect()->route('homepage');
     }
 
     public function signin(loginRequest $request){

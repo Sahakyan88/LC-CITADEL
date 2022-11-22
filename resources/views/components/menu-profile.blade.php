@@ -1,22 +1,33 @@
-<div class="col-lg-4 col-md-12 col-sm-12">
-    <!-- Service Detail Category -->
-    <div class="sidebar-widget service-details__category">
-        <div class="sidebar-widget__content">
-            <h3 class="service-details__title">Profile</h3>
-            <ul class="service-details__cagegory-list">
-                <li
-                    class="{{ request()->is('personal-info') ? 'active' : '' }}{{ request()->is('auth') ? 'active' : '' }}">
-                    <a href="">Personal Information<span
-                            class="arrow icon-right-arrow"></span></a>
-                </li>
-                <li class="{{ request()->is('profile-password') ? 'active' : '' }}"><a
-                        href="">Change Password<span
-                            class="arrow icon-right-arrow"></span></a></li>
-                <li class="{{ request()->is('orders-profile') ? 'active' : '' }}"><a
-                        href="">Orders<span class="arrow icon-right-arrow"></span></a></li>
-                <li><a href="{{ route('logout') }}">Logout<span class="arrow icon-right-arrow"></span></a></li>
 
-            </ul>
-        </div>
-    </div>
-</div>
+<section id="features" class="features ">
+    <div class="container">
+        <div class="row" style="    width: 100%;
+        padding: 30px;
+        background: #fff;
+        box-shadow: 0 0 24px 0 rgb(0 0 0 / 12%);
+    }">
+            <div class="col-lg-4 mb-5 mb-lg-0 " data-aos="fade-right">
+                <ul class="nav nav-tabs flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link  show {{ request()->is('personal-info') ? 'active' : '' }}{{ request()->is('login-user') ? 'active' : '' }}{{ request()->is('register-user') ? 'active' : '' }}" href="{{ route('personalinfo') }}" class="arrow icon-right-arrow">
+                            <h4>Personal Information</h4>
+                        </a>
+                    </li>
+                    <li class="nav-item mt-2 ">
+                        <a class="nav-link  show {{ request()->is('profile-password') ? 'active' : '' }}" href=" {{ route('profilepassword')  }}" class="arrow icon-right-arrow">
+                            <h4>Change Password</h4>
+                        </a>
+                    </li>
+                    <li class="nav-item mt-2 ">
+                        <a class="nav-link  show {{ request()->is('orders-profile') ? 'active' : '' }}" href="{{ route('ordersprofile') }}" class="arrow icon-right-arrow">
+                            <h4>Services</h4>
+                        </a>
+                    </li>
+                    <li class="nav-item mt-2">
+                        <a class="nav-link acive show" href="{{ route('logout') }}" class="arrow icon-right-arrow">
+                            <h4>Logout</h4>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+

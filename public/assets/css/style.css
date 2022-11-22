@@ -1304,18 +1304,18 @@ section {
   padding: 15px;
   font-weight: 600;
 }
-.contact{
+/* .contact{
   margin-top: 50px;
-}
+} */
 .about{
   margin-top: 50px;
 }
 .services{
   margin-top: 50px;
 }
-.contact{
+/* .contact{
   margin-top: 50px;
-}
+} */
 .error{
   
   display: block;
@@ -1338,9 +1338,7 @@ section {
 .lang-img {
 width: 25px;
 }
-.auth-page{
-  height: 250px;
-}
+
 
 .contact .php-email-form .error-message br+br {
   margin-top: 25px;

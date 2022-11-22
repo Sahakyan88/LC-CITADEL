@@ -45,10 +45,12 @@
                             href="{{ route('contact') }}">Contact</a></li>
                     @if (Auth::user())
                         <li><a class="nav-link scrollto {{ request()->is('auth') ? 'active' : '' }}"
-                                href="{{ url('/auth') }}">Profile</a></li>
+                                href="{{ url('/login-user') }}">Profile</a></li>
                     @else
-                        <li><a class="nav-link scrollto {{ request()->is('auth') ? 'active' : '' }}"
-                                href="{{ route('user-auth') }}">Signin</a></li>
+                        <li><a class="nav-link scrollto {{ request()->is('login-user') ? 'active' : '' }}"
+                                href="{{ route('login-user') }}">Signin</a></li>
+                        <li><a class="nav-link scrollto {{ request()->is('register-user') ? 'active' : '' }}"
+                                href="{{ route('register-user') }}">Signup</a></li>
                     @endif
                     <li>
                         <div class="dropdown"> <button class="btn  dropdown-toggle" type="button"
@@ -94,7 +96,7 @@
                         <div class="col-lg-3 col-md-6">
                             <div class="footer-info">
                                 <h1><a href="{{ route('homepage') }}"><img
-                                   src="{{ asset('assets/img/logo.jpg') }}"></a></h1>
+                                            src="{{ asset('assets/img/logo.jpg') }}"></a></h1>
                                 <p>
                                     @if (isset($site_settings->address))
                                         {{ $site_settings->address }}
@@ -136,18 +138,23 @@
                                 <li><i class="bx bx-chevron-right"></i> <a href="{{ route('contact') }}">Contact</a>
                                 </li>
                                 <li><i class="bx bx-chevron-right"></i> <a href="#faq">F.A.Q</a></li>
-                                @if (Auth::user())
-                                    <li><i class="bx bx-chevron-right"></i> <a href="{{ url('/auth') }}">Signin</a>
-                                    </li>
-                                @else
-                                    <li><i class="bx bx-chevron-right"></i> <a
-                                            href="{{ route('user-auth') }}">Signin</a></li>
-                                @endif
+                              
                             </ul>
                         </div>
-                        <div class="col-lg-4 col-md-6 footer-newsletter">
-                            <h4>Our Newsletter</h4>
-                            <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
+                        <div class="col-lg-3 col-md-6 footer-links">
+                            <h4>Newsletter</h4>
+                            <ul>
+                                @if (Auth::user())
+                                <li><i class="bx bx-chevron-right"></i> <a href="{{ url('/login-user') }}">profile</a>
+                                </li>
+                            @else
+                               <li> <i class="bx bx-chevron-right"></i> <a
+                                        href="{{ route('login-user') }}">Signin</a></li>
+                               <li> <i class="bx bx-chevron-right"></i> <a
+                                        href="{{ route('register-user') }}">Signup</a></li>
+                            @endif
+                              
+                            </ul>
                         </div>
                     </div>
                 </div>

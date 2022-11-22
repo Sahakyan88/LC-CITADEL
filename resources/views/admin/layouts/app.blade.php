@@ -90,15 +90,18 @@
                                 <div class="nav-link-icon"><i data-feather="tool"></i></div>
                                 Home Page
                             </a>
-                            <a class="nav-link @if(isset($menu) && $menu == 'users') active @endif" href="{{ route('ausers') }}">
-                               <div class="nav-link-icon"><i data-feather="users"></i></div>
-                               Users
-                            </a>
                             <a class="nav-link @if(isset($menu) && $menu == 'about') active @endif" href="{{ route('ausers') }}">
                                 <div class="nav-link-icon"><i data-feather="users"></i></div>
                                 About us
                              </a>
-                    
+                             <a class="nav-link @if(isset($menu) && $menu == 'team') active @endif" href="{{ route('ateam') }}">
+                                <div class="nav-link-icon"><i data-feather="users"></i></div>
+                               Our Team
+                             </a>
+                            <a class="nav-link @if(isset($menu) && $menu == 'users') active @endif" href="{{ route('ausers') }}">
+                               <div class="nav-link-icon"><i data-feather="users"></i></div>
+                               Users
+                            </a>
                             <?php $contectMenuItems = array('services','dictionary','settings','slider','faq');?>
                             <a class="nav-link @if(isset($menu) && !in_array($menu,$contectMenuItems)) collapsed @endif" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="true" aria-controls="collapseUsers">
                                 <div class="nav-link-icon"><i data-feather="users"></i></div>

@@ -1,39 +1,37 @@
 <?php
 
+
+
 namespace App\Models\Admin;
 
 use Illuminate\Database\Eloquent\Model;
 use DB;
 
-class home extends Model
+
+class Team extends Model
 {
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
     public $multilangualFiled = false;
 
-    protected $table = 'home';
+    protected $table = 'teams';
 
 
     public $timestamps  = false;
 
     public function getAll($start,$length,$filter,$sort_field,$sort_dir){
 
-        $query = DB::table('home');
+        $query = DB::table('teams');
 
-        $query->select(array(DB::raw('SQL_CALC_FOUND_ROWS home.id'),
-            'home.id as DT_RowId',
-            'home.title_en as title',
-            'home.ordering as ordering',
-            'home.published as published'));
+        $query->select(array(DB::raw('SQL_CALC_FOUND_ROWS teams.id'),
+            'teams.id as DT_RowId',
+            'teams.title_en as title',
+            'teams.ordering as ordering',
+            'teams.published as published'));
 
         if($length != '-1'){
             $query->skip($start)->take($length);
         }
         if( isset($filter['search']) && strlen($filter['search']) > 0 ){
-            $query->where('home.title', 'LIKE', '%'. $filter['search'] .'%')->orWhere('home.price', 'LIKE', '%'. $filter['search'] .'%');
+            $query->where('teams.title', 'LIKE', '%'. $filter['search'] .'%')->orWhere('teams.price', 'LIKE', '%'. $filter['search'] .'%');
         }
         $query->orderBy($sort_field, $sort_dir);
         $data = $query->get();
@@ -42,5 +40,6 @@ class home extends Model
         $return['count'] = $count->recordsTotal;
         return $return;
     }
-    
+   
 }
+

@@ -52,18 +52,35 @@ class WelcomeController extends Controller
     }
     public function about()
     {
-        view()->share('menu', 'about');
-        return view('app.about');
+        $lang = App::getLocale();
+       
+    $teams = DB::table('teams')
+    ->select(
+    'teams.title_'.$lang.' as title','teams.description_'.$lang.' as description',
+    'teams.image_id',
+    'images.filename as image_file_name',
+    )
+    ->where('teams.published', 1)
+    ->leftJoin('images', 'images.id', '=', 'teams.image_id')
+    ->orderBy('published', 'DESC')->get();
+
+    view()->share('menu', 'about');
+    return view('app.about',compact('teams'));
     }
     public function contact()
     {
         view()->share('menu', 'contact');
         return view('app.contact');
     }
-    public function auth()
+    public function login()
     {
-        view()->share('menu', 'signin');
-        return view('app.auth');
+        view()->share('menu', 'login');
+        return view('app.login');
+    }
+    public function register()
+    {
+        view()->share('menu', 'register');
+        return view('app.register');
     }
     public function send(Request $request)
     {

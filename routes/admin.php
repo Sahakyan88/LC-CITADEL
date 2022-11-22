@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\TeamController;
 use App\Http\Controllers\Admin\ContentController;
 use App\Http\Controllers\Admin\DictionaryController;
 use App\Http\Controllers\Admin\RequestsController;
@@ -40,7 +41,6 @@ Route::group(['middleware' => 'adminauth'], function () {
     Route::post('change-password',[AuthController::class, 'changePassword'])->name('adminChangePassword');
     Route::post('save-settings',[AdminController::class, 'saveSettings'])->name('saveAdminSettings');
     Route::post('save-contact',[AdminController::class, 'saveContact'])->name('saveAdminContact');
-
     //settings
     Route::get('settings',[SettingsController::class, 'settings'])->name('adminSettings');
     Route::post('settings',[SettingsController::class,'updateSettings'])->name('updateSettings');
@@ -100,6 +100,22 @@ Route::group(['middleware' => 'adminauth'], function () {
     Route::get('user-data',[UserController::class, 'userData'])->name('aUserData');
     Route::post('user-vierfy',[UserController::class, 'verify'])->name('aUserSaveVerify');
     Route::post('user-upload-avatar',[ImageController::class, 'upload'])->name('uploadAvatar');
+
+
+
+//team
+Route::get('team',[TeamController::class, 'homeTeam'])->name('ateam');
+Route::get('team-get',[TeamController::class, 'teamGet'])->name('aGetTeam');
+Route::post('team-save',[TeamController::class, 'ateamSave'])->name('aTeamSave');
+Route::get('team-data',[TeamController::class, 'teamData'])->name('aTeamData');
+Route::post('team-remove',[TeamController::class, 'removeTeam'])->name('aRemoveTeam');
+Route::post('team-ordering',[TeamController::class, 'reorderingHome'])->name('aTeamSort');
+
+
+
+
+
+
 
     Route::post('upload-image',[ImageController::class, 'upload'])->name('aUpload');
     Route::post('remove-image',[ImageController::class, 'remove'])->name('aRemoveImage');

@@ -16,8 +16,6 @@
             <div class="card">
                 <div class="card-header">Image</div>
                 <div class="card-body text-center">
-                    <!-- Profile picture image-->
-                    {{-- {{ dd($item) }} --}}
                     <div class="image-upload-container" id="cover">
                         <div class="image-part">
                             <img class="thumbnail"
@@ -26,7 +24,7 @@
                                 value="@if ($item->image) {{ $item->image->id }} @endif" />
                         </div>
                         <div class="image-action @if ($item->image) fileExist @else fileNotExist @endif">
-                            <div>size (1920 x 828)</div>
+                            <div>size (600 x 600)</div>
                             <div class="img-not-exist">
                                 <span id="uploadBtn" class="btn btn-success">Select image </span>
                             </div>
@@ -67,14 +65,15 @@
                                 <div class="container mt-4">
                                     <div class="form-row">
                                         <div class="form-group col-12">
-                                            <label class="small mb-1" for="title">Title</label>
+                                            <label class="small mb-1" for="title">Name Surname</label>
                                             <input class="form-control" id="title" name="title_{{ $lang['lang'] }}"
-                                                type="text" placeholder="title" value="{{ $item->$title }}" />
+                                                type="text" placeholder="Name Surname"
+                                                value="{{ $item->$title }}" />
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-12">
-                                            <label class="small mb-1" for="title">Description</label>
+                                            <label class="small mb-1" for="title">Position</label>
                                             <textarea class="form-control textarea" name="description_{{ $lang['lang'] }}" rows="12">{{ $item->$description }}</textarea>
                                         </div>
                                     </div>
@@ -114,7 +113,7 @@
 
         $.ajax({
             type: "POST",
-            url: "{{ route('adminHomeSave') }}",
+            url: "{{ route('aTeamSave') }}",
             data: data,
             dataType: 'json',
             success: function(response) {

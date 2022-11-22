@@ -1,8 +1,7 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Admin\Home;
+use App\Models\Admin\Team;
 use App\Helpers\Translate;
 
 use App\Http\Controllers\Controller;
@@ -11,20 +10,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Admin\ImageDB;
 
-
-class HomeController extends Controller
+class TeamController extends Controller
 {
-    public function home(Request $request){
+    public function homeTeam(Request $request){
         $page = (isset($_GET['page'])) ? $_GET['page'] : false;
         view()->share('page', $page);
-        view()->share('menu', 'home');
-      
-        return view('admin.home.index');
+        view()->share('menu', 'team');
+
+        return view('admin.team.index');
     }
 
 
-    public function homeData(Request $request){
-        $model = new Home();
+    public function teamData(Request $request){
+        $model = new Team();
         $filter = array('search' => $request->input('search'),
             'status' => $request->input('filter_status'),
             'featured'=> $request->input('featured',false));
@@ -41,23 +39,23 @@ class HomeController extends Controller
         return $data;
     }
 
-    public function getHome(Request $request){
+    public function teamGet(Request $request){
         $id = (int)$request['id'];
         if($id){
-            $item = Home::find($id);
+            $item = Team::find($id);
             if ($item->image_id) {
                 $imageDb = new ImageDB();
                 $item->image = $imageDb->get($item->image_id);
             }
             $mode = 'edit';
         }else{
-            $item = new Home();
+            $item = new Team();
             $item->created_at = date("Y-m-d H:i:s");
             $mode= "add";
         }
         $data = json_encode(
             array('data' =>
-                (String) view('admin.home.item', array(
+                (String) view('admin.team.item', array(
                     'item'=>$item,
                     'mode' => $mode,
                 )),
@@ -67,7 +65,7 @@ class HomeController extends Controller
         return $data;
     }
 
-    public function saveHome(Request $request){
+    public function ateamSave(Request $request){
 
        
         // dd($request->all());
@@ -90,11 +88,11 @@ class HomeController extends Controller
 
         $id = $request->input('id');
         if (!$id) {
-            $item = new Home();
-            $max = DB::table('home')->max('ordering');
+            $item = new Team();
+            $max = DB::table('teams')->max('ordering');
             $item->ordering = (is_null($max) ? 1 : $max + 1);
         } else {
-            $item = Home::find($id);
+            $item = Team::find($id);
             if (!$item) return json_encode(array('status' => 0, 'message' => "Can't save"));
         }
 
@@ -118,11 +116,11 @@ class HomeController extends Controller
         }
 
     }
-    public function removeHome(Request $request){
+    public function removeTeam(Request $request){
 
         $ids = $request->input('ids');
         foreach ($ids as $id) {
-            $item = Home::find($id);
+            $item = Team::find($id);
             if ($item) {
                 if ($item->image_id) {
                     $image = ImageDB::find($item->image_id);
@@ -139,13 +137,13 @@ class HomeController extends Controller
         return $data;
     }
 
-    public function reorderingHome(Request $request){
+    public function reorderingTeam(Request $request){
         $ids = $request->input('ids');
         $newOrdering = count($ids);
 
         foreach($ids as $value => $key)
         {
-            $item = Home::find(str_replace("row_", "", $key));
+            $item = Team::find(str_replace("row_", "", $key));
             if($item){
                 $item->ordering = $newOrdering;
                 $item->save();

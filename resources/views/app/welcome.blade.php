@@ -8,9 +8,10 @@
                     <h1>{{ $home->title }}</h1>
                     <h2>{{ $home->description }}</h2>
                     @if (Auth::user())
-                        <a href="{{ url('/auth') }}" class="btn-get-started scrollto">Get Started</a>
+                        <a href="{{ url('/login-user') }}" class="btn-get-started scrollto">Get Started</a>
                     @else
-                        <a href="{{ route('user-auth') }}" class="btn-get-started scrollto">Get Started</a>
+                        <a href="{{ route('register-user') }}" class="btn-get-started scrollto">Get Started</a>
+
                     @endif
                 </div>
             </section>

@@ -8,7 +8,7 @@ class Services implements FilterInterface
 {
     public function applyFilter(Image $image)
     {
-    	return $image->fit(370, 313, function ($constraint) {
+    	return $image->fit(600, 600, function ($constraint) {
             $constraint->aspectRatio();
 		    $constraint->upsize();
 		});
