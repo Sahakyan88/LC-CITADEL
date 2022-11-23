@@ -14,8 +14,12 @@
                         <div class="address">
                             <i class="bi bi-geo-alt"></i>
                             <h4>Location:</h4>
-                            <p>@if (isset($site_settings->address))
-                                {{ $site_settings->address }}
+                            <p> @if (isset($site_settings->address_am) && App::getLocale() == 'am')
+                                {{ $site_settings->address_am }}
+                            @elseif(isset($site_settings->address_ru) && App::getLocale() == 'ru')
+                                {{ $site_settings->address_ru }}
+                            @else
+                                {{ $site_settings->address_en }}
                             @endif</p>
                         </div>
                         <div class="email mt-4">

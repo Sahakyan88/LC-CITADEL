@@ -2,97 +2,90 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Admin\Service;
+use App\Models\Admin\About;
+use App\Helpers\Translate;
 use App\Http\Controllers\Controller;
 use Validator;
-use App\Helpers\Translate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Admin\ImageDB;
 
-
-class ServicesController extends Controller
+class AboutAdminController extends Controller
 {
-    public function services(Request $request){
+    public function homeAbout(Request $request){
         $page = (isset($_GET['page'])) ? $_GET['page'] : false;
         view()->share('page', $page);
-        view()->share('menu', 'services');
-        return view('admin.services.services_index');
+        view()->share('menu', 'about');
+        return view('admin.about.index');
     }
-    
 
-    public function servicesData(Request $request){
-        $model = new Service();
+
+    public function aboutData(Request $request){
+        $model = new About();
         $filter = array('search' => $request->input('search'),
-                        'status' => $request->input('filter_status'),
-                        'featured'=> $request->input('featured',false));
+            'status' => $request->input('filter_status'),
+            'featured'=> $request->input('featured',false));
 
         $items = $model->getAll(
-        $request->input('start'),
-        $request->input('length'),
-        $filter,
-        $request->input('sort_field'),
-        $request->input('sort_dir'),
+            $request->input('start'),
+            $request->input('length'),
+            $filter,
+            $request->input('sort_field'),
+            $request->input('sort_dir'),
         );
 
         $data = json_encode(array('data' => $items['data'], 'recordsFiltered' => $items['count'], 'recordsTotal'=> $items['count']));
         return $data;
     }
 
-    public function getServices(Request $request){
+    public function aboutGet(Request $request){
         $id = (int)$request['id'];
         if($id){
-            $item = Service::find($id);
+            $item = About::find($id);
             if ($item->image_id) {
                 $imageDb = new ImageDB();
                 $item->image = $imageDb->get($item->image_id);
             }
             $mode = 'edit';
         }else{
-            $item = new Service();
+            $item = new About();
             $item->created_at = date("Y-m-d H:i:s");
             $mode= "add";
         }
         $data = json_encode(
             array('data' =>
-                (String) view('admin.services.services_item', array(
+                (String) view('admin.about.item', array(
                     'item'=>$item,
                     'mode' => $mode,
                 )),
                 'status' => 1)
-            );
+        );
 
         return $data;
     }
-    
-    public function saveServices(Request $request){
-    
+
+    public function aboutSave(Request $request){
+
         // $validator  = Validator::make($request->all(), [
-        //     'title_am'      => 'required',
-        //     'image'         => 'required',
-        //     'price'         => 'required',
-        //     'body_am'       => 'required'
+        //     'title_am'  => 'required',
+        //     'image'     => 'required',
+        //     'body_am'   => 'required',
+       
         // ]);
-      
-        // if ($validator->fails()) {
-        //     return response()->json([
-        //         'status'  => 0,
-        //         'message' => $validator->getMessageBag()->first()
-        //     ]);
-        // }
-        // $validated = $validator->validated();
-        
+
+
         $data = $request->all();
+
         $id = $request->input('id');
         if (!$id) {
-            $item = new Service();
-            $max = DB::table('services')->max('ordering');
+            $item = new About();
+            $max = DB::table('about')->max('ordering');
             $item->ordering = (is_null($max) ? 1 : $max + 1);
         } else {
-            $item = Service::find($id);
+            $item = About::find($id);
             if (!$item) return json_encode(array('status' => 0, 'message' => "Can't save"));
         }
-      
+
         $item->image_id = $data['image'];
         if ($item->image_id) {
             $imageDB = ImageDB::find($item->image_id);
@@ -103,23 +96,21 @@ class ServicesController extends Controller
         $item = $translateHelper->make($item,$data);
 
         $item->published   = $data['published'];
-        $item->price       = $data['price'];
+      
         $item->save();
         $id = $item->id;
-
         if (isset($publishedNotification)) {
             return json_encode(array('status' => 1, 'message' => "Cant publish Without image", 'published' => 0));
         } else {
             return json_encode(array('status' => 1));
         }
-    
-    }
 
-    public function removeServices(Request $request){
-     
+    }
+    public function removeAbout(Request $request){
+
         $ids = $request->input('ids');
         foreach ($ids as $id) {
-            $item = Service::find($id);
+            $item = About::find($id);
             if ($item) {
                 if ($item->image_id) {
                     $image = ImageDB::find($item->image_id);
@@ -136,13 +127,13 @@ class ServicesController extends Controller
         return $data;
     }
 
-    public function reorderingServices(Request $request){
+    public function reorderingAbout(Request $request){
         $ids = $request->input('ids');
         $newOrdering = count($ids);
 
         foreach($ids as $value => $key)
         {
-            $item = Service::find(str_replace("row_", "", $key));
+            $item = About::find(str_replace("row_", "", $key));
             if($item){
                 $item->ordering = $newOrdering;
                 $item->save();
@@ -151,5 +142,5 @@ class ServicesController extends Controller
         }
         exit();
     }
-
 }
+

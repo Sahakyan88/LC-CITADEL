@@ -272,34 +272,17 @@
     <div class="row">
         <div class="col-xxl-12">
             <div class="card mb-4">
-                <div class="card-header border-bottom">
-                        <ul class="nav nav-tabs card-header-tabs" id="dashboardNav" role="tablist">
-                            <li class="nav-item mr-1" role="presentation">
-                                <a class="nav-link active" id="general-tab" data-toggle="tab" href="#general" role="tab"
-                                    aria-controls="general" aria-selected="">General</a>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <a class="nav-link" id="types-tab" data-toggle="tab" href="#types" role="tab"
-                                    aria-controls="types" aria-selected="false">Types</a>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <a class="nav-link" id="replacement-tab" data-toggle="tab" href="#replacement" role="tab"
-                                    aria-controls="replacement" aria-selected="false">Replacement</a>
-                            </li>
-                        </ul>
-                </div>
                 <div class="card-body">
                     <div class="tab-content" id="dashboardNavContent">
                         <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
                             <form id="save-item-form" method="post">
+                                <input type="hidden" class="hidden_id" name="id" value="{{ $item->id }}" />
+                                @csrf
                                 <div class="row">
-                                    <input type="hidden" class="hidden_id" name="id" value="{{ $item->id }}" />
-                                    @csrf
                                     <div class="col-xl-4">
                                         <div class="card">
                                             <div class="card-header">Image</div>
                                             <div class="card-body text-center">
-                                                <!-- Profile picture image-->
                                                 <div class="image-upload-container" id="cover">
                                                     <div class="image-part">
                                                         <img class="thumbnail"
@@ -308,18 +291,13 @@
                                                             value="@if ($item->image) {{ $item->image->id }} @endif" />
                                                     </div>
                                                     <div class="image-action @if ($item->image) fileExist @else fileNotExist @endif">
-                                                        <div>
-                                                            <span >size: (370 x 313) </span>
-                                                        </div>
+                                                        <div>size (370 x 313)</div>
                                                         <div class="img-not-exist">
                                                             <span id="uploadBtn" class="btn btn-success">Select image </span>
-                                                           
                                                         </div>
-                                                       
                                                         <div class="img-exist">
                                                             <span class="btn btn-danger remove-image">Remove </span>
                                                         </div>
-                                                       
                                                     </div>
                                                 </div>
                                             </div>
@@ -329,40 +307,47 @@
                                         <div class="card">
                                             <div class="card-header">Details</div>
                                             <div class="card-body">
-                                                <div class="card-body">
-                                                    <div class="form-row">
-                                                        <div class="form-group col-12">
-                                                            <label class="small mb-1" for="title">Title</label>
-                                                            <input class="form-control" id="title" name="title" type="text"
-                                                                placeholder="title" value="{{ $item->title }}" />
+                                                <!-- Tab nav start-->
+                                                <div class="card-header border-bottom" style="background-color:#fff;">
+                                                    <ul class="nav nav-tabs card-header-tabs" id="dashboardNav" role="tablist">
+                                                        @foreach (Session::get('bLangs') as $index => $lang)
+                                                            <li class="nav-item mr-1"><a
+                                                                    class="nav-link @if ($index == 0) active @endif"
+                                                                    id="multi_content_{{ $lang['lang'] }}-pill"
+                                                                    href="#multi_content_{{ $lang['lang'] }}" data-toggle="tab" role="tab"
+                                                                    aria-controls="multi_content_{{ $lang['lang'] }}"
+                                                                    aria-selected="@if ($index == 0) true @else false @endif">{{ $lang['title'] }}</a>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                                <div class="tab-content" id="dashboardNavContent">
+                                                    @foreach (Session::get('bLangs') as $index => $lang)
+                                                        <?php $title = 'title_' . $lang['lang']; ?>
+                                                        <?php $body = 'body_' . $lang['lang']; ?>
+                                                        <!-- Dashboard Tab Pane 1-->
+                                                        <div class="tab-pane fade @if ($index == 0) show active @endif"
+                                                            id="multi_content_{{ $lang['lang'] }}" role="tabpanel"
+                                                            aria-labelledby="multi_content_{{ $lang['lang'] }}-pill">
+                                                            <div class="container mt-4">
+                                                                <div class="form-row">
+                                                                    <div class="form-group col-12">
+                                                                        <label class="small mb-1" for="title">Title</label>
+                                                                        <input class="form-control" id="title" name="title_{{ $lang['lang'] }}"
+                                                                            type="text" placeholder="Title"
+                                                                            value="{{ $item->$title }}" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-row">
+                                                                        <div class="form-group col-12">
+                                                                            <label class="small mb-1" for="title">Text</label>
+                                                                            <textarea class="form-control wysihtml5 textarea" id="body" name="body_{{ $lang['lang'] }}"rows="12">{!!html_entity_decode($item->$body)!!}</textarea>
+                                                                        </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </div>
+                                                    @endforeach
                                                     <div class="form-row">
-                                                        <div class="form-group col-12">
-                                                            <label class="small mb-1" for="title">Price</label>
-                                                            <input class="form-control" id="price" name="price" type="number"
-                                                                placeholder="price" value="{{ $item->price }}" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-row">
-                                                        <div class="form-group col-12">
-                                                            <label class="small mb-1" for="title">Description</label>
-                                                            <textarea class="form-control textarea" name="description" rows="12">{{ $item->description }}</textarea>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-row">
-                                                        <div class="form-group col-12">
-                                                            <label class="small mb-1" for="title">Text</label>
-                                                            <textarea class="form-control wysihtml5 textarea" id="body" name="body" rows="12">{{ $item->body }}</textarea>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-row">
-                                                        <div class="form-group col-md-6" style="margin-top: 20px">
-                                                            Featured:
-                                                            <?php $checked = $item->featured == '1' ? 'checked' : ''; ?>
-                                                            <input class="admin_checkbox" value="1" style="width: 20px; height: 20px;"
-                                                                type="checkbox" name="featured" <?= $checked ?> />
-                                                        </div>
                                                         <div class="form-group col-md-6">
                                                             Status:
                                                             <select class="form-select form-control" name="published"
@@ -372,87 +357,19 @@
                                                                 <option @if ($item->published == 0) selected @endif value="0">Disabled
                                                                 </option>
                                                             </select>
+                                                            </span>
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            Price:
+                                                            <input class="form-control" type="number" value="{{ $item->price }}" name="price">
                                                         </div>
                                                     </div>
-                                                    <!-- Tab content end -->
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </form>
-                        </div>
-                        <div class="tab-pane fade" id="types" role="tabpanel" aria-labelledby="types-tab">
-                            <div class="row">
-                                <div class="col-xl-12">
-                                        @if ($mode == 'edit')                              
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <button class="btn btn-primary btn-sm" id="add_type" type="button">Add</button>
-                                                <button class="btn btn-danger btn-sm" id="remove_item_type" type="button">Remove</button>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="table-responsive">
-                                                    <table class="table table-bordered table-hover" id="dataTableTypes" width="100%" cellspacing="0">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Ordering</th>
-                                                                <th>ID</th>
-                                                                <th>Title</th>
-                                                                <th>Published</th>
-                                                                <th>Edit</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody></tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        @else
-                                        <div class="card">
-                                            <div class="card-body">
-                                                Please save service before add types
-                                            </div>
-                                        </div>
-                                        @endif
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="replacement" role="tabpanel" aria-labelledby="replacement-tab">
-                            <div class="row">
-                                <div class="col-xl-12">
-                                        @if ($mode == 'edit')                              
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <button class="btn btn-primary btn-sm" id="add_replacement" type="button">Add</button>
-                                                <button class="btn btn-danger btn-sm" id="remove_replacement" type="button">Remove</button>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="table-responsive">
-                                                    <table class="table table-bordered table-hover" id="dataTableReplacement" width="100%" cellspacing="0">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Ordering</th>
-                                                                <th>ID</th>
-                                                                <th>Title</th>
-                                                                <th>Published</th>
-                                                                <th>Edit</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody></tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        @else
-                                        <div class="card">
-                                            <div class="card-body">
-                                                Please save service before add replacement
-                                            </div>
-                                        </div>
-                                        @endif
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>

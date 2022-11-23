@@ -81,7 +81,7 @@ h6 {
   height: 70px;
   transition: all 0.5s;
   z-index: 997;
-  background: #000;
+  background: white;
 }
 
 #header .logo h1 {
@@ -145,7 +145,7 @@ h6 {
   justify-content: space-between;
   padding: 12px 0;
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.8);
+  color: #918f9a;
   white-space: nowrap;
   transition: 0.3s;
   position: relative;
@@ -182,7 +182,7 @@ h6 {
 .navbar .active,
 .navbar .active:focus,
 .navbar li:hover>a {
-  color: #fff;
+  color: 918f9a;
 }
 
 .navbar .dropdown ul {

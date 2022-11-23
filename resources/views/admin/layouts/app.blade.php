@@ -90,8 +90,8 @@
                                 <div class="nav-link-icon"><i data-feather="tool"></i></div>
                                 Home Page
                             </a>
-                            <a class="nav-link @if(isset($menu) && $menu == 'about') active @endif" href="{{ route('ausers') }}">
-                                <div class="nav-link-icon"><i data-feather="users"></i></div>
+                            <a class="nav-link @if(isset($menu) && $menu == 'about') active @endif" href="{{ route('aAbout') }}">
+                                <div class="nav-link-icon"><i data-feather="tool"></i></div>
                                 About us
                              </a>
                              <a class="nav-link @if(isset($menu) && $menu == 'team') active @endif" href="{{ route('ateam') }}">

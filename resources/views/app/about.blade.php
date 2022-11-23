@@ -36,14 +36,13 @@
 
     </div>
   </section>
+  @if (count($teams)>0)
    <section id="team" class="team">
     <div class="container">
-
       <div class="section-title" data-aos="fade-up">
         <h2>Team</h2>
         <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
       </div>
-
       <div class="row">
         @foreach ( $teams as $team )
         <div class="col-xl-4 col-lg-4 col-md-6" data-aos="fade-up">
@@ -63,5 +62,5 @@
       </div>
     </div>
   </section>
-
+  @endif
 @endsection

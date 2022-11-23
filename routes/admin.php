@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\TeamController;
+use App\Http\Controllers\Admin\AboutAdminController;
 use App\Http\Controllers\Admin\ContentController;
 use App\Http\Controllers\Admin\DictionaryController;
 use App\Http\Controllers\Admin\RequestsController;
@@ -51,6 +52,13 @@ Route::group(['middleware' => 'adminauth'], function () {
     Route::post('home-save',[HomeController::class, 'saveHome'])->name('adminHomeSave');
     Route::post('home-remove',[HomeController::class, 'removeHome'])->name('aRemoveHome');
     Route::post('home-ordering',[HomeController::class, 'reorderingHome'])->name('aHomeSort');
+
+    ///aboutus
+    Route::get('about',[AboutAdminController::class, 'homeAbout'])->name('aAbout');
+    Route::get('about-get',[AboutAdminController::class, 'aboutGet'])->name('aGetAbout');
+    Route::post('about-save',[AboutAdminController::class, 'aboutSave'])->name('aAboutSave');
+    Route::get('about-data',[AboutAdminController::class, 'aboutData'])->name('aAboutData');
+    Route::post('about-ordering',[AboutAdminController::class, 'reorderingAbout'])->name('aAboutSort');
 
 
     Route::post('save-profile',[AuthController::class, 'saveProfile'])->name('adminSaveProfile');

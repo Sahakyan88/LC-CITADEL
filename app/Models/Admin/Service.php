@@ -12,9 +12,11 @@ class Service extends Model
      *
      * @var string
      */
+
     protected $table = 'services';
 
-    
+	public $multilangualFiled = false;
+
     public $timestamps  = false;
     
     public function getAll($start,$length,$filter,$sort_field,$sort_dir){
@@ -23,7 +25,7 @@ class Service extends Model
 
 		$query->select(array(DB::raw('SQL_CALC_FOUND_ROWS services.id'), 
 										'services.id as DT_RowId', 
-										'services.title as title', 
+										'services.title_en as title', 
 										'services.price as price',  
 										'services.ordering as ordering',  
 										'services.published as published'));
@@ -32,7 +34,7 @@ class Service extends Model
 				$query->skip($start)->take($length);
 			}
 			if( isset($filter['search']) && strlen($filter['search']) > 0 ){
-				$query->where('services.title', 'LIKE', '%'. $filter['search'] .'%')->orWhere('services.price', 'LIKE', '%'. $filter['search'] .'%');
+				$query->where('services.title_en', 'LIKE', '%'. $filter['search'] .'%')->orWhere('services.price', 'LIKE', '%'. $filter['search'] .'%');
 			}
 			$query->orderBy($sort_field, $sort_dir);
 			$data = $query->get();

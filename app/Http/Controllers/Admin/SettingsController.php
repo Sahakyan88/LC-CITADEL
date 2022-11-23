@@ -21,19 +21,21 @@ class SettingsController extends Controller
         view()->share('menu', 'settings');
         return view('admin.settings',compact('data'));
     }
-    public function updateSettings(){
-        $data=request()->validate([
-            'email'=>'string',
-            'phone'=>'string',
-            'address'=>'string',
-            'fax'=>'string',
-            'facebook'=>'string',
-            'twitter'=>'string',
-        ]);
-        $data1=Settings::where('key','sait_settings')->first();//find(2);
-        $data1->update([
-            "value"=>$data
-        ]);
-        return json_encode(array('status' => 1));
+    public function updateSettings(Request $request){
+        $data =$request->all();
+            $toSave = array('facebook'=>$data['facebook'],
+                            'instagram'=> $data['instagram'],
+                            'address_en' => $data['address_en'],
+                            'address_ru' => $data['address_ru'],
+                            'address_am' => $data['address_am'],
+                            'phone' => $data['phone'],
+                            'enail' => $data['email']
+            );
+             
+            $toSave=Settings::where('key','sait_settings')->first();//find(2);
+            $toSave->update([
+                "value"=>$data
+            ]);
+            return json_encode(array('status' => 1));
     }
 }
