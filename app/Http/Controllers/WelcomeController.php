@@ -51,7 +51,7 @@ class WelcomeController extends Controller
     }
     public function about()
     {
-    $lang = App::getLocale();
+        $lang = App::getLocale();
        
     $teams = DB::table('teams')
     ->select(
@@ -61,16 +61,6 @@ class WelcomeController extends Controller
     )
     ->where('teams.published', 1)
     ->leftJoin('images', 'images.id', '=', 'teams.image_id')
-    ->orderBy('published', 'DESC')->get();
-     
-    $about = DB::table('about')
-    ->select(
-    'about.title_'.$lang.' as title','about.description_'.$lang.' as description',
-    'about.image_id',
-    'images.filename as image_file_name',
-    )
-    ->where('about.published', 1)
-    ->leftJoin('images', 'images.id', '=', 'about.image_id')
     ->orderBy('published', 'DESC')->get();
 
     view()->share('menu', 'about');
