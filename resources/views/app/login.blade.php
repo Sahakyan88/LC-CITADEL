@@ -18,7 +18,9 @@
                                         placeholder="Password">
                                 </div>
                             </div>
-                            <div class="text-center"><button type="submit">Signin</button></div>
+                            <div class="text-center"><button type="submit">Sign In</button></div>
+                            <br>
+                            <p>Don't have an account yet? <a href="{{url('/register-user')}}">Sign Up</a>  </p>
                         </form>
                     </div>
                 </div>

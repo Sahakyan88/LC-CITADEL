@@ -36,16 +36,12 @@ class AuthController extends Controller
     public function getLogin()
     {
         if(auth()->guard('admin')->check()){
-            return redirect()->route('dashboard');   
+            return redirect()->route('dashboard');
         }
         return view('admin.login');
     }
 
-    /**
-     * Show the application loginprocess.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function postLogin(Request $request)
     {
         $this->validate($request, [
@@ -56,9 +52,10 @@ class AuthController extends Controller
         if (auth()->guard('admin')->attempt(['username' => $request->input('username'), 'password' => $request->input('password')]))
         {
             $user = auth()->guard('admin')->user();
+            Auth::guard('admin')->login($user, $request->get('remember'));
             return redirect()->route('dashboard');
         } else {
-            return back()->with('error','your username and password are wrong.');
+            return back()->with('error','Username or password is incorrect.');
         }
     }
 
@@ -70,10 +67,10 @@ class AuthController extends Controller
     public function logout()
     {
         auth()->guard('admin')->logout();
-        \Session::flush();     
+        \Session::flush();
         return redirect(url('admin'));
     }
- 
+
 
     public function saveProfile(Request $request){
 
@@ -89,7 +86,7 @@ class AuthController extends Controller
             ]);
         }
         $validated = $validator->validated();
-      
+
         $data['name']       = $request['name'];
         $data['last_name']  = $request['last_name'];
         $data['email']      = $request['email'];
@@ -120,7 +117,7 @@ class AuthController extends Controller
         $data['current_password'] = $request['current_password'];
         $data['new_password'] = $request['new_password'];
         $data['new_password_re'] = $request['new_password_re'];
-        
+
         $validation = Validator::make($data, self::$passwordValidation);
         if ($validation->fails()) {
             return json_encode(array('status' => 0, 'message' => 'Validation error.'));

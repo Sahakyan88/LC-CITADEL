@@ -18,7 +18,7 @@ class HomeController extends Controller
         $page = (isset($_GET['page'])) ? $_GET['page'] : false;
         view()->share('page', $page);
         view()->share('menu', 'home');
-      
+
         return view('admin.home.index');
     }
 
@@ -69,13 +69,9 @@ class HomeController extends Controller
 
     public function saveHome(Request $request){
 
-       
-        // dd($request->all());
+
         $validator  = Validator::make($request->all(), [
-            'title_en'         => 'required',
             'image'         => 'required',
-            'description_en'   => 'required',
-       
         ]);
 
         if ($validator->fails()) {
@@ -108,11 +104,11 @@ class HomeController extends Controller
         $item = $translateHelper->make($item,$data);
 
         $item->published   = $data['published'];
-      
+
         $item->save();
         $id = $item->id;
         if (isset($publishedNotification)) {
-            return json_encode(array('status' => 1, 'message' => "Cant publish Without image", 'published' => 0));
+            return json_encode(array('status' => 1, 'message' => "Can't publish Without image", 'published' => 0));
         } else {
             return json_encode(array('status' => 1));
         }
