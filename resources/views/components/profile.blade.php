@@ -2,7 +2,7 @@
     @include('components.menu-profile')
     <div class="col-sm-8  contact">
             <div data-aos="fade-up">
-                <h5 class="service-detail__title">Personel Information</h5>
+                <h5 class="service-detail__title">Personal Information</h5>
                 <form id="login-form" method="post" role="form"
                     class="php-email-form auth-page-login auth-page">
                     @csrf

@@ -61,7 +61,7 @@ class AuthController extends Controller
         return $data;
     }
     public function orderGet(Request $request){
- 
+
         $id = (int)$request['id'];
         if($id){
             $item = Order::find($id);
@@ -82,7 +82,7 @@ class AuthController extends Controller
     public function signup(Request $request)
     {
         Auth::login($user = User::create([
-            
+
             'first_name'        => $request->first_name,
             'last_name'         => $request->last_name,
             'phone'             => $request->phone,
@@ -96,7 +96,7 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-       
+
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();
@@ -107,8 +107,8 @@ class AuthController extends Controller
     }
 
     public function signin(loginRequest $request){
-       
-        
+
+
         $request->authenticate();
         $request->session()->regenerate();
 
@@ -117,7 +117,7 @@ class AuthController extends Controller
 
     public function saveProfile(Request $request)
     {
-      
+
         $request->validate([
             'first_name'      => 'required|string|max:255',
             'last_name'       => 'required|string|max:255',
@@ -125,10 +125,10 @@ class AuthController extends Controller
             'phone'           => 'required|numeric',
             'address'         => 'required',
             'licanece_number' => 'required|numeric',
-            'email'           => ['required','string',Rule::unique('users')->ignore(Auth::guard('web')->user()->id),        
+            'email'           => ['required','string',Rule::unique('users')->ignore(Auth::guard('web')->user()->id),
             ],
         ]);
-        
+
         $data = array();
         $data['first_name']      = $request['first_name'];
         $data['last_name']       = $request['last_name'];
@@ -163,7 +163,7 @@ class AuthController extends Controller
             $obj_user = User::find($user_id);
             $obj_user->password = Hash::make($request_data['confirm_password']);
             $obj_user->save();
-            return redirect()->back()->withSuccess('Password cahnge successfully!');
+            return redirect()->back()->withSuccess('Password was changed successfully!');
         } else {
             return redirect()->back()->with('error', 'Old Password invalid');
         }
@@ -270,6 +270,6 @@ class AuthController extends Controller
             return response()->json(['status' => 0, 'errors' => trans('app.error_password_saved')], 400);
         }
     }
-        
+
 
 }
