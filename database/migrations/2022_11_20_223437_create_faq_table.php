@@ -22,7 +22,6 @@ return new class extends Migration
             $table->longtext('answer_en');
             $table->longtext('answer_ru');
             $table->longtext('answer_am');
-
             $table->integer('ordering');
             $table->timestamps();
         });

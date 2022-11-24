@@ -43,6 +43,21 @@ class HomepageSeeder extends Seeder
             'published' => '0',
            
         ]);
+        DB::table('dictionary')->insert([
+            'faq_am' => '',
+            'faq_ru' => '',
+            'faq_en' => 'English',
+            'service_am' => '',
+            'service_ru' => '',
+            'service_en' => 'English',
+            'team_am' => '',
+            'team_ru' => '',
+            'team_en' => 'English',
+            'contact_am' => '',
+            'contact_ru' => '',
+            'contact_en' => 'English',
+           
+        ]);
        
     }
 }

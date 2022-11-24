@@ -43,47 +43,43 @@ class DictionaryController extends Controller
     {
 
         $model = new Dictionary();
-
         $filter = array('search' => $request->input('search'),
-                        'type'=> $request->input('filter_type'));
+            'status' => $request->input('filter_status'),
+            'featured'=> $request->input('featured',false));
 
-        $inNews = $model->getAll(
-            $this->request->input('start'),
-            $this->request->input('length'),
+        $items = $model->getAll(
+            $request->input('start'),
+            $request->input('length'),
             $filter,
-            $this->request->input('sort_field'),
-            $this->request->input('sort_dir'));
+            $request->input('sort_field'),
+            $request->input('sort_dir'),
+        );
 
-        $data = json_encode(
-            array('data' => $inNews['data'],
-            'recordsFiltered' => $inNews['count'],
-            'recordsTotal'=> $inNews['count']));
+        $data = json_encode(array('data' => $items['data'], 'recordsFiltered' => $items['count'], 'recordsTotal'=> $items['count']));
         return $data;
-        //return $request;
-
     }
 
-    public function get()
+    public function get(Request $request)
     {
 
-        $key = $this->request->input('key');
-
-        if ($key) {
-            $word = Dictionary::where('key', $key)->first();
+        $id = (int)$request['id'];
+        if($id){
+            $item = Dictionary::find($id);
             $mode = 'edit';
+        }else{
+            $item = new Dictionary();
+            $item->created_at = date("Y-m-d H:i:s");
+            $mode= "add";
         }
-
-        if (!$word) {
-            return json_encode(array('status' => 0, 'errors' => "Can't find word"));
-        }
-
-        $data = json_encode(array(
-                'data' => (String)view('admin.dictionary.item', array(
-                    'item' => $word,
-                    'mode' => $mode
+        $data = json_encode(
+            array('data' =>
+                (String) view('admin.dictionary.item', array(
+                    'item'=>$item,
+                    'mode' => $mode,
                 )),
-                'status' => 1
-            ));
+                'status' => 1)
+        );
+
         return $data;
     }
 

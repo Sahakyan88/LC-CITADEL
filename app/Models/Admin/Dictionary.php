@@ -17,41 +17,29 @@ class Dictionary extends Model
     public $timestamps  = false;
     
     
-    public function getAll($start,$length,$filter,$sort_field,$sort_dir){
-    	$query = DB::table('dictionary');
+	public function getAll($start,$length,$filter,$sort_field,$sort_dir){
 
-		$query->select(array(DB::raw('SQL_CALC_FOUND_ROWS dictionary.key'),
-		                             'dictionary.key as DT_RowId',
-									 'dictionary.en as title'));
-		if($length != '-1'){
-			$query->skip($start)->take($length);
-		}
+        $query = DB::table('dictionary');
 
-		if ($filter){
-			if ( strlen($filter['search']) ) {
-    			$query->where('key', 'LIKE', '%'. $filter['search'] .'%')
-    			->orWhere('en', 'LIKE', '%'. $filter['search'] .'%');
-    			// ->orWhere('ru', 'LIKE', '%'. $filter['search'] .'%')
-    			// ->orWhere('am', 'LIKE', '%'. $filter['search'] .'%');
-    		}
-		}
-		if(isset($filter['type']) && $filter['type'] != -1 ){
-			$query->where('dictionary.type',$filter['type']);    
-		}
+        $query->select(array(DB::raw('SQL_CALC_FOUND_ROWS dictionary.id'),
+            'dictionary.id as DT_RowId',
+            'dictionary.faq_en as title',
+            'dictionary.published as published'));
 
-		$query->orderBy($sort_field, $sort_dir);
-		$data = $query->get();
-
-		foreach ($data as $d) {
-			$d->DT_RowId = "row_".$d->DT_RowId;
-		}
-
-		$count  = DB::select( DB::raw("SELECT FOUND_ROWS() AS recordsTotal;"))[0];
-
-
-		$return['data'] = $data;
-		$return['count'] = $count->recordsTotal;
-    	return $return;
+        if($length != '-1'){
+            $query->skip($start)->take($length);
+        }
+        if( isset($filter['search']) && strlen($filter['search']) > 0 ){
+            $query->where('dictionary.title', 'LIKE', '%'. $filter['search'] .'%')->orWhere('dictionary.id', 'LIKE', '%'. $filter['search'] .'%');
+        }
+        $query->orderBy($sort_field, $sort_dir);
+        $data = $query->get();
+        $count  = DB::select( DB::raw("SELECT FOUND_ROWS() AS recordsTotal;"))[0];
+        $return['data'] = $data;
+        $return['count'] = $count->recordsTotal;
+        return $return;
     }
+    
 }
+
 
