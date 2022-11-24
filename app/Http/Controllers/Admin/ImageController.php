@@ -1,15 +1,11 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
-// use App\Helpers\Helper;
 use Illuminate\Routing\Redirector;
-// use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\ImageDB;
 use Response;
-// use Illuminate\Support\Facades\Input;
 use Validator;
 
 class ImageController extends Controller
@@ -66,12 +62,6 @@ class ImageController extends Controller
         }
     }
 
-    // public function removeImage(){
-    //     $image_id = (int)$this->request->input('imageId');
-    //     $model = new ImageDB();
-    //     $model->remove($image_id);
-    // }
-    
     public function remove(){
         $image_id = (int)$this->request->input('imageId');
         $avatar = (int)$this->request->input('avatar');

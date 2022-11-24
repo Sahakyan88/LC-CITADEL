@@ -15,7 +15,7 @@ class Service extends Model
 
     protected $table = 'services';
 
-	public $multilangualFiled = false;
+    public $multilangualFiled = ['body'];
 
     public $timestamps  = false;
     

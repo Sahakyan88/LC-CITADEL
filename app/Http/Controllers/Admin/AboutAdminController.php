@@ -66,16 +66,20 @@ class AboutAdminController extends Controller
 
     public function aboutSave(Request $request){
 
-        // $validator  = Validator::make($request->all(), [
-        //     'title_am'  => 'required',
-        //     'image'     => 'required',
-        //     'body_am'   => 'required',
+        $validator  = Validator::make($request->all(), [
+            'title_en'  => 'required',
+            'image'     => 'required',
+            'body_en'   => 'required',
        
-        // ]);
-
-
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'status'  => 0,
+                'message' => $validator->getMessageBag()->first()
+            ]);
+        }
+        $validated = $validator->validated();
         $data = $request->all();
-
         $id = $request->input('id');
         if (!$id) {
             $item = new About();

@@ -74,7 +74,7 @@
                                     <div class="form-row">
                                             <div class="form-group col-12">
                                                 <label class="small mb-1" for="title">Text</label>
-                                                <textarea class="form-control wysihtml5 textarea" id="body" name="body_{{ $lang['lang'] }}"rows="12">{!!html_entity_decode($item->$body)!!}<</textarea>
+                                                <textarea class="form-control wysihtml5 textarea"  name="body_{{ $lang['lang'] }}"rows="12">{!!html_entity_decode($item->$body)!!}</textarea>
                                             </div>
                                     </div>
                                 </div>

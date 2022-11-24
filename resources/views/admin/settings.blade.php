@@ -65,7 +65,7 @@
                                     <div class="form-group col-md-6">
                                         <label class="small mb-1" for="inputInstagram">Instagram</label>
                                         <input class="form-control" id="inputInstagram" type="text" name="instagram"
-                                            placeholder="Twitter" value="{{ $data->instagram }}" />
+                                            placeholder="Instagram" value="{{ $data->instagram }}" />
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label class="small mb-1" for="inputFacebook">Facebook</label>

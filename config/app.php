@@ -80,7 +80,7 @@ return [
     |
     */
 
-    'locale' => 'am',
+    'locale' => 'en',
     'active_langs' =>  ['am' => "Հայերեն",'en' => 'English','ru' => 'Русский' ],
 
 

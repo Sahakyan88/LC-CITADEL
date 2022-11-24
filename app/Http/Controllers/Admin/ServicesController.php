@@ -67,20 +67,20 @@ class ServicesController extends Controller
     
     public function saveServices(Request $request){
     
-        // $validator  = Validator::make($request->all(), [
-        //     'title_am'      => 'required',
-        //     'image'         => 'required',
-        //     'price'         => 'required',
-        //     'body_am'       => 'required'
-        // ]);
+        $validator  = Validator::make($request->all(), [
+            'title_en'      => 'required',
+            'image'         => 'required',
+            'price'         => 'required',
+            'body_en'       => 'required'
+        ]);
       
-        // if ($validator->fails()) {
-        //     return response()->json([
-        //         'status'  => 0,
-        //         'message' => $validator->getMessageBag()->first()
-        //     ]);
-        // }
-        // $validated = $validator->validated();
+        if ($validator->fails()) {
+            return response()->json([
+                'status'  => 0,
+                'message' => $validator->getMessageBag()->first()
+            ]);
+        }
+        $validated = $validator->validated();
         
         $data = $request->all();
         $id = $request->input('id');

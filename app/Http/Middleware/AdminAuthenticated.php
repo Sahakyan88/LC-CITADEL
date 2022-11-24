@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 use Session;
+use App;
 
 class AdminAuthenticated
 {
@@ -24,7 +25,8 @@ class AdminAuthenticated
                 return redirect(route('adminLogin'));
             }
         }
-        
+          App::setLocale('en');
+       
         if(!Session::get('bLangs')){
 			$bLangs = array();
             $bLangs[] = array('lang'=>'en','title'=>'English');

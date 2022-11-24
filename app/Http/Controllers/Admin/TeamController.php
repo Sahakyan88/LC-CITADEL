@@ -67,12 +67,10 @@ class TeamController extends Controller
 
     public function ateamSave(Request $request){
 
-       
-        // dd($request->all());
-        $validator  = Validator::make($request->all(), [
-            'title_en'         => 'required',
+        $validator  = \Validator::make($request->all(), [
+            'title_en'      => 'required',
             'image'         => 'required',
-            'description_en'   => 'required',
+            'description_en'=> 'required',
        
         ]);
 

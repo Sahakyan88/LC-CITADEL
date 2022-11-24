@@ -41,39 +41,13 @@ class UserController extends Controller
         return $data;
     }
     public function userGet(Request $request){
-      
+    
         $id = (int)$request['id'];
         $page = (isset($request['page']) && $request['page'] == 'verification' ) ? true : false;
         $item = $id ? Users::find($id) : new Users();   
-       
         if($id){
-
             $item = Users::find($id);
-
-            // if($item->avatar && $item->avatar != null){
-            //     $item->avatar = asset('images/backendSmall/'.$item->avatar);
-            // }
             $mode = "edit";
-
-            // $services =  DB::table('services')->select('services.id','categories.title_en as category_title','services.price')
-            //             ->leftJoin('categories', 'categories.id', '=', 'services.category_id')
-            //             ->where('user_id', $id)->get();
-            
-            // $verification =  DB::table('verification')->select('*')->where('user_id', $id)->first();
-            // if($services){
-            //     foreach($services as $service){
-            //         $imagesArray = [];
-            //         $images =  DB::table('images')->select('id','filename')->where('parent_id', $service->id)->get();
-            //         if($images){
-            //             foreach($images as $image){
-            //                 $imagesArray[] = array('id'=>$image->id,'thumb_url'=>asset('images/backendSmall/'.$image->filename),'image_url'=>asset('images/original/'.$image->filename));
-            //             }
-            //             $service->images = $imagesArray;
-            //         }
-            //     }
-                
-            // }
-            // $item->services = $services;
         }else{
             return json_encode(array('status' => 0, 'message' => 'User is required.'));
             
@@ -110,11 +84,10 @@ class UserController extends Controller
         }else{
             $item = Users::find($id);
         }
-       
+
         $item->first_name = $request['first_name'];
         $item->last_name  = $request['last_name'];
         $item->email      = $request['email'];
-       
        
         $item->save();
         return json_encode(array('status' => 1));
@@ -138,7 +111,6 @@ class UserController extends Controller
             return json_encode(array('status' => 0, 'message' => 'User not submit'));
         }
         
-        
         $data = array();
         $data['status'] = $request['status'];
         $data['message'] = $request['message'];
@@ -158,71 +130,4 @@ class UserController extends Controller
         }
         return json_encode(array('status' => 1));
     }
-    // public function getServices(){
-      
-    //     $model = new Service();
-    //     $user_id = (int)$this->request->input('user_id'); 
-
-    //     $items = $model->getServices(
-    //         $this->request->input('start'),
-    //         $this->request->input('length'),
-    //         $user_id,
-    //         $this->request->input('sort_field'),
-    //         $this->request->input('sort_dir')
-    //     );
-
-    //     $data = json_encode(array('data' => $items['data'], 'recordsFiltered' => $items['count']));
-     
-    //     return $data;
-    // }
-
-    // public function getService(Request $request){
-      
-    //     $id = (int)$request->input('id');
-
-    //     if($id){
-    //         $item = Service::find($id);
-    //         $mode = 'edit';
-    //     }else{
-    //         $owner_id = (int)$request->input('owner_id');
-    //         if(!$owner_id)return json_encode(array('status' => 0, 'message' => "Bad request"));
-    
-    //         $item = new Service();
-    //         $item->id = 0;
-    //         $item->owner_id = $owner_id;
-    //         $mode = 'add';
-    //     }
-
-    //     $data = json_encode(
-    //                     array('data' => 
-    //                         (String) view('admin.users.ItemServices', array(
-    //                             'item'=>$item,
-    //                             'mode' => $mode
-    //                         )),
-    //                         'status' => 1)
-    //                     );
-    //     return $data;  
-    // }
-
-
-    // public function saveServices(Request $request){        
-
-    //     $data = $request->all();
-    //     $servicesId = (int)$request->input('servicesId');
-    //     if(!$servicesId){
-    //         $item = new Service();
-    //     }else{
-    //         $item = Service::find($servicesId);
-    //         if(!$item) return json_encode(array('status' => 0, 'message' => "Can't save"));
-    //     }
-      
-    //     $item->category_id  = $data['category_id'];
-    //     $item->price        = $data['price'];
-    //     $item->user_id      = $data['user_id'];
-    //     $item->description  = $data['description'];
-    //     $item->save();
-    //     $id = $item->id;
-    //     return json_encode(array('status' => 1));
-    // }
-
 }
