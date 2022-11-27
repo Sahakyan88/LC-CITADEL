@@ -18,9 +18,7 @@
         </header>
         <div class="container mt-n10">
             <div class="card">
-                <div class="card-header">
-                  
-                </div>
+                
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">

@@ -376,11 +376,20 @@
 				},
 				email: {
 					required: true,
-					email: true
+					email: true,
+
+
 				},
 				password: {
-					required: true
+					required: true,
+					minlength:6
 				}
+			},
+			messages: {
+				
+				password: {
+					minlength: "Minlenght be 6 characters",
+				},
 			}
 		});
 	}

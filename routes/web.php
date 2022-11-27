@@ -37,17 +37,15 @@ function lastIntInString($slug){
     return substr($slug , $pos+1);
 }
 
-
-
-
-Route::group(['prefix' => $local], function() {
-//pages
+Route::get('/login', [WelcomeController::class, 'login'])->name('login-user');
+Route::get('/register', [WelcomeController::class, 'register'])->name('register-user');
 Route::post('/signup', [AuthController::class, 'signup'])->name('signup');
 Route::post('/signin', [AuthController::class, 'signin'])->name('signin');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
+
+Route::group(['prefix' => $local], function() {
+//pages
 Route::post('/contact-request', [WelcomeController::class, 'send'])->name('send');
-Route::get('/login-user', [WelcomeController::class, 'login'])->name('login-user');
-Route::get('/register-user', [WelcomeController::class, 'register'])->name('register-user');
 Route::get('/', [WelcomeController::class, 'homepage'])->name('homepage');
 Route::get('/contact', [WelcomeController::class, 'contact'])->name('contact');
 Route::get('/services', [WelcomeController::class, 'service'])->name('service');

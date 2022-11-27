@@ -40,7 +40,7 @@
                                     <button type="submit">Sign Up</button>
                                 </div>
                                 <br>
-                                <p>Already a member? <a href="{{url('/login-user')}}">Sign In</a></p>
+                                <p>Already a member? <a href="{{route('login-user')}}">Sign In</a></p>
                             </form>
                         </div>
                     </div>

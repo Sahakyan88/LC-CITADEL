@@ -16,8 +16,6 @@
             <div class="card">
                 <div class="card-header">Image</div>
                 <div class="card-body text-center">
-                    <!-- Profile picture image-->
-                    {{-- {{ dd($item) }} --}}
                     <div class="image-upload-container" id="cover">
                         <div class="image-part">
                             <img class="thumbnail"

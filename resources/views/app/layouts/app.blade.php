@@ -22,9 +22,13 @@
     <link href="{{ asset('assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+
 </head>
 
 <body>
+    <?php
+    $lang = App::getLocale();
+    ?>
     <header id="header" class="fixed-top d-flex align-items-center">
         <div class="container d-flex justify-content-between">
 
@@ -37,23 +41,23 @@
                     <li><a class="nav-link scrollto {{ request()->is('/') ? 'active' : '' }}"
                             href="{{ route('homepage') }}">{{ config()->get('lang.' . App::getLocale() . '.home') }}</a>
                     </li>
-                    <li><a class="nav-link scrollto {{ request()->is('about') ? 'active' : '' }}"
+                    <li><a class="nav-link scrollto {{ request()->is('about') ? 'active' : '' }}{{ request()->is($lang.'/about') ? 'active' : '' }}"
                             href="{{ route('about') }}">{{ config()->get('lang.' . App::getLocale() . '.about_us') }}</a>
                     </li>
-                    <li><a class="nav-link scrollto {{ request()->is('services') ? 'active' : '' }}"
+                    <li><a class="nav-link scrollto {{ request()->is('services') ? 'active' : '' }} {{ request()->is($lang.'/services') ? 'active' : '' }}"
                             href="{{ route('service') }}">{{ config()->get('lang.' . App::getLocale() . '.services') }}
                         </a>
                     </li>
                     </li>
-                    <li><a class="nav-link scrollto {{ request()->is('contact') ? 'active' : '' }}"
+                    <li><a class="nav-link scrollto {{ request()->is('contact') ? 'active' : '' }}{{ request()->is($lang.'/contact') ? 'active' : '' }}"
                             href="{{ route('contact') }}">{{ config()->get('lang.' . App::getLocale() . '.contact_us') }}</a>
                     </li>
                     @if (Auth::user())
-                        <li><a class="nav-link scrollto {{ request()->is('auth') ? 'active' : '' }}"
+                        <li><a class="nav-link scrollto {{ request()->is('auth') ? 'active' : '' }} {{ request()->is($lang.'/auth') ? 'active' : '' }}"
                                 href="{{ route('personalinfo') }}">{{ config()->get('lang.' . App::getLocale() . '.profile') }}</a>
                         </li>
                     @else
-                        <li><a class="nav-link scrollto {{ request()->is('register-user') ? 'active' : '' }}"
+                        <li><a class="nav-link scrollto {{ request()->is('register-user') ? 'active' : '' }} {{ request()->is($lang.'/register-user') ? 'active' : '' }}"
                                 href="{{ route('login-user') }}">{{ config()->get('lang.' . App::getLocale() . '.sign_in') }}</a>
                         </li>
                     @endif
@@ -76,10 +80,8 @@
                                         if (app::getLocale() == 'am') {
                                             if (strlen($segment1) > 1) {
                                                 $link = str_replace(Request::root() . '/' . $segment1, Request::root() . '/' . $l . '/' . $segment1, URL::current());
-                                            // dd($link);
                                             } else {
                                                 $link = str_replace(Request::root(), Request::root() . '/' . $l, URL::current());
-                                                // dd($link);
                                             }
                                         } else {
                                             $link = str_replace(Request::root() . '/' . $segment1, Request::root() . '/' . $l, URL::current());

@@ -81,6 +81,9 @@ class AuthController extends Controller
 
     public function signup(Request $request)
     {
+        $request->validate([
+            'email'           => ['unique:users,email,$this->id,id'],
+        ]);
         Auth::login($user = User::create([
 
             'first_name'        => $request->first_name,
@@ -106,8 +109,7 @@ class AuthController extends Controller
         return redirect()->route('homepage');
     }
 
-    public function signin(LoginRequest $request){
-
+    public function signin(Request $request){
 
         $request->authenticate();
         $request->session()->regenerate();

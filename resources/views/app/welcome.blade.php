@@ -19,7 +19,7 @@
                 <div class="section-title" data-aos="fade-up">
                     <h2>F.A.Q</h2>
                     @if (count($dictionary) > 0)
-                    <p>{{  $dictionary[0]->faq }}</p>
+                    <p>{{$dictionary[0]->faq }}</p>
                     @endif
                 </div>
                 <div class="faq-list">
