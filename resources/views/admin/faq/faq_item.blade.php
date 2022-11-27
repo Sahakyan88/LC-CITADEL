@@ -69,12 +69,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-
-
-                       
-                       
                         <!-- Tab content end -->
                     </div>
                 </div>

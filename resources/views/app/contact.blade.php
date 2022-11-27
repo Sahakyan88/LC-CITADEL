@@ -1,12 +1,12 @@
 @extends('app.layouts.app')
 @section('content')
-    <section id="contact" class="contact">
+    <section id="contact" class="contact services section-bg">
         <div class="container">
             <div class="section-title" data-aos="fade-up">
                 <h2>Contact</h2>
-                <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint
-                    consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat
-                    sit in iste officiis commodi quidem hic quas.</p>
+                @if (count($dictionary) > 0)
+                    <p>{{ $dictionary[0]->contact }}</p>
+                @endif
             </div>
             <div class="row no-gutters justify-content-center" data-aos="fade-up">
                 <div class="col-lg-5 d-flex align-items-stretch">
@@ -14,27 +14,33 @@
                         <div class="address">
                             <i class="bi bi-geo-alt"></i>
                             <h4>Location:</h4>
-                            <p> @if (isset($site_settings->address_am) && App::getLocale() == 'am')
-                                {{ $site_settings->address_am }}
-                            @elseif(isset($site_settings->address_ru) && App::getLocale() == 'ru')
-                                {{ $site_settings->address_ru }}
-                            @else
-                                {{ $site_settings->address_en }}
-                            @endif</p>
+                            <p>
+                                @if (isset($site_settings->address_am) && App::getLocale() == 'am')
+                                    {{ $site_settings->address_am }}
+                                @elseif(isset($site_settings->address_ru) && App::getLocale() == 'ru')
+                                    {{ $site_settings->address_ru }}
+                                @else
+                                    {{ $site_settings->address_en }}
+                                @endif
+                            </p>
                         </div>
                         <div class="email mt-4">
                             <i class="bi bi-envelope"></i>
                             <h4>Email:</h4>
-                            <p> @if (isset($site_settings->email))
-                                {{ $site_settings->email }}
-                            @endif</p>
+                            <p>
+                                @if (isset($site_settings->email))
+                                    {{ $site_settings->email }}
+                                @endif
+                            </p>
                         </div>
                         <div class="phone mt-4">
                             <i class="bi bi-phone"></i>
                             <h4>Call:</h4>
-                            <p>@if (isset($site_settings->phone))
-                                {{ $site_settings->phone }}
-                            @endif</p>
+                            <p>
+                                @if (isset($site_settings->phone))
+                                    {{ $site_settings->phone }}
+                                @endif
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -46,24 +52,23 @@
             </div>
             <div class="row mt-5 justify-content-center" data-aos="fade-up">
                 <div class="col-lg-10">
-                    <form id="send-form"  method="post" class="php-email-form contact-page">
+                    <form id="send-form" method="post" class="php-email-form contact-page">
                         @csrf
                         <div class="row">
                             <div class="col-md-6 form-group">
                                 <input type="text" name="name" class="form-control" id="name"
-                                    placeholder="Your Name" >
+                                    placeholder="Your Name">
                             </div>
                             <div class="col-md-6 form-group mt-3 mt-md-0">
                                 <input type="email" class="form-control" name="email" id="email"
-                                    placeholder="Your Email" >
+                                    placeholder="Your Email">
                             </div>
                         </div>
                         <div class="form-group mt-3">
-                            <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject"
-                                >
+                            <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject">
                         </div>
                         <div class="form-group mt-3">
-                            <textarea class="form-control" name="message" rows="5" placeholder="Message" ></textarea>
+                            <textarea class="form-control" name="message" rows="5" placeholder="Message"></textarea>
                         </div>
                         <div class="text-center"><button type="submit">Send Message</button></div>
                     </form>
@@ -72,46 +77,46 @@
         </div>
     </section>
     @push('script')
-    <script src="{{ asset('assets/js/main.js') }}"></script>
-    <script src="{{ asset('assets/vendor/jquery/jquery-v3.6.0.js') }}"></script>
-    <script src="{{ asset('assets/vendor/validate/js/validate.js') }}"></script>
-    <script src="{{ asset('assets/js/script.js') }}"></script>
-    <script>
-        $('.contact-page').submit(function(event) {
-            event.preventDefault();
-            var formData = new FormData(this);
-            $('.owner-form .error').remove();
-            $.ajax({
-                type: 'POST',
-                url: "{{ route('send') }}",
-                data: formData,
-                cache: false,
-                contentType: false,
-                processData: false,
-                dataType: 'json',
-                success: function(response) {
-                    if (response.status == 1) {
-                        location.reload();
+        <script src="{{ asset('assets/js/main.js') }}"></script>
+        <script src="{{ asset('assets/vendor/jquery/jquery-v3.6.0.js') }}"></script>
+        <script src="{{ asset('assets/vendor/validate/js/validate.js') }}"></script>
+        <script src="{{ asset('assets/js/script.js') }}"></script>
+        <script>
+            $('.contact-page').submit(function(event) {
+                event.preventDefault();
+                var formData = new FormData(this);
+                $('.owner-form .error').remove();
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ route('send') }}",
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.status == 1) {
+                            location.reload();
+                        }
+                    },
+                    error: function(response) {
+                        if (response.responseJSON.errors) {
+                            errors = response.responseJSON.errors
+                            $.each(errors, function(key, value) {
+                                if ($("#" + key).length > 0) {
+                                    $("#" + key).after('<label class="error">' + value +
+                                        '</label>');
+                                }
+                            });
+                            $('html, body').animate({
+                                scrollTop: $("html").offset().top
+                            }, 500);
+                        }
+                        return;
                     }
-                },
-                error: function(response) {
-                    if (response.responseJSON.errors) {
-                        errors = response.responseJSON.errors
-                        $.each(errors, function(key, value) {
-                            if ($("#" + key).length > 0) {
-                                $("#" + key).after('<label class="error">' + value +
-                                    '</label>');
-                            }
-                        });
-                        $('html, body').animate({
-                            scrollTop: $("html").offset().top
-                        }, 500);
-                    }
-                    return;
-                }
-            });
+                });
 
-        });
-    </script>
+            });
+        </script>
     @endpush
 @endsection

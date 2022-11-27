@@ -1,7 +1,7 @@
 @extends('app.layouts.app')
 @section('content')
     @if (!Auth::user())
-        <section id="contact" class="contact">
+        <section id="contact" class="contact services section-bg">
             <div class="container col-sm-6 ">
                 <div class="row">
                     <div class="form-group ">
@@ -53,6 +53,7 @@
                 @include('components.profile')
 
             </div>
+        </div>
         </section>
     @endif
     @push('script')

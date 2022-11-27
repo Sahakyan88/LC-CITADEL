@@ -106,7 +106,7 @@ class AuthController extends Controller
         return redirect()->route('homepage');
     }
 
-    public function signin(loginRequest $request){
+    public function signin(LoginRequest $request){
 
 
         $request->authenticate();

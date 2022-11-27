@@ -9,7 +9,7 @@
                         <div class="col-auto mt-4">
                             <h1 class="page-header-title">
                                 <div class="page-header-icon"><i data-feather="folder"></i></div>
-                                F.A.Q.
+                               Dictionary
                             </h1>
                         </div>
                     </div>
@@ -18,15 +18,14 @@
         </header>
         <div class="container mt-n10">
             <div class="card">
-                <div class="card-header">
-                    <button class="btn btn-primary btn-sm" id="add_item" type="button">Add</button>
-                    <button class="btn btn-danger btn-sm" id="remove_item" type="button">Remove</button>
-                </div>
+               
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                             <tr>
+                                <th>Ordering</th>
+                                <!-- <th>ID</th> -->
                                 <th>Title</th>
                                 <th>Status</th>
                                 <th>Edit</th>
@@ -99,7 +98,7 @@
                     },
                     "columns": [
                         { "data": "title", "name":'title', "orderable": true },
-                        // { "data": "answer", "name":'answer', "orderable": true },
+                        { "data": "title", "name":'title', "orderable": true },
                         { "data": "published", "name":'published', "orderable": true , "sClass": "content-middel",
                             render: function ( data, type, row, meta) {
                                 switch(row.published){
@@ -127,9 +126,8 @@
                             "targets": [ 0 ],
                             "visible": false,
                         },
-                        {"width": "5%", "targets": 1},
-                        {"width": "10%", "targets": 2},
-                        {"width": "5%", "targets": 3},
+                        {"width": "50%", "targets": 1},
+                        {"width": "25%", "targets": 2},
                       
                     ],
                     "lengthMenu": [
@@ -168,15 +166,15 @@
 
                 $('#dataTable').on('click', '.item_edit', function (e) {
                     editId = $(this).attr('edit_item_id');
-                    itemPopup.setTitle('Edit F.A.Q');
-                    itemPopup.load("{{route('aGetFaq')}}?id="+editId, function () {
+                    itemPopup.setTitle('Edit Dictionary');
+                    itemPopup.load("{{route('aGetDictionary')}}?id="+editId, function () {
                         this.open();
                     });
                 });
 
                 $('#add_item').on('click', function (e) {
                     Loading.add($('#add_item'));
-                    itemPopup.setTitle('Add F.A.q');
+                    itemPopup.setTitle('Add Dictionary');
                     itemPopup.load("{{route('aGetFaq')}}", function () {
                         this.open();
                     });

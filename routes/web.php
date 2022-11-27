@@ -36,23 +36,22 @@ function lastIntInString($slug){
     }
     return substr($slug , $pos+1);
 }
-Route::get('/login-user', [WelcomeController::class, 'login'])->name('login-user');
-Route::get('/register-user', [WelcomeController::class, 'register'])->name('register-user');
 
+
+
+
+Route::group(['prefix' => $local], function() {
+//pages
 Route::post('/signup', [AuthController::class, 'signup'])->name('signup');
 Route::post('/signin', [AuthController::class, 'signin'])->name('signin');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 Route::post('/contact-request', [WelcomeController::class, 'send'])->name('send');
-
-Route::group(['prefix' => $local], function() {
-//pages
+Route::get('/login-user', [WelcomeController::class, 'login'])->name('login-user');
+Route::get('/register-user', [WelcomeController::class, 'register'])->name('register-user');
 Route::get('/', [WelcomeController::class, 'homepage'])->name('homepage');
 Route::get('/contact', [WelcomeController::class, 'contact'])->name('contact');
 Route::get('/services', [WelcomeController::class, 'service'])->name('service');
 Route::get('/about', [WelcomeController::class, 'about'])->name('about');
-
-
-});
 ///profile
 Route::get('/orders-profile', [AuthController::class, 'ordersPprofile'])->name('ordersprofile')->middleware('auth');
 Route::get('/personal-info', [AuthController::class, 'personaIinfo'])->name('personalinfo')->middleware('auth');
@@ -60,10 +59,6 @@ Route::get('/profile-password', [AuthController::class, 'profilePassword'])->nam
 Route::post('/change-password', [AuthController::class, 'changePassword'])->name('changepassword')->middleware('auth');
 Route::get('order-data-profile',[AuthController::class, 'orderData'])->name('orderDataProfile');
 Route::get('order-data-edit',[AuthController::class, 'orderGet'])->name('profileGetOrder');
-// Route::get('/clear', function() {
-//     Artisan::call('cache:clear');
-//     Artisan::call('route:clear');
-//     Artisan::call('config:clear');
-//     Artisan::call('view:clear');
-//     return "Cache is cleared";
-// });
+
+});
+

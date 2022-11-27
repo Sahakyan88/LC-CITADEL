@@ -50,11 +50,11 @@
                     </li>
                     @if (Auth::user())
                         <li><a class="nav-link scrollto {{ request()->is('auth') ? 'active' : '' }}"
-                                href="{{ url('/personal-info') }}">{{ config()->get('lang.' . App::getLocale() . '.profile') }}</a>
+                                href="{{ route('personalinfo') }}">{{ config()->get('lang.' . App::getLocale() . '.profile') }}</a>
                         </li>
                     @else
                         <li><a class="nav-link scrollto {{ request()->is('register-user') ? 'active' : '' }}"
-                                href="{{ url('/login-user') }}">{{ config()->get('lang.' . App::getLocale() . '.sign_in') }}</a>
+                                href="{{ route('login-user') }}">{{ config()->get('lang.' . App::getLocale() . '.sign_in') }}</a>
                         </li>
                     @endif
                     <li>
@@ -74,13 +74,15 @@
                                     @if ($l != App::getLocale())
                                         <?php $segment1 = Request::segment(1);
                                         if (app::getLocale() == 'am') {
-                                            if (strlen($segment1) > 0) {
+                                            if (strlen($segment1) > 1) {
                                                 $link = str_replace(Request::root() . '/' . $segment1, Request::root() . '/' . $l . '/' . $segment1, URL::current());
+                                            // dd($link);
                                             } else {
                                                 $link = str_replace(Request::root(), Request::root() . '/' . $l, URL::current());
+                                                // dd($link);
                                             }
                                         } else {
-                                            $link = str_replace(Request::root() . '/' . $segment1, Request::root() . '/' . $l . '/', URL::current());
+                                            $link = str_replace(Request::root() . '/' . $segment1, Request::root() . '/' . $l, URL::current());
                                         } ?>
                                         <a class="lang-a" href="{{ $link }}">{{ $language }}</a>
                                     @endif
@@ -154,21 +156,6 @@
 
                             </ul>
                         </div>
-                        {{--                    <div class="col-lg-3 col-md-6 footer-links"> --}}
-                        {{--                        <h4>Newsletter</h4> --}}
-                        {{--                        <ul> --}}
-                        {{--                            @if (Auth::user()) --}}
-                        {{--                                <li><i class="bx bx-chevron-right"></i> <a href="{{ url('/login-user') }}">profile</a> --}}
-                        {{--                                </li> --}}
-                        {{--                            @else --}}
-                        {{--                                <li><i class="bx bx-chevron-right"></i> <a --}}
-                        {{--                                        href="{{ route('login-user') }}">Signin</a></li> --}}
-                        {{--                                <li><i class="bx bx-chevron-right"></i> <a --}}
-                        {{--                                        href="{{ route('register-user') }}">Signup</a></li> --}}
-                        {{--                            @endif --}}
-
-                        {{--                        </ul> --}}
-                        {{--                    </div> --}}
                     </div>
                 </div>
             </div>

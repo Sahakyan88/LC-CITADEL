@@ -28,6 +28,13 @@ class WelcomeController extends Controller
         )
         ->where('faq.published', 1)
         ->orderBy('published', 'DESC')->get();
+
+        $dictionary = DB::table('dictionary')
+        ->select(
+            'dictionary.faq_'.$lang.' as faq',
+        )
+        ->where('dictionary.published', 1)
+        ->orderBy('published', 'DESC')->get();
        
         $homeimage = DB::table('home')
         ->select(
@@ -41,18 +48,45 @@ class WelcomeController extends Controller
        
         view()->share('menu', 'home');
         view()->share('homeimage', $homeimage);
+        view()->share('dictionary', $dictionary);
+
         view()->share('faq', $faq);
         return view('app.welcome');
     }
     public function service()
     {
+        $lang = App::getLocale();
+        $services = DB::table('services')
+        ->select(
+            'services.title_'.$lang.' as title','services.body_'.$lang.' as body',
+            'services.image_id',
+            'services.price',
+            'images.filename as image_file_name',
+        )
+        ->where('services.published', 1)
+        ->leftJoin('images', 'images.id', '=', 'services.image_id')
+        ->orderBy('published', 'DESC')->get();
+       
+        $dictionary = DB::table('dictionary')
+    ->select(
+        'dictionary.service_'.$lang.' as service',
+    )
+    ->where('dictionary.published', 1)
+    ->orderBy('published', 'DESC')->get();
         view()->share('menu', 'service');
-        return view('app.service');
+        return view('app.service',compact('dictionary','services'));
     }
     public function about()
     {
-        $lang = App::getLocale();
-       
+    $lang = App::getLocale();
+
+    $dictionary = DB::table('dictionary')
+    ->select(
+        'dictionary.team_'.$lang.' as team',
+    )
+    ->where('dictionary.published', 1)
+    ->orderBy('published', 'DESC')->get();
+
     $teams = DB::table('teams')
     ->select(
     'teams.title_'.$lang.' as title','teams.description_'.$lang.' as description',
@@ -63,21 +97,41 @@ class WelcomeController extends Controller
     ->leftJoin('images', 'images.id', '=', 'teams.image_id')
     ->orderBy('published', 'DESC')->get();
 
+    $about = DB::table('about')
+    ->select(
+    'about.title_'.$lang.' as title','about.body_'.$lang.' as body',
+    'about.image_id',
+    'images.filename as image_file_name',
+    )
+    ->where('about.published', 1)
+    ->leftJoin('images', 'images.id', '=', 'about.image_id')
+    ->orderBy('published', 'DESC')->get();
+
     view()->share('menu', 'about');
-    return view('app.about',compact('teams'));
+    return view('app.about',compact('teams','about','dictionary'));
     }
     public function contact()
     {
+        $lang = App::getLocale();
+
+        $dictionary = DB::table('dictionary')
+    ->select(
+        'dictionary.contact_'.$lang.' as contact',
+    )
+    ->where('dictionary.published', 1)
+    ->orderBy('published', 'DESC')->get();
         view()->share('menu', 'contact');
-        return view('app.contact');
+        return view('app.contact',compact('dictionary'));
     }
     public function login()
     {
+        $lang = App::getLocale();
         view()->share('menu', 'login');
         return view('app.login');
     }
     public function register()
     {
+        $lang = App::getLocale();
         view()->share('menu', 'register');
         return view('app.register');
     }

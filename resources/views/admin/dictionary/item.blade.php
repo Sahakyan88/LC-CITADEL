@@ -32,8 +32,12 @@
                         </div>
                         <div class="tab-content" id="dashboardNavContent">
                             @foreach (Session::get('bLangs') as $index => $lang)
-                            <?php $question = 'question_' . $lang['lang']; ?>
-                            <?php $answer = 'answer_' . $lang['lang']; ?>
+                            <?php $faq = 'faq_' . $lang['lang']; ?>
+                            <?php $contact = 'contact_' . $lang['lang']; ?>
+                            <?php $service = 'service_' . $lang['lang']; ?>
+                            <?php $team = 'team_' . $lang['lang']; ?>
+
+
                                 <!-- Dashboard Tab Pane 1-->
                                 <div class="tab-pane fade @if ($index == 0) show active @endif"
                                     id="multi_content_{{ $lang['lang'] }}" role="tabpanel"
@@ -41,15 +45,26 @@
                                     <div class="container mt-4">
                                         <div class="form-row">
                                             <div class="form-group col-12">
-                                                <label class="small mb-1" for="title">Question</label>
-                                                <input class="form-control" id="title"  name="question_{{ $lang['lang'] }}" type="text"
-                                                       placeholder="title" value="{{ $item->$question }}" />
+                                                <label class="small mb-1" for="title">F.A.Q block text</label>
+                                                <textarea class="form-control" id="price"  name="faq_{{ $lang['lang'] }}" rows="12">{{ $item->$faq }}</textarea>
                                             </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-12">
-                                                <label class="small mb-1" for="title">Answer</label>
-                                                <textarea class="form-control" id="price"  name="answer_{{ $lang['lang'] }}" rows="12">{{ $item->$answer }}</textarea>
+                                                <label class="small mb-1" for="title">Services block text</label>
+                                                <textarea class="form-control" id="price"  name="service_{{ $lang['lang'] }}" rows="12">{{ $item->$service }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-12">
+                                                <label class="small mb-1" for="title">Contact us block text</label>
+                                                <textarea class="form-control" id="price"  name="contact_{{ $lang['lang'] }}" rows="12">{{ $item->$contact }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-12">
+                                                <label class="small mb-1" for="title">Team  block text</label>
+                                                <textarea class="form-control" id="price"  name="team_{{ $lang['lang'] }}" rows="12">{{ $item->$team }}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -69,12 +84,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-
-
-                       
-                       
                         <!-- Tab content end -->
                     </div>
                 </div>
@@ -95,7 +104,7 @@
 
         $.ajax({
             type: "POST",
-            url: "{{ route('adminFaqSave') }}",
+            url: "{{ route('DictionarySave') }}",
             data: data,
             dataType: 'json',
             success: function(response) {

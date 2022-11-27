@@ -1,4 +1,14 @@
-
+<script type="text/javascript">
+    if (typeof(itemPopup) != "undefined") {
+        $(itemPopup).one("loaded", function(e) {
+            initTinymce();
+            @if ($mode == 'add')
+            Loading.remove($('#add_item'));
+            @endif
+        });
+    }
+</script>
+    
     <div class="row">
         <div class="col-xxl-12">
             <div class="card mb-4">
@@ -71,7 +81,7 @@
                                                                 <div class="form-row">
                                                                         <div class="form-group col-12">
                                                                             <label class="small mb-1" for="title">Text</label>
-                                                                            <textarea class="form-control wysihtml5 textarea" name="body_{{ $lang['lang'] }}"rows="12">{!!html_entity_decode($item->$body)!!}</textarea>
+                                                                            <textarea class="form-control wysihtml5 textarea" name="body_{{ $lang['lang'] }}"rows="12">{!!($item->$body)!!}</textarea>
                                                                         </div>
                                                                 </div>
                                                             </div>

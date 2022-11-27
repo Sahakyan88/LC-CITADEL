@@ -8,7 +8,7 @@ class Document implements FilterInterface
 {
     public function applyFilter(Image $image)
     {
-    	return $image->fit(200, 200, function ($constraint) {
+    	return $image->fit(800, 708, function ($constraint) {
 		    $constraint->upsize();
 		});
     }

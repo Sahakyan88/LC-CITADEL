@@ -78,13 +78,9 @@ Route::group(['middleware' => 'adminauth'], function () {
     Route::get('dictionary',[DictionaryController::class, 'index'])->name('adminDictionary');
     Route::get('dictionary-data',[DictionaryController::class, 'data'])->name('aDictionaryData');
     Route::get('dictionary-get',[DictionaryController::class, 'get'])->name('aGetDictionary');
-    Route::post('dictionary-save',[DictionaryController::class, 'save'])->name('adminDictionarySave');
-
-    Route::post('dictionary-save',[DictionaryController::class, 'save'])->name('adminDicionarySave');
-    Route::get('dictionary-sync',[DictionaryController::class, 'sync'])->name('aSyncDictionary');
+    Route::post('dictionary-save',[DictionaryController::class, 'save'])->name('DictionarySave');
 
    
-
     //F.A.Q
     Route::get('faq',[FaqController::class, 'faq'])->name('adminFaq');
     Route::get('faq-data',[FaqController::class, 'faqData'])->name('aFaqData');

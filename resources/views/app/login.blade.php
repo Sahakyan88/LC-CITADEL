@@ -1,12 +1,12 @@
 @extends('app.layouts.app')
 @section('content')
     @if (!Auth::user())
-        <section id="contact" class="contact">
+        <section id="contact" class="contact services section-bg">
             <div class="container col-sm-4">
                 <div class="form-group">
                     <div data-aos="fade-up">
                         <h2 class="text-center">Signin</h2>
-                        <form  id="login-form" method="post" role="form" class="php-email-form auth-page-login auth-page">
+                        <form  id="register-form" method="post" role="form" class="php-email-form auth-page-login auth-page">
                             @csrf
                             <div class="row">
                                 <div class="form-group">
@@ -20,7 +20,7 @@
                             </div>
                             <div class="text-center"><button type="submit">Sign In</button></div>
                             <br>
-                            <p>Don't have an account yet? <a href="{{url('/register-user')}}">Sign Up</a>  </p>
+                            <p>Don't have an account yet? <a href="{{route('register-user')}}">Sign Up</a>  </p>
                         </form>
                     </div>
                 </div>
@@ -58,7 +58,9 @@
                         }
                     },
                     error: function(response) {
+                        console.log(response.responseJSON);
                         if (response.responseJSON.errors) {
+                          
                             errors = response.responseJSON.errors
                             $.each(errors, function(key, value) {
                                 if ($("#" + key).length > 0) {

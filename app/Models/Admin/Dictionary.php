@@ -11,8 +11,11 @@ class Dictionary extends Model
      * The table associated with the model.
      *
      * @var string
+	 * 
      */
     protected $table = 'dictionary';
+	public $multilangualFiled = false;
+
 
     public $timestamps  = false;
     

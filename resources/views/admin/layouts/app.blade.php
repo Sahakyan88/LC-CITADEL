@@ -133,6 +133,11 @@
                         <div class="nav-link-icon"><i data-feather="info"></i></div>
                         General info
                     </a>
+                    <a class="nav-link @if(isset($menu) && ($menu =='dictionary')) active @endif"
+                    href="{{ route('adminDictionary') }}">
+                     <div class="nav-link-icon"><i data-feather="help-circle"></i></div>
+                     Dictionary
+                 </a>
 
                 </div>
             </div>

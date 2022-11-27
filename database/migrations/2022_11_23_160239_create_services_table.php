@@ -18,9 +18,9 @@ return new class extends Migration
             $table->string('title_am');
             $table->string('title_en');
             $table->string('title_ru');
-            $table->longText('body_am');
-            $table->longText('body_ru');
-            $table->longText('body_en');
+            $table->text('body_am');
+            $table->text('body_ru');
+            $table->text('body_en');
             $table->longText('price');
             $table->integer('image_id');
             $table->integer('ordering');
