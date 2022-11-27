@@ -11,7 +11,20 @@ return [
         'sign_up' => 'Գրանցվել',
         'profile' => 'Անձնական էջ',
         'copyright' => 'Բոլոր իրավունքները պաշտպանված են',
-        'faq' => 'Հաճախակի տրվող հարցեր'
+        'faq' => 'Հաճախակի տրվող հարցեր',
+        'team'=>'Մեր թիմը',
+        'plans'=>'Ապահովագրական փաթեթներ',
+        'insurance'=>'Ապահովագրություն',
+        'get_insurance'=>'Գրանցվել հիմա',
+        'contact'=>'Կոնտակտներ',
+        'address'=>'Հասցե',
+        'email'=>'Էլ․ փոստ',
+        'phone'=>'Հեռախոսահամար',
+        'name'=>'Անուն',
+        'surname'=>'Ազգանուն',
+        'subject'=>'Թեմա',
+        'message'=>'Հաղորդագրություն',
+        'send'=>'Ուղարկել'
     ],
     'en' => [
         'get_started' => 'Learn more',
@@ -23,7 +36,20 @@ return [
         'sign_up' => 'Sign Up',
         'profile' => 'Profile',
         'copyright' => 'All Rights Reserved.',
-        'faq' => 'FAQ'
+        'faq' => 'F.A.Q',
+        'team'=>'Our Team',
+        'plans'=>'Insurance packages',
+        'insurance'=>'Insurance',
+        'get_insurance'=>'Get started',
+        'contact'=>'Contacts',
+        'address'=>'Address',
+        'email'=>'Email',
+        'phone'=>'Call',
+        'name'=>'Name',
+        'surname'=>'Surname',
+        'subject'=>'Subject',
+        'message'=>'Message',
+        'send'=>'Send'
     ],
     'ru' => [
         'get_started' => 'Узнать больше',
@@ -35,6 +61,19 @@ return [
         'sign_up' => 'Зарегистрироваться',
         'profile' => 'Личная страница',
         'copyright' => 'Все права защищены.',
-        'faq' => 'Часто задаваемые вопросы'
+        'faq' => 'Часто задаваемые вопросы',
+        'team'=>'Наша команда',
+        'plans'=>'Страховые пакеты',
+        'insurance'=>'Страхование',
+        'get_insurance'=>'Присоединиться сейчас',
+        'contact'=>'Контакты',
+        'address'=>'Адрес',
+        'email'=>'Эл. почта',
+        'phone'=>'Тел. ',
+        'name'=>'Имя',
+        'surname'=>'Фамилия',
+        'subject'=>'Тема',
+        'message'=>'Сообщение',
+        'send'=>'Отправить'
     ]
 ];

@@ -31,7 +31,7 @@ if($local == 'am')$local = '';
 function lastIntInString($slug){
 
     $pos = strrpos($slug, "-");
-    if ($pos === false) { 
+    if ($pos === false) {
         return false;
     }
     return substr($slug , $pos+1);
@@ -50,7 +50,8 @@ Route::get('/login-user', [WelcomeController::class, 'login'])->name('login-user
 Route::get('/register-user', [WelcomeController::class, 'register'])->name('register-user');
 Route::get('/', [WelcomeController::class, 'homepage'])->name('homepage');
 Route::get('/contact', [WelcomeController::class, 'contact'])->name('contact');
-Route::get('/services', [WelcomeController::class, 'service'])->name('service');
+//Route::get('/services', [WelcomeController::class, 'service'])->name('service');
+Route::get('/insurance', [WelcomeController::class, 'service'])->name('service');
 Route::get('/about', [WelcomeController::class, 'about'])->name('about');
 ///profile
 Route::get('/orders-profile', [AuthController::class, 'ordersPprofile'])->name('ordersprofile')->middleware('auth');

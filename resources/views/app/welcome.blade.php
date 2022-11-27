@@ -7,7 +7,7 @@
                 <div class="container text-center text-md-left" data-aos="fade-up">
                     <h1>{{ $home->title }}</h1>
                     <h2>{{ $home->description }}</h2>
-                    <a href="{{ url('/services') }}"
+                    <a href="{{ url(App::getLocale() . "/insurance") }}"
                         class="btn-get-started scrollto">{{ config()->get('lang.' . App::getLocale() . '.get_started') }}</a>
                 </div>
             </section>
@@ -17,7 +17,7 @@
         <section id="faq" class="faq section-bg">
             <div class="container">
                 <div class="section-title" data-aos="fade-up">
-                    <h2>F.A.Q</h2>
+                    <h2>{{config()->get('lang.' . App::getLocale() . '.faq')}}</h2>
                     @if (count($dictionary) > 0)
                     <p>{{  $dictionary[0]->faq }}</p>
                     @endif

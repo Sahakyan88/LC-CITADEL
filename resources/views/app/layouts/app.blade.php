@@ -34,14 +34,14 @@
 
             <nav id="navbar" class="navbar">
                 <ul>
-                    <li><a class="nav-link scrollto {{ request()->is('/') ? 'active' : '' }}"
+                    <li><a class="nav-link scrollto {{ request()->is('/')  ? 'active' : '' }}"
                             href="{{ route('homepage') }}">{{ config()->get('lang.' . App::getLocale() . '.home') }}</a>
                     </li>
                     <li><a class="nav-link scrollto {{ request()->is('about') ? 'active' : '' }}"
                             href="{{ route('about') }}">{{ config()->get('lang.' . App::getLocale() . '.about_us') }}</a>
                     </li>
-                    <li><a class="nav-link scrollto {{ request()->is('services') ? 'active' : '' }}"
-                            href="{{ route('service') }}">{{ config()->get('lang.' . App::getLocale() . '.services') }}
+                    <li><a class="nav-link scrollto {{ request()->is('insurance') ? 'active' : '' }}"
+                            href="{{ route('service') }}">{{ config()->get('lang.' . App::getLocale() . '.insurance') }}
                         </a>
                     </li>
                     </li>
@@ -126,9 +126,9 @@
                                 </p>
                                 <div class="social-links mt-3">
                                     <a href="@if (isset($site_settings->instagram)) {{ $site_settings->instagram }} @endif"
-                                        class="instagram"><i class="bx bxl-instagram"></i></a>
+                                        class="instagram" target="_blank"><i class="bx bxl-instagram"></i></a>
                                     <a href="@if (isset($site_settings->facebook)) {{ $site_settings->facebook }} @endif"
-                                        class="facebook"><i class="bx bxl-facebook"></i></a>
+                                        class="facebook" target="_blank"><i class="bx bxl-facebook"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -141,7 +141,7 @@
                                         href="{{ route('about') }}">{{ config()->get('lang.' . App::getLocale() . '.about_us') }}</a>
                                 </li>
                                 <li><i class="bx bx-chevron-right"></i> <a
-                                        href="{{ route('service') }}">{{ config()->get('lang.' . App::getLocale() . '.services') }}</a>
+                                        href="{{ route('service') }}">{{ config()->get('lang.' . App::getLocale() . '.insurance') }}</a>
                                 </li>
                             </ul>
                         </div>
@@ -151,7 +151,7 @@
                                         href="{{ route('contact') }}">{{ config()->get('lang.' . App::getLocale() . '.contact_us') }}</a>
                                 </li>
                                 <li><i class="bx bx-chevron-right"></i> <a
-                                        href="#faq">{{ config()->get('lang.' . App::getLocale() . '.faq') }}</a>
+                                        href="{{ route('homepage') }}#faq">{{ config()->get('lang.' . App::getLocale() . '.faq') }}</a>
                                 </li>
 
                             </ul>

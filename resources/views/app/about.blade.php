@@ -20,7 +20,7 @@
         <section id="team" class="team">
             <div class="container">
                 <div class="section-title" data-aos="fade-up">
-                    <h2>Team</h2>
+                    <h2>{{config()->get('lang.' . App::getLocale() . '.team')}}</h2>
                     @if (count($dictionary) > 0)
                         <p>{{ $dictionary[0]->team }}</p>
                     @endif
