@@ -24,7 +24,14 @@ return [
         'surname'=>'Ազգանուն',
         'subject'=>'Թեմա',
         'message'=>'Հաղորդագրություն',
-        'send'=>'Ուղարկել'
+        'send'=>'Ուղարկել',
+        'personal_information'=>'Անձնական տվյալներ',
+        'change_pass'=>'Փոխել գաղտնաբառը',
+        'logout'=>'Դուրս գալ',
+        'old_pass'=>'Հին գաղտնաբառ',
+        'new_pass'=>'Նոր գաղտնաբառ',
+        'confirm_pass'=>'Կրկնիր նոր գաղտնաբառը',
+        'save'=>'Պահպանել',
     ],
     'en' => [
         'get_started' => 'Learn more',
@@ -49,7 +56,14 @@ return [
         'surname'=>'Surname',
         'subject'=>'Subject',
         'message'=>'Message',
-        'send'=>'Send'
+        'send'=>'Send',
+        'personal_information'=>'Personal Information',
+        'change_pass'=>'Change Password',
+        'logout'=>'Logout',
+        'old_pass'=>'Old Password',
+        'new_pass'=>'New Password',
+        'confirm_pass'=>'Confirm Password',
+        'save'=>'Save',
     ],
     'ru' => [
         'get_started' => 'Узнать больше',
@@ -74,6 +88,13 @@ return [
         'surname'=>'Фамилия',
         'subject'=>'Тема',
         'message'=>'Сообщение',
-        'send'=>'Отправить'
+        'send'=>'Отправить',
+        'personal_information'=>'Личная информация',
+        'change_pass'=>'Изменить пароль',
+        'logout'=>'Выход',
+        'old_pass'=>'Старый пароль',
+        'new_pass'=>'Новый пароль',
+        'confirm_pass'=>'Подтвердить пароль',
+        'save'=>'Сохранить',
     ]
 ];

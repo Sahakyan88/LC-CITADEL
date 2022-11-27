@@ -6,7 +6,7 @@
                 <div class="row">
                     <div class="form-group ">
                         <div data-aos="fade-up">
-                            <h2 class="text-center">Signup</h2>
+                            <h2 class="text-center">Sign Up</h2>
                             <form method="POST" id="register-form" class="php-email-form auth-page">
                                 @csrf
                                 <div class="row">
