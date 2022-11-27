@@ -15,7 +15,7 @@
                         <div> <img style="border-radius: 50px;" src="{{ asset('images/backendSmall/' . $service->image_file_name) }}"></div>
                         <h4 class="title"><a href="">{{ $service->title }}</a></h4>
                         <h4 class="title"><a href="">{{ $service->price }}$</a></h4>
-                        <p class="description"><?php echo $service->body ?> </p>
+                        <div class="description"><?php echo $service->body ?> </div>
                         <div class="text-center"><button type="submit" class="btn btn-success">Pay Now</button></div>
                     </div>
                 </div>
