@@ -7,7 +7,7 @@
                 <div class="container text-center text-md-left" data-aos="fade-up">
                     <h1>{{ $home->title }}</h1>
                     <h2>{{ $home->description }}</h2>
-                    <a href="{{ url('/services') }}"
+                    <a href="{{ route('service') }}"
                         class="btn-get-started scrollto">{{ config()->get('lang.' . App::getLocale() . '.get_started') }}</a>
                 </div>
             </section>
@@ -17,45 +17,60 @@
         <section id="faq" class="faq section-bg">
             <div class="container">
                 <div class="section-title" data-aos="fade-up">
-                    <h2>F.A.Q</h2>
+                    <h2>{{ config()->get('lang.' . App::getLocale() . '.faq') }}</h2>
                     @if (count($dictionary) > 0)
-                    <p>{{$dictionary[0]->faq }}</p>
+                        <p>{{ $dictionary[0]->faq }}</p>
                     @endif
                 </div>
                 <div class="faq-list">
-                    <div>
-                        <ul>
-                            @for ($i = 0; $i < count($faq); $i++)
-                                @if ($i == 0)
-                                    <li data-aos="fade-up">
-                                        <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse"
-                                            class="collapse" data-bs-target="#faq-list-1"> {{ $faq[$i]->question }}
-                                            <i class="bx bx-chevron-down icon-show"></i><i
-                                                class="bx bx-chevron-up icon-close"></i></a>
-                                        <div id="faq-list-1" class="collapse show" data-bs-parent=".faq-list">
-                                            <p>
-                                                {{ $faq[$i]->answer }} </p>
+                    <div class="b-faq ">
+                        @for ($i = 0; $i < count($faq); $i++)
+                            @if ($i == 0)
+                                <ul>
+                                    <li class="faq__item" data-aos="fade-up">
+                                        <a class="faq__title js-faq-title">{{ $faq[$i]->question }}
+                                            <i class="bx bx-help-circle icon-help"></i> </a>
+                                        <div class="faq__content js-faq-content">
+                                            <p> {{ $faq[$i]->answer }} </p>
                                         </div>
                                     </li>
-                                @endif
-                                @if ($i != 0)
-                                    <li data-aos="fade-up" data-aos-delay="100">
-                                        <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse"
-                                            data-bs-target="#faq-list-2" class="collapsed"> {{ $faq[$i]->question }}
-                                            <i class="bx bx-chevron-down icon-show"></i><i
-                                                class="bx bx-chevron-up icon-close"></i></a>
-                                        <div id="faq-list-2" class="collapse" data-bs-parent=".faq-list">
-                                            <p>
-                                                {{ $faq[$i]->answer }} </p>
+                                </ul>
+                            @endif
+                            @if ($i != 0)
+                                <ul>
+                                    <li class="faq__item" data-aos="fade-up">
+                                        <a class="faq__title js-faq-title">{{ $faq[$i]->question }}
+                                            <i class="bx bx-help-circle icon-help"></i> </a>
+                                        <div style="display:none" class="faq__content js-faq-content ">
+                                            <p> {{ $faq[$i]->answer }} </p>
                                         </div>
                                     </li>
-                                @endif
-                            @endfor
+                                </ul>
+                            @endif
+                        @endfor
                     </div>
-                    </ul>
                 </div>
             </div>
         </section>
     @endif
     </main>
+@push('script')
+    <script>
+        $(document).ready(function() {
+            $(".js-faq-title").on("click", function(e) {
+                console.log(4144);
+                e.preventDefault();
+                var $this = $(this);
+                if (!$this.hasClass("faq__active")) {
+                    $(".js-faq-content").slideUp(800);
+                    $(".js-faq-title").removeClass("faq__active");
+                    $(".js-faq-rotate").removeClass("faq__rotate");
+                }
+                $this.toggleClass("faq__active");
+                $this.next().slideToggle();
+                $(".js-faq-rotate", this).toggleClass("faq__rotate");
+            });
+        });
+    </script>
+    @endpush
 @endsection

@@ -40,7 +40,6 @@
                                         <div class="tab-content" id="dashboardNavContent">
                                             @foreach (Session::get('bLangs') as $index => $lang)
                                                 <?php $address = 'address_' . $lang['lang']; ?>
-                                                <!-- Dashboard Tab Pane 1-->
                                                 <div class="tab-pane fade @if ($index == 0) show active @endif"
                                                     id="multi_content_{{ $lang['lang'] }}" role="tabpanel"
                                                     aria-labelledby="multi_content_{{ $lang['lang'] }}-pill">
@@ -72,7 +71,6 @@
                                         <input class="form-control" id="inputFacebook" type="text" name="facebook"
                                             placeholder="Facebook" value="{{ $data->facebook }}" />
                                     </div>
-
                                 </div>
                                 <div class="form-group">
                                     <button type="button" onclick="save()" id="saveItemBtn"

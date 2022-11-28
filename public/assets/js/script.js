@@ -358,7 +358,7 @@
 
 
 
-	//Contact Form Validation
+	//Contact Form Validationauth-page
 	if ($('#register-form').length) {
 		$('#register-form').validate({
 			rules: {
@@ -371,26 +371,22 @@
 				phone: {
 					required: true
 				},
-				address: {
+				password: {
+					minlength: 6,
 					required: true
 				},
 				email: {
 					required: true,
 					email: true,
-
+					remote:{
+						url:"/checkMail",
+						type:"get"
+					},
 
 				},
-				password: {
-					required: true,
-					minlength:6
-				}
-			},
-			messages: {
 				
-				password: {
-					minlength: "Minlenght be 6 characters",
-				},
-			}
+			},
+	
 		});
 	}
 	//Contact Form Validation

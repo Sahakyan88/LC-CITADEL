@@ -61,24 +61,6 @@ class Doc extends Model
         }
         return false;
     }
-
-//     public function addOriginal($image,$filename){
-
-//       if($image->move('img/', $filename)){
-//         return true;
-//       }
-//       return false;
-//   }
-
-    // public function remove($imageId){
-    //   $image = Doc::find($imageId);
-    //     if($image){
-    //         $path = 'content/'.$image->filename.'.'.$image->ext;
-    //         File::delete($path);
-
-    //         $image->delete();
-    //     }
-    // }
     public function generateFilename(){
 		return substr(md5(microtime()),0,12);
 	}

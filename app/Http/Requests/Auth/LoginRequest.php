@@ -33,6 +33,13 @@ class LoginRequest extends FormRequest
             'password' => 'required|string',
         ];
     }
+    public function messages()
+        {
+            return [
+                'email.required' => 'Email is required',
+                'password.required' => 'Password is required',
+            ];
+        }
 
     /**
      * Attempt to authenticate the request's credentials.
@@ -49,7 +56,7 @@ class LoginRequest extends FormRequest
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'email' => __('auth.failed'),
+                'email' => __('Auth Failed'),
             ]);
         }
 

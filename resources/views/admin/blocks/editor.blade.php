@@ -2,35 +2,6 @@
 <script src="{!! asset('backend/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js') !!}" type="text/javascript"></script>
 <script src="{!! asset('backend/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js') !!}" type="text/javascript"></script>-->
 <script type="text/javascript">
-    // function initTinymce() {
-    //     tinymce.init({
-    //         selector: '.wysihtml5',
-    //         height: 300,
-    //         verify_html: false,
-    //         plugins: [
-    //             'advlist autolink lists link image charmap print preview anchor',
-    //             'searchreplace visualblocks code fullscreen',
-    //             'insertdatetime media table contextmenu paste code'
-    //         ],
-    //         toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-    //         content_css: [
-    //             '//fast.fonts.net/cssapi/e6dc9b99-64fe-4292-ad98-6974f93cd2a2.css',
-    //             '//www.tinymce.com/css/codepen.min.css'
-    //         ],
-    //         style_formats: [
-    //         {
-    //             title: 'Image Left',
-    //             selector: 'img',
-    //             classes: 'imageFLeft'
-    //         },
-    //         {
-    //             title: 'Image Right',
-    //             selector: 'img', 
-    //             classes: 'imageFRight'
-    //         }]
-    //     });
-    // }
-
     function example_image_upload_handler (blobInfo, success, failure, progress) {
   var xhr, formData;
 
@@ -91,14 +62,4 @@
             ]
         });
     }
-
-    // $(".wysihtml5").click(function(){
-    //   var text = $(this).text();
-    //   $('.wysihtml5').data("wysihtml5").editor.setValue(text);
-    // });
-    // $(document).on('focusin', function(e) {
-    //     if ($(e.target).closest(".tox-dialog").length) {
-    //         e.stopImmediatePropagation();
-    //     }
-    // });
 </script>
