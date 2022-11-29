@@ -217,7 +217,11 @@ h6 {
   box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
   transition: 0.3s;
 }
-
+.profile-user{
+ width: 100%;
+ background: #fff;
+ box-shadow: 0 0 24px 0 rgb(0 0 0 / 12%);
+}
 .navbar .dropdown ul li {
   min-width: 200px;
 }
@@ -307,7 +311,9 @@ h6 {
   top: 15px;
   right: 15px;
 }
-
+.lang-left{
+  margin-left: 16px;
+}
 .navbar-mobile ul {
   display: block;
   position: absolute;
@@ -316,7 +322,8 @@ h6 {
   bottom: 15px;
   left: 15px;
   padding: 10px 0;
-  background-color: #fff;
+  background: #4a5a59;
+  color: white;
   overflow-y: auto;
   transition: 0.3s;
 }
@@ -335,7 +342,7 @@ h6 {
 .navbar-mobile a:focus {
   padding: 10px 20px;
   font-size: 15px;
-  color: #21413c;
+  color: white;
 }
 
 .navbar-mobile a:hover,

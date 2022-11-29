@@ -24,10 +24,9 @@ use App\Helpers\Helper;
 $local = App::getLocale();
 Route::get('/', function () {
     $referer = Redirect::back()->getTargetUrl();
-    $segments = explode('/', '');
+    $segments = explode('/', '/');
     $url = $referer. implode("/", $segments);
-    $aurl = $url. parse_url($referer, PHP_URL_QUERY);
-    return redirect($aurl);
+    return redirect($url);
 });
 
 Route::get('/login', [WelcomeController::class, 'login'])->name('login-user');

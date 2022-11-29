@@ -7,10 +7,10 @@
     <meta name="description" content=""/>
     <meta name="author" content=""/>
     <title>LC-CITADEL</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/nkar.png') }}">
     <link href="{!! asset('backend/css/styles.css') !!}" media="all" rel="stylesheet" type="text/css"/>
     <link href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" rel="stylesheet"
           crossorigin="anonymous"/>
-    <link rel="icon" type="image/x-icon" href="{!! asset('backend/assets/img/favicon.png') !!}"/>
     <script data-search-pseudo-elements defer
             src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js"
             crossorigin="anonymous"></script>
@@ -30,6 +30,7 @@
     <!-- * * * * * * When using an image, we recommend the SVG format.-->
     <!-- * * * * * * Dimensions: Maximum height: 32px, maximum width: 240px-->
     <a class="navbar-brand" href="{{ route('dashboard') }}">
+        <img style="width: 20%" src="{{ asset('assets/img/nkar.png') }}">
         LC-CITADEL
         <?php /* <!-- <img src="{!! asset('backend/img/logo.png') !!}" style="height: 25px;" /> --> */ ?>
     </a>
@@ -73,24 +74,6 @@
             <div class="sidenav-menu">
                 <div class="nav accordion" id="accordionSidenav">
 
-                    <?php /* <!-- Sidenav Menu Heading (Account)
-                            <!-- * * Note: * * Visible only on and above the sm breakpoint-->
-                            <div class="sidenav-menu-heading d-sm-none">Account</div>
-                            <!-- Sidenav Link (Alerts)-->
-                            <!-- * * Note: * * Visible only on and above the sm breakpoint-->
-                            <a class="nav-link d-sm-none" href="#!">
-                                <div class="nav-link-icon"><i data-feather="bell"></i></div>
-                                Alerts
-                                <span class="badge badge-warning-soft text-warning ml-auto">4 New!</span>
-                            </a>
-                            <!-- Sidenav Link (Messages)-->
-                            <!-- * * Note: * * Visible only on and above the sm breakpoint-->
-                            <a class="nav-link d-sm-none" href="#!">
-                                <div class="nav-link-icon"><i data-feather="mail"></i></div>
-                                Messages
-                                <span class="badge badge-success-soft text-success ml-auto">2 New!</span>
-                            </a> -->
-                            */ ?>
                         <!-- Sidenav Menu Heading (Core)-->
                     <div class="sidenav-menu-heading">Main</div>
                     <!-- Sidenav Accordion (Dashboard)-->
@@ -156,11 +139,6 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-6 small">Copyright &copy; LC-CITADEL 2022</div>
-                    <!-- <div class="col-md-6 text-md-right small">
-                        <a href="#!">Privacy Policy</a>
-                        &middot;
-                        <a href="#!">Terms &amp; Conditions</a>
-                    </div> -->
                 </div>
             </div>
         </footer>

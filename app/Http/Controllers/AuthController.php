@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
+    
     /*
     |--------------------------------------------------------------------------
     | Login Controller

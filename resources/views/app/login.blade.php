@@ -1,12 +1,18 @@
 @extends('app.layouts.appTwo')
 @section('sectionTwo')
     @if (!Auth::user())
-        <section style="height: 100vh" class="contact  section-bg">
+        <section style="height: 77vh" class="contact  section-bg mt-5">
+            <style>
+                .mobile-nav-toggle {
+                    display: none;
+                }
+            </style>
             <div class="container col-sm-4">
                 <div class="form-group">
                     <div data-aos="fade-up">
                         <h2 class="text-center">Sign In</h2>
-                        <form method="post" action="{{ route('signin') }}" role="form" class="php-email-form auth-page-login">
+                        <form method="post" action="{{ route('signin') }}" role="form"
+                            class="php-email-form auth-page-login">
                             @csrf
                             <div class="row">
                                 <div class="form-group">

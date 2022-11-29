@@ -12,7 +12,7 @@
                             <p>{{ Session::get('success') }}</p>
                         </div>
                     @endif
-                        <form id="login-form" method="POST" action="{{ route('changepassword') }}" class="php-email-form auth-page-login auth-page">
+                        <form  method="POST" action="{{ route('changepassword') }}" class="php-email-form">
                             @csrf
                             <div class="row">
                                 <div class="form-group">
@@ -45,7 +45,6 @@
                     </div>
                 </div>
             </div>
-        </div>
         </div>
     </section>
 @endsection

@@ -3,7 +3,7 @@ $lang = App::getLocale();
 ?>
 <section id="features" class="features col-lg-4">
     <div class="container">
-        <div class="row" style="width: 100%;padding: 30px;background: #fff;box-shadow: 0 0 24px 0 rgb(0 0 0 / 12%);">
+        <div class="profile-user">
             <div data-aos="fade-right">
                 <ul class="nav nav-tabs flex-column">
                     <li class="nav-item">
