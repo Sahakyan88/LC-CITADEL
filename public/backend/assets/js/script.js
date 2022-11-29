@@ -358,29 +358,29 @@
 
 
 
-	//Contact Form Validation
-	if ($('#contact-form').length) {
-		$('#contact-form').validate({
-			rules: {
-				name: {
-					required: true
-				},
-				phone: {
-					required: true
-				},
-				subject: {
-					required: true
-				},
-				email: {
-					required: true,
-					email: true
-				},
-				message: {
-					required: true
-				}
-			}
-		});
-	}
+	// //Contact Form Validation
+	// if ($('#contact-form').length) {
+	// 	$('#contact-form').validate({
+	// 		rules: {
+	// 			name: {
+	// 				required: true
+	// 			},
+	// 			phone: {
+	// 				required: true
+	// 			},
+	// 			subject: {
+	// 				required: true
+	// 			},
+	// 			email: {
+	// 				required: true,
+	// 				email: true
+	// 			},
+	// 			message: {
+	// 				required: true
+	// 			}
+	// 		}
+	// 	});
+	// }
 
 
 

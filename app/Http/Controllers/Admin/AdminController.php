@@ -26,7 +26,13 @@ class AdminController extends Controller
     public function dashboard()
     {
         $users =  DB::table('users')->count();
+        $service =  DB::table('services')->count();
+        $team =  DB::table('teams')->count();
+
         view()->share('users', $users);
+        view()->share('team', $team);
+        view()->share('service', $service);
+
         view()->share('menu', 'dashboard');
         return view('admin.dashboard');
     }

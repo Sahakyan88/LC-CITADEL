@@ -20,6 +20,8 @@ class WelcomeController extends Controller
 {
     public function homepage()
     {
+       
+
         $lang = App::getLocale();
         $faq    =  DB::table('faq')->where('published',1)->get();
         $faq = DB::table('faq')

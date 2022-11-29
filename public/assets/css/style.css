@@ -81,7 +81,7 @@ h6 {
   height: 70px;
   transition: all 0.5s;
   z-index: 997;
-  background: white;
+  background: #6e8785;
 }
 
 #header .logo h1 {
@@ -99,11 +99,29 @@ h6 {
   color: #fff;
   text-decoration: none;
 }
+.language{
+  padding: 0 !important;
+}
+.bottom-language{
+  border: none;
+}
+.navbar>ul>li>.language:before {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 0;
+  bottom: 0;
+ 
+  left: 0;
+  visibility: hidden;
+  width: 0px;
+  transition: all 0.3s ease-in-out 0s;
+}
 
 #header .logo img {
   padding: 0;
   margin: 0;
-  max-height: 40px;
+  max-height: 80px;
 }
 
 @media (max-width: 992px) {
@@ -145,7 +163,7 @@ h6 {
   justify-content: space-between;
   padding: 12px 0;
   font-size: 14px;
-  color: #918f9a;
+  color: white;
   white-space: nowrap;
   transition: 0.3s;
   position: relative;
@@ -199,7 +217,11 @@ h6 {
   box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
   transition: 0.3s;
 }
-
+.profile-user{
+ width: 100%;
+ background: #fff;
+ box-shadow: 0 0 24px 0 rgb(0 0 0 / 12%);
+}
 .navbar .dropdown ul li {
   min-width: 200px;
 }
@@ -289,7 +311,9 @@ h6 {
   top: 15px;
   right: 15px;
 }
-
+.lang-left{
+  margin-left: 16px;
+}
 .navbar-mobile ul {
   display: block;
   position: absolute;
@@ -298,7 +322,8 @@ h6 {
   bottom: 15px;
   left: 15px;
   padding: 10px 0;
-  background-color: #fff;
+  background: #4a5a59;
+  color: white;
   overflow-y: auto;
   transition: 0.3s;
 }
@@ -317,7 +342,7 @@ h6 {
 .navbar-mobile a:focus {
   padding: 10px 20px;
   font-size: 15px;
-  color: #21413c;
+  color: white;
 }
 
 .navbar-mobile a:hover,
@@ -1168,7 +1193,7 @@ section {
   font-size: 24px;
   position: absolute;
   right: 0;
-  left: 20px;
+  left: 0;
   color: #97cac2;
 }
 
@@ -1322,7 +1347,6 @@ section {
 	line-height: 24px;
 	padding: 5px 0px 0px;
 	margin: 0px;
-	text-transform: uppercase;
 	font-size: 12px;
 	color: #ff0000;
 	font-weight: 500;
@@ -1432,7 +1456,7 @@ width: 25px;
 }
 
 #footer .footer-top {
-  background: #0c1817;
+  background: #6e8785;
   border-bottom: 1px solid #18302c;
   padding: 60px 0 30px 0;
 }

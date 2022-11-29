@@ -6,25 +6,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
 <section class="service-detail">
     <div class="container">
-        <div class="row clearfix">
+        <div class="row contact mt-5" style="box-shadow: 0 0 24px 0 rgb(0 0 0 / 12%);" >
             @include("components.menu-profile")
-            <div class="col-lg-8 col-md-12 col-sm-12">
-                <h2 class="service-detail__title">Orders</h2>
+            <div class="col-lg-8 mt-5">
                 <div class="service-detail__text">
-                    
                         <div class="card">
                             <div class="card-header"></div>
                             <div class="card-body">
-                                <div class="form-group col-md-2 float-right">
-                                    <div class="small text-muted">Status</div>
-                                    <select class="form-control" name="filter_status" id="filter_status">
-                                        <option value=''>-- All--</option>
-                                        <option value='waiting'>Waiting</option>
-                                        <option value='approved'>Approved</option>
-                                        <option value='declined'>Declined</option>
-                                        <option value='canceled'>Canceled</option>
-                                    </select>
-                                </div>
+                                
                                 <div class="table-responsive">
                                         <table class="table table-bordered table-hover " id="dataTable" width="100%" cellspacing="0">
                                             <thead>

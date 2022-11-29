@@ -5,6 +5,9 @@ namespace App\Providers;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use App;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Http\Request;
+
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -34,7 +37,8 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         //
-        
+        $this->configureRateLimiting();
+
         parent::boot();
     }
 
@@ -66,7 +70,7 @@ class RouteServiceProvider extends ServiceProvider
         $request = app(\Illuminate\Http\Request::class);
         $locale = $request->segment(1);
 
-        if($locale == 'am'){
+        if($locale == 'am' && $locale == 'en'){
             header("Location: /");
             exit();
         }
@@ -113,5 +117,17 @@ class RouteServiceProvider extends ServiceProvider
              ->middleware('admin')
              ->namespace('App\Http\Controllers\Admin')
              ->group(base_path('routes/admin.php'));
+    }
+    
+    /**
+     * Configure the rate limiters for the application.
+     *
+     * @return void
+     */
+    protected function configureRateLimiting()
+    {
+        RateLimiter::for('api', function (Request $request) {
+            return Limit::perMinute(60)->by(optional($request->user())->id ?: $request->ip());
+        });
     }
 }

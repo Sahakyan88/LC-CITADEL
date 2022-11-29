@@ -38,31 +38,13 @@ class ImageDB extends Model
 
         if($image->move('content/', $filename.'.'.$ext)){
            $data = array();
-            // if($gallery_id){
-            //     $data['parent_id'] = $gallery_id;
-
-            //     $max = DB::table('images')->where('parent_id', $gallery_id)->max('ordering');
-            //     $data['ordering'] = (is_null($max) ? 0 : $max + 1);
-            // }
-        //   if($temp){
-        //       $tempStoreUntil = time() + (3 * 24 * 60 * 60);
-        //       $data['temp'] = $tempStoreUntil;
-        //   }
            $data['size'] = $size; 
            $data['filename'] = $filename; 
            $data['ext'] = $ext;  
-        //    $data['created_at'] = \Carbon\Carbon::now()->toDateTimeString();  
-        //    $data['updated_at'] = \Carbon\Carbon::now()->toDateTimeString();
-
-        //    $id = DB::table('images')->insertGetId($data);
             return true;
-        //    return $this->get($id);
         }
         return false;
     }
-
-    /// NEW ///
-    /// Upload avatar
     public function addAvatar($image,$userId){
         $filename = $hash = $this->generateFilename();
         $ext = $image->getClientOriginalExtension();
@@ -88,24 +70,7 @@ class ImageDB extends Model
 
         $filename = $hash = $this->generateFilename();
         $ext = $image->getClientOriginalExtension();
-  
-        // switch ($image->mime) {
-        //     case 'image/png':
-        //         $ext = 'png';
-        //         break;
-        //     case 'image/jpg':
-        //         $ext = 'jpg';
-        //         break;
-        //     case 'image/jpeg':
-        //         $ext = 'jpeg';
-        //         break;
-        //     default:
-        //         $ext = 'jpeg';
-        //         break;
-        // }
-        // $fullFileName = $filename.'.'.$ext;
         if($image->move('content/', $filename.'.'.$ext)){
-        // if($image->save('content/'.$fullFileName,100)){
             $id = DB::table('images')->insertGetId([
               'parent_id' => $serviceId,
               'filename' => $filename.'.'.$ext
@@ -137,7 +102,6 @@ class ImageDB extends Model
         }
         return false;
     }
-    /// NEW ///
     public function addBase64Image($image,$userId){
 
         $filename = $this->generateFilename();

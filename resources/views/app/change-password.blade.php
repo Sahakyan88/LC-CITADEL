@@ -2,9 +2,9 @@
 @section('content')
     <section class="service-detail">
         <div class="container">
-            <div class="row">
+            <div class="row contact mt-5" style="box-shadow: 0 0 24px 0 rgb(0 0 0 / 12%);" >
                 @include('components.menu-profile')
-                <div class="col-sm-8  contact">
+                <div class="col-sm-8 mt-5 contact">
                     <div data-aos="fade-up">
                         <h5 class="service-detail__title">{{config()->get('lang.' . App::getLocale() . '.change_pass')}}</h5>
                         @if (Session::has('success'))
@@ -12,7 +12,7 @@
                             <p>{{ Session::get('success') }}</p>
                         </div>
                     @endif
-                        <form id="login-form" method="POST" action="{{ route('changepassword') }}" class="php-email-form auth-page-login auth-page">
+                        <form  method="POST" action="{{ route('changepassword') }}" class="php-email-form">
                             @csrf
                             <div class="row">
                                 <div class="form-group">
@@ -45,7 +45,6 @@
                     </div>
                 </div>
             </div>
-        </div>
         </div>
     </section>
 @endsection

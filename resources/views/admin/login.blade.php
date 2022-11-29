@@ -1,14 +1,15 @@
 @extends('admin.layouts.guest')
 @section('content')
 
-    <main>
+    <main  style="background-color: #f2f9f8 !important">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-5">
                     <!-- Basic login form-->
-                    <div class="card shadow-lg border-0 rounded-lg mt-5">
-                        <div class="card-header justify-content-center"><h3 class="font-weight-light my-4">Login Admin
-                                Panel</h3></div>
+                    <div class="card shadow-lg border-0 rounded-lg mt-5 mb-10">
+                        <div class="card-header justify-content-center"><h3 class="font-weight-light my-4"><a style="text-decoration: none" href="{{ route('homepage')  }}">Login Admin
+                            Panel</a></h3>        
+                            </div>
                         <div class="card-body">
                             <!-- Login form-->
                             <form id="admin_login" method="post" action="{{ route('adminLoginPost') }}">

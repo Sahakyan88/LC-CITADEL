@@ -8,14 +8,17 @@
         <meta name="author" content="" />
         <title>Admin panel</title>
         <link href="/backend/css/styles.css" rel="stylesheet" />
-        <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
+        <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/nkar.png') }}">
         <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
     </head>
-    <body class="bg-primary">
+    <body class="bg-primary" style="background-color: #6e8785 !important">
         <div id="layoutAuthentication">
+            <a style="text-decoration: none;color:white !important;" href="{{ route('homepage')  }}"><img style="width: 12%;" src="{{ asset('assets/img/nkar.png') }}">LC-CITADEL</a>
+
             <div id="layoutAuthentication_content">
                 @yield('content')
+               
             </div>
             <div id="layoutAuthentication_footer">
                 <footer class="footer mt-auto footer-dark">

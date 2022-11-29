@@ -1,46 +1,62 @@
-@extends('app.layouts.app')
-@section('content')
+@extends('app.layouts.appTwo')
+@section('sectionTwo')
     @if (!Auth::user())
-        <section id="contact" class="contact services section-bg">
-            <div class="container col-sm-6 ">
+        <section style="height: 77vh" class="contact  section-bg mt-5">
+            <style>
+                .mobile-nav-toggle {
+                    display: none;
+                }
+            </style>
+            <div class="container col-sm-4 ">
                 <div class="row">
                     <div class="form-group ">
                         <div data-aos="fade-up">
                             <h2 class="text-center">Sign Up</h2>
-                            <form method="POST" id="register-form" class="php-email-form auth-page">
+                            <form method="POST" action="{{ route('signup') }}" class="php-email-form ">
                                 @csrf
                                 <div class="row">
-                                    <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group ">
                                         <input type="text" name="first_name" class="form-control" id="first_name"
-                                               placeholder="Your First Name">
+                                            placeholder="Your First Name"@if ($old = old('first_name')) value="{{ $old }}" @endif>
+                                        @error('first_name')
+                                            <p style="color: red">{{ $message }}</p>
+                                        @enderror
                                     </div>
-                                    <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group ">
                                         <input type="text" name="last_name" class="form-control" id="last_name"
-                                               placeholder="Your Last Name">
+                                            placeholder="Your Last Name"@if ($old = old('last_name')) value="{{ $old }}" @endif>
+                                        @error('last_name')
+                                            <p style="color: red">{{ $message }}</p>
+                                        @enderror
                                     </div>
-                                    <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group ">
                                         <input type="number" name="phone" class="form-control" id="phone"
-                                               placeholder="Your Phone Number">
+                                            placeholder="Your Phone Number"@if ($old = old('phone')) value="{{ $old }}" @endif>
+                                        @error('phone')
+                                            <p style="color: red">{{ $message }}</p>
+                                        @enderror
                                     </div>
-                                    <div class="form-group col-lg-6 col-md-6 col-sm-12">
-                                        <input type="text" class="form-control" name="address" id="address"
-                                               placeholder="Your Address">
-                                    </div>
-                                    <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group ">
                                         <input type="email" class="form-control" name="email" id="email"
-                                               placeholder="Your Email">
+                                            placeholder="Your Email"@if ($old = old('email')) value="{{ $old }}" @endif>
+                                        @error('email')
+                                            <p style="color: red">{{ $message }}</p>
+                                        @enderror
                                     </div>
-                                    <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group ">
                                         <input type="password" class="form-control" id="password" name="password"
-                                               placeholder="Password">
+                                            placeholder="Password"
+                                            @if ($old = old('password')) value="{{ $old }}" @endif>
+                                        @error('password')
+                                            <p style="color: red">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                 </div>
-
                                 <div class="text-center">
                                     <button type="submit">Sign Up</button>
                                 </div>
                                 <br>
-                                <p>Already a member? <a href="{{url('/login-user')}}">Sign In</a></p>
+                                <p>Already a member? <a href="{{ route('login-user') }}">Sign In</a></p>
                             </form>
                         </div>
                     </div>
@@ -48,90 +64,6 @@
             </div>
         </section>
     @else
-        <section class="service-detail">
-            <div class="container">
-                @include('components.profile')
-
-            </div>
-        </div>
-        </section>
+        @include('components.profile')
     @endif
-    @push('script')
-        <script src="{{ asset('assets/js/main.js') }}"></script>
-        <script src="{{ asset('assets/vendor/jquery/jquery-v3.6.0.js') }}"></script>
-        <script src="{{ asset('assets/vendor/validate/js/validate.js') }}"></script>
-        <script src="{{ asset('assets/js/script.js') }}"></script>
-        <script>
-            $('.auth-page').submit(function (event) {
-                event.preventDefault();
-                var formData = new FormData(this);
-                $('.owner-form .error').remove();
-                $.ajax({
-                    type: 'POST',
-                    url: "{{ url('/signup') }}",
-                    data: formData,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    dataType: 'json',
-                    success: function (response) {
-                        if (response.status == 1) {
-                            location.reload();
-                        }
-                    },
-                    error: function (response) {
-                        if (response.responseJSON.errors) {
-                            errors = response.responseJSON.errors
-                            $.each(errors, function (key, value) {
-                                if ($("#" + key).length > 0) {
-                                    $("#" + key).after('<label class="error">' + value +
-                                        '</label>');
-                                }
-                            });
-                            $('html, body').animate({
-                                scrollTop: $("html").offset().top
-                            }, 500);
-                        }
-                        return;
-                    }
-                });
-
-            });
-            $('.auth-page-login').submit(function (event) {
-                event.preventDefault();
-                var formData = new FormData(this);
-                $('.owner-form .error').remove();
-                $.ajax({
-                    type: 'POST',
-                    url: "{{ url('/signin') }}",
-                    data: formData,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    dataType: 'json',
-                    success: function (response) {
-                        if (response.status == 1) {
-                            location.reload();
-                        }
-                    },
-                    error: function (response) {
-                        if (response.responseJSON.errors) {
-                            errors = response.responseJSON.errors
-                            $.each(errors, function (key, value) {
-                                if ($("#" + key).length > 0) {
-                                    $("#" + key).after('<label class="error">' + value +
-                                        '</label>');
-                                }
-                            });
-                            $('html, body').animate({
-                                scrollTop: $("html").offset().top
-                            }, 500);
-                        }
-                        return;
-                    }
-                });
-
-            });
-        </script>
-    @endpush
 @endsection
