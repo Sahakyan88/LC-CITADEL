@@ -104,7 +104,7 @@
                     <a class="nav-link @if(isset($menu) && $menu == 'services') active @endif"
                        href="{{ route('adminServices') }}">
                         <div class="nav-link-icon"><i data-feather="dollar-sign"></i></div>
-                        Insurance
+                        Services
                     </a>
                     <a class="nav-link @if(isset($menu) && ($menu =='faq')) active @endif"
                        href="{{ route('adminFaq') }}">

@@ -42,14 +42,14 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="mr-3">
-                                <div class="text-white-75 small">Insurance</div>
+                                <div class="text-white-75 small">Services</div>
                                 <div class="text-lg font-weight-bold">{{$service}}</div>
                             </div>
                             <i class="feather-xl text-white-50" data-feather="dollar-sign"></i>
                         </div>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
-                        <a class="small text-white stretched-link" href="{{ route('adminServices') }}">View Insurance</a>
+                        <a class="small text-white stretched-link" href="{{ route('adminServices') }}">View Services</a>
                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                     </div>
                 </div>
@@ -76,13 +76,13 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="mr-3">
-                                <div class="text-white-75 small">Services</div>
+                                <div class="text-white-75 small">F.A.Q</div>
                             </div>
                             <i class="feather-xl text-white-50" data-feather="dollar-sign"></i>
                         </div>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
-                        <a class="small text-white stretched-link" href="">View Services</a>
+                        <a class="small text-white stretched-link" href="{{route('adminFaq')  }}">View F.A.Q</a>
                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                     </div>
                 </div>

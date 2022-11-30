@@ -1,5 +1,6 @@
 @extends('app.layouts.app')
 @section('content')
+
     @if (count($homeimage) > 0)
         @foreach ($homeimage as $home)
             <section style="background-image: url('{{ asset('images/homeslider/' . $home->image_file_name) }}" id="hero"

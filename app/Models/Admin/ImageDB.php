@@ -21,6 +21,7 @@ class ImageDB extends Model
                 ->where('id', $id)
                 ->first();
       if($image){
+        $image->path_passport = asset('passport/'.$image->filename);
         $image->path = asset('images/backendSmall/'.$image->filename);
         $image->path_original = asset('images/original/'.$image->filename);
         $image->path_small = asset('images/selfSmall/'.$image->filename);

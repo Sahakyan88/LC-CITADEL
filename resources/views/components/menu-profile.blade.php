@@ -25,6 +25,12 @@ $lang = App::getLocale();
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link  show  {{ request()->is('passport') ? 'active' : '' }} {{ request()->is($lang . '/passport') ? 'active' : '' }}"
+                            href="{{ route('passportGet') }}" class="arrow icon-right-arrow">
+                            <h4>{{ config()->get('lang.' . App::getLocale() . '.passport') }}</h4>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link acive show" href="{{ route('logout') }}" class="arrow icon-right-arrow">
                             <h4>{{ config()->get('lang.' . App::getLocale() . '.logout') }}</h4>
                         </a>

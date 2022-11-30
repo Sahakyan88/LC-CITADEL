@@ -27,11 +27,25 @@
     <?php
     $lang = App::getLocale();
     ?>
+    @if (request()->is($lang.''))
+        <style>
+            .fixed-top.scrolled {
+                background: #b8c2c1 !important;
+                transition: background-color 200ms linear;
+            }
+        </style>
+    @else
+        <style>
+            .fixed-top {
+                background: #b8c2c1 !important;
+            }
+        </style>
+    @endif
     <header id="header" class="fixed-top d-flex align-items-center">
         <div class="container d-flex justify-content-between">
 
             <div class="logo">
-                <h1><a href="{{ route('homepage') }}"><img src="{{ asset('assets/img/nkar.png') }}">LC-Citadel</a></h1>
+                <h1><a href="{{ route('homepage') }}"><img src="{{ asset('assets/img/nkar.png') }}"><span class="mobilee-logo">LC-Citadel</span></a></h1>
             </div>
             <nav id="navbar" class="navbar">
                 <ul>
@@ -42,7 +56,7 @@
                             href="{{ route('about') }}">{{ config()->get('lang.' . App::getLocale() . '.about_us') }}</a>
                     </li>
                     <li><a
-                            class="nav-link scrollto {{ request()->is($lang . '/insurance') ? 'active' : '' }} {{ request()->is('insurance') ? 'active' : '' }}"href="{{ route('service') }}">{{ config()->get('lang.' . App::getLocale() . '.insurance') }}
+                            class="nav-link scrollto {{ request()->is($lang . '/services') ? 'active' : '' }} {{ request()->is('services') ? 'active' : '' }}"href="{{ route('service') }}">{{ config()->get('lang.' . App::getLocale() . '.services') }}
                         </a></li>
                     </li>
                     <li><a class="nav-link scrollto {{ request()->is('contact') ? 'active' : '' }}{{ request()->is($lang . '/contact') ? 'active' : '' }}"
@@ -50,7 +64,7 @@
                     </li>
                     @if (Auth::user())
                         <li><a class="nav-link scrollto {{ request()->is('login') ? 'active' : '' }} {{ request()->is('register') ? 'active' : '' }} {{ request()->is($lang . '/personal-info') ? 'active' : '' }}
-                            {{ request()->is($lang . '/profile-password') ? 'active' : '' }} {{ request()->is($lang . '/orders-profile') ? 'active' : '' }}"
+                            {{ request()->is($lang .'/passport') ? 'active' : '' }}  {{ request()->is($lang . '/profile-password') ? 'active' : '' }} {{ request()->is($lang . '/orders-profile') ? 'active' : '' }}"
                                 href="{{ route('personalinfo') }}">{{ config()->get('lang.' . App::getLocale() . '.profile') }}</a>
                         </li>
                     @else
@@ -144,7 +158,7 @@
                                         href="{{ route('about') }}">{{ config()->get('lang.' . App::getLocale() . '.about_us') }}</a>
                                 </li>
                                 <li><i class="bx bx-chevron-right"></i> <a
-                                        href="{{ route('service') }}">{{ config()->get('lang.' . App::getLocale() . '.insurance') }}</a>
+                                        href="{{ route('service') }}">{{ config()->get('lang.' . App::getLocale() . '.services') }}</a>
                                 </li>
                             </ul>
                         </div>
@@ -182,6 +196,14 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
         @stack('script')
+        <script>
+            $(document).ready(function() {
+                $(document).scroll(function() {
+                    var $nav = $(".fixed-top");
+                    $nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height());
+                });
+            });
+        </script>
 
 </body>
 

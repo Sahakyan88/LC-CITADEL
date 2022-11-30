@@ -81,8 +81,20 @@ h6 {
   height: 70px;
   transition: all 0.5s;
   z-index: 997;
-  background: #6e8785;
 }
+.chekc-terms{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: flex-start;
+  align-items: center;
+}
+.pdf{
+  text-decoration:underline !important;
+
+}
+
 
 #header .logo h1 {
   font-size: 30px;
@@ -332,6 +344,7 @@ h6 {
   margin: 0;
 }
 
+
 .navbar-mobile a:hover:before,
 .navbar-mobile li:hover>a:before,
 .navbar-mobile .active:before {
@@ -395,11 +408,11 @@ h6 {
 --------------------------------------------------------------*/
 #hero {
   width: 100%;
-  height: calc(100vh - 70px);
+  height: calc(100vh - 0px);
   background: url("../img/hero-bg.jpg") center center;
   background-size: cover;
   position: relative;
-  margin-top: 70px;
+  /* margin-top: 70px; */
   padding: 0;
 }
 
@@ -458,9 +471,20 @@ h6 {
 
 @media (max-width: 992px) {
   #hero {
-    margin-top: 60px;
     height: calc(100vh - 60px);
   }
+  #header .logo h1 a, #header .logo h1 a:hover {
+
+    font-size: 20px;
+}
+#header .logo img {
+  
+  max-height: 65px;
+}
+.mobilee-logo{
+  position: relative;
+  left: 16%;
+}
 }
 
 @media (max-width: 768px) {
@@ -1347,7 +1371,7 @@ section {
 	line-height: 24px;
 	padding: 5px 0px 0px;
 	margin: 0px;
-	font-size: 12px;
+	font-size: 13px !important;
 	color: #ff0000;
 	font-weight: 500;
 }
@@ -1456,7 +1480,7 @@ width: 25px;
 }
 
 #footer .footer-top {
-  background: #6e8785;
+  background: #dae2e1ba;
   border-bottom: 1px solid #18302c;
   padding: 60px 0 30px 0;
 }

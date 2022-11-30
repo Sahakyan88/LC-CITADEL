@@ -34,6 +34,8 @@ class RegisterRequest extends FormRequest
             'last_name' => 'required',
             'first_name' => 'required',
             'phone' => 'required|string',
+            'checkbox' =>'accepted'
+
         ];
     }
     public function messages()
@@ -46,6 +48,7 @@ class RegisterRequest extends FormRequest
                 'last_name.required' => 'Last name is required',
                 'first_name.required' => 'First name is required',
                 'phone.required' => 'Phone number is required',
+                'checkbox.accepted' => 'Please indicate that you have read and agree to the Terms and Conditions',
             ];
         }
 }

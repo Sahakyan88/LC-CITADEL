@@ -58,14 +58,28 @@ class WelcomeController extends Controller
     public function service()
     {
         $lang = App::getLocale();
-        $services = DB::table('services')
+        $servicesPackages = DB::table('services')
         ->select(
             'services.title_'.$lang.' as title','services.body_'.$lang.' as body',
             'services.image_id',
             'services.price',
+            'services.featured',
             'images.filename as image_file_name',
         )
         ->where('services.published', 1)
+        ->where('services.featured', 0)
+        ->leftJoin('images', 'images.id', '=', 'services.image_id')
+        ->orderBy('published', 'DESC')->get();
+        $servicesOther = DB::table('services')
+        ->select(
+            'services.title_'.$lang.' as title','services.body_'.$lang.' as body',
+            'services.image_id',
+            'services.price',
+            'services.featured',
+            'images.filename as image_file_name',
+        )
+        ->where('services.published', 1)
+        ->where('services.featured', 1)
         ->leftJoin('images', 'images.id', '=', 'services.image_id')
         ->orderBy('published', 'DESC')->get();
        
@@ -76,7 +90,7 @@ class WelcomeController extends Controller
     ->where('dictionary.published', 1)
     ->orderBy('published', 'DESC')->get();
         view()->share('menu', 'service');
-        return view('app.service',compact('dictionary','services'));
+        return view('app.service',compact('dictionary','servicesPackages','servicesOther'));
     }
     public function about()
     {
@@ -137,6 +151,7 @@ class WelcomeController extends Controller
         view()->share('menu', 'register');
         return view('app.register');
     }
+    
     public function send(Request $request)
     {
         

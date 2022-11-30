@@ -23,6 +23,7 @@ return new class extends Migration
             $table->text('body_en');
             $table->longText('price');
             $table->integer('image_id');
+            $table->integer('featured');
             $table->integer('ordering');
             $table->integer('published')->default(0);
             $table->timestamps();

@@ -20,7 +20,7 @@
                                         placeholder="{{config()->get('lang.' . App::getLocale() . '.old_pass')}} " required
                                         @if ($old = old('old_password')) value="{{ $old }}" @endif>
                                     @error('old_password')
-                                        <p style="color: red">{{ $message }}</p>
+                                        <p class="error">{{ $message }}</p>
                                     @enderror
                                 </div>
                                 <div class="form-group">
@@ -28,7 +28,7 @@
                                         placeholder="{{config()->get('lang.' . App::getLocale() . '.new_pass')}}"
                                         @if ($old = old('new_password')) value="{{ $old }}" @endif>
                                     @error('new_password')
-                                        <p style="color: red">{{ $message }}</p>
+                                    <p class="error">{{ $message }}</p>
                                     @enderror
                                 </div>
                                 <div class="form-group">
@@ -36,7 +36,8 @@
                                     placeholder="{{config()->get('lang.' . App::getLocale() . '.confirm_pass')}}"
                                     @if ($old = old('confirm_password')) value="{{ $old }}" @endif>
                                 @error('confirm_password')
-                                    <p style="color: red">{{ $message }}</p>
+                                <p class="error">{{ $message }}</p>
+
                                 @enderror
                                 </div>
                             </div>

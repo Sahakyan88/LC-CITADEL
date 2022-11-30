@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Response;
+use File;
+use App\Models\ImageDB;
 use Redirect;
 use Illuminate\Support\Facades\DB;
 
@@ -45,6 +47,46 @@ class AuthController extends Controller
     public function personaIinfo(){
 
         return view('app.login');
+    }
+    public function passport(){
+        $image = DB::table('users')
+        ->select(
+            'users.image_id',
+            'images.filename as image_file_name',
+            'images.id',
+        )
+        ->where('users.id', Auth::user()->id)
+        ->leftJoin('images', 'images.id', '=', 'users.image_id')
+        ->get();
+        return view('app.passport',compact('image'));
+    }
+    public function  storeImage(Request $request){
+        $data= new ImageDB();
+        if($request->file('image')){
+            $file= $request->file('image');
+            $filename= date('YmdHi').$file->getClientOriginalName();
+            $file->move(public_path('passport'), $filename);
+            $data['filename']= $filename;
+            $data->save();
+            $id=Auth::user()->id;
+            $user= User::find($id);
+            $user->image_id=$data['id'];
+            $user->save();
+            return redirect()->back()->withSuccess('Image Upload Successfully!');
+        }
+        return redirect()->back()->withSuccess('Plesee upload image','Error');
+    }
+    public function  deleteImage(Request $request){
+        $file = ImageDB::find($request->image_id);
+        $user = User::find(Auth::user()->id);
+        $user->image_id=null;
+        $user->save();
+        if ($file) {
+            $path = 'passport/'.$file->filename;
+            File::delete($path);
+            $file->delete();
+            return redirect()->back()->withSuccess('Image Delete Successfully!');
+        }
     }
     public function  orderData(Request $request){
         $model = new Order();
@@ -92,6 +134,7 @@ class AuthController extends Controller
             'last_name'         => $request->last_name,
             'phone'             => $request->phone,
             'email'             => $request->email,
+            'terms'             => $request->checkbox,
             'password'          => Hash::make($request->password),
 
         ]));

@@ -1,7 +1,7 @@
 @extends('app.layouts.appTwo')
 @section('sectionTwo')
     @if (!Auth::user())
-        <section style="height: 77vh" class="contact  section-bg mt-5">
+        <section style="height: 90vh" class="contact  section-bg mt-4">
             <style>
                 .mobile-nav-toggle {
                     display: none;
@@ -19,28 +19,28 @@
                                         <input type="text" name="first_name" class="form-control" id="first_name"
                                             placeholder="Your First Name"@if ($old = old('first_name')) value="{{ $old }}" @endif>
                                         @error('first_name')
-                                            <p style="color: red">{{ $message }}</p>
+                                        <p class="error">{{ $message }}</p>
                                         @enderror
                                     </div>
                                     <div class="form-group ">
                                         <input type="text" name="last_name" class="form-control" id="last_name"
                                             placeholder="Your Last Name"@if ($old = old('last_name')) value="{{ $old }}" @endif>
                                         @error('last_name')
-                                            <p style="color: red">{{ $message }}</p>
+                                        <p class="error">{{ $message }}</p>
                                         @enderror
                                     </div>
                                     <div class="form-group ">
                                         <input type="number" name="phone" class="form-control" id="phone"
                                             placeholder="Your Phone Number"@if ($old = old('phone')) value="{{ $old }}" @endif>
                                         @error('phone')
-                                            <p style="color: red">{{ $message }}</p>
+                                        <p class="error">{{ $message }}</p>
                                         @enderror
                                     </div>
                                     <div class="form-group ">
                                         <input type="email" class="form-control" name="email" id="email"
                                             placeholder="Your Email"@if ($old = old('email')) value="{{ $old }}" @endif>
                                         @error('email')
-                                            <p style="color: red">{{ $message }}</p>
+                                        <p class="error">{{ $message }}</p>
                                         @enderror
                                     </div>
                                     <div class="form-group ">
@@ -48,9 +48,18 @@
                                             placeholder="Password"
                                             @if ($old = old('password')) value="{{ $old }}" @endif>
                                         @error('password')
-                                            <p style="color: red">{{ $message }}</p>
+                                        <p class="error">{{ $message }}</p>
                                         @enderror
                                     </div>
+                                    <div class="form-group chekc-terms">
+
+                                       <input type="checkbox"  name="checkbox" @if ($old = old('checkbox')) value="{{ $old }}" @endif>
+                                           <span style="margin-left: 10px"><span>I agree to the<span> <a target="_blank" class="pdf" href="{{ asset('assets/pdf/terms.pdf') }}">Terms and Conditions</a></span> 
+                                       
+                                    </div>
+                                    @error('checkbox')
+                                    <p class="error">{{ $message }}</p>
+                                    @enderror
                                 </div>
                                 <div class="text-center">
                                     <button type="submit">Sign Up</button>
