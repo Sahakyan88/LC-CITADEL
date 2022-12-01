@@ -34,7 +34,7 @@ class Faq extends Model
             $query->skip($start)->take($length);
         }
         if( isset($filter['search']) && strlen($filter['search']) > 0 ){
-            $query->where('faq.question', 'LIKE', '%'. $filter['search'] .'%')->orWhere('faq.answer', 'LIKE', '%'. $filter['search'] .'%');
+            $query->where('faq.question_en', 'LIKE', '%'. $filter['search'] .'%')->orWhere('faq.answer_en', 'LIKE', '%'. $filter['search'] .'%');
         }
         $query->orderBy($sort_field, $sort_dir);
         $data = $query->get();

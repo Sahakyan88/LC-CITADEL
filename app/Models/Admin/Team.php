@@ -31,7 +31,7 @@ class Team extends Model
             $query->skip($start)->take($length);
         }
         if( isset($filter['search']) && strlen($filter['search']) > 0 ){
-            $query->where('teams.title', 'LIKE', '%'. $filter['search'] .'%')->orWhere('teams.price', 'LIKE', '%'. $filter['search'] .'%');
+            $query->where('teams.title_en', 'LIKE', '%'. $filter['search'] .'%');
         }
         $query->orderBy($sort_field, $sort_dir);
         $data = $query->get();

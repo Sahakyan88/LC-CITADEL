@@ -197,7 +197,7 @@ class AuthController extends Controller
             return redirect()->back()->withSuccess('Password was changed successfully!');
         } else {
          
-            return redirect()->back()->withSuccess('error', 'Old Password invalid');
+            return redirect()->back()->withSuccess('Old Password invalid', 'Old Password invalid');
         }
     }
      

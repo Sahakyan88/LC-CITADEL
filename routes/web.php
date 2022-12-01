@@ -8,7 +8,8 @@ use App\Http\Controllers\PaypalController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\OwnerController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
+// use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,21 +22,27 @@ use Illuminate\Http\Request;
 |
 */
 use App\Helpers\Helper;
+
 $local = App::getLocale();
 Route::get('/', function () {
     $referer = Redirect::back()->getTargetUrl();
-    $segments = explode('/', '/');
-    $url = $referer. implode("/", $segments);
+    $parse_url = parse_url($referer, PHP_URL_PATH);
+    $segments = explode('/', $parse_url);
+    array_splice($segments, 1, 1, 'am');
+    $url = Request::root() . implode("/", $segments);
+    if (parse_url($referer, PHP_URL_QUERY)) {
+        $url = $url . '?' . parse_url($referer, PHP_URL_QUERY);
+    }
     return redirect($url);
-});
+})->name('homepage');
 
 Route::get('/login', [WelcomeController::class, 'login'])->name('login-user');
 Route::get('/register', [WelcomeController::class, 'register'])->name('register-user');
 Route::post('/signup', [AuthController::class, 'signup'])->name('signup');
 Route::post('/signin', [AuthController::class, 'signin'])->name('signin');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
-Route::post('/save-image', [AuthController::class, 'storeImage'])->name('imagePassport');
-Route::delete('/delete-image', [AuthController::class, 'deleteImage'])->name('deleteImage');
+Route::post('/save-image', [AuthController::class, 'storeImage'])->name('imagePassport')->middleware('auth');
+Route::delete('/delete-image', [AuthController::class, 'deleteImage'])->name('deleteImage')->middleware('auth');
 
 
 
@@ -51,8 +58,8 @@ Route::get('/personal-info', [AuthController::class, 'personaIinfo'])->name('per
 Route::get('/profile-password', [AuthController::class, 'profilePassword'])->name('profilepassword')->middleware('auth');
 Route::get('/passport', [AuthController::class, 'passport'])->name('passportGet')->middleware('auth');
 Route::post('/change-password', [AuthController::class, 'changePassword'])->name('changepassword')->middleware('auth');
-Route::get('order-data-profile',[AuthController::class, 'orderData'])->name('orderDataProfile');
-Route::get('order-data-edit',[AuthController::class, 'orderGet'])->name('profileGetOrder');
+Route::get('order-data-profile',[AuthController::class, 'orderData'])->name('orderDataProfile')->middleware('auth');
+Route::get('order-data-edit',[AuthController::class, 'orderGet'])->name('profileGetOrder')->middleware('auth');
 
 });
 

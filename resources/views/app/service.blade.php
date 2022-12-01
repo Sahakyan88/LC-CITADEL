@@ -14,7 +14,7 @@
                         <div class="col-xl-4  col-md-4 mt-5" data-aos="fade-up">
                             <div class="icon-box icon-box-pink">
                                 <div> <img style="border-radius: 50px;"
-                                        src="{{ asset('images/backendSmall/' . $service->image_file_name) }}"></div>
+                                        src="{{ asset('images/galleryList/' . $service->image_file_name) }}"></div>
                                 <h4 class="title"><a href="">{{ $service->title }}</a></h4>
                                 <h4 class="title"><a href="">{{ $service->price }}$</a></h4>
                                 <div class="description"><?php echo $service->body; ?> </div>
@@ -25,6 +25,7 @@
                         </div>
                     @endforeach
                 </div>
+            </div>
         @endif
         @if (count($servicesOther) > 0)
             <div class="container" style="margin-top: 10%">
@@ -36,7 +37,7 @@
                         <div class="col-xl-4  col-md-4 mt-5" data-aos="fade-up">
                             <div class="icon-box icon-box-pink">
                                 <div> <img style="border-radius: 50px;"
-                                        src="{{ asset('images/backendSmall/' . $service->image_file_name) }}"></div>
+                                        src="{{ asset('images/galleryList/' . $service->image_file_name) }}"></div>
                                 <h4 class="title"><a href="">{{ $service->title }}</a></h4>
                                 <h4 class="title"><a href="">{{ $service->price }}$</a></h4>
                                 <div class="description"><?php echo $service->body; ?> </div>
@@ -47,6 +48,7 @@
                         </div>
                     @endforeach
                 </div>
+            </div>
     </section>
     @endif
 @endsection

@@ -8,7 +8,7 @@ class BackendSmall implements FilterInterface
 {
     public function applyFilter(Image $image)
     {
-        return $image->fit(50, 50, function ($constraint) {
+        return $image->fit(200, 200, function ($constraint) {
             $constraint->aspectRatio();
             $constraint->upsize();
         });

@@ -6,10 +6,14 @@
     justify-content: center;
 }
 .form-input {
-    width: 350px;
-    padding: 20px;
+  
+    padding: 22px;
     box-shadow: -3px -3px 7px rgba(94, 104, 121, 0.377),
         3px 3px 7px rgba(94, 104, 121, 0.377);
+}
+.vit-lamg{
+    text-align: center;
+    margin-top: 20px;;
 }
 .form-input input {
     display: none;
@@ -20,7 +24,7 @@
     height: 30px;
     line-height: 30px;
     text-align: center;
-    background: #1172c2;
+    background: #b8c2c1;
     color: #fff;
     font-size: 15px;
     font-family: "Open Sans", sans-serif;
@@ -31,7 +35,14 @@
 }
 
 .form-input img {
-    width: 100%;
+    width: 70%;
     display: none;
     margin-bottom: 30px;
+}
+.preview{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: space-between;
+    justify-content: space-around;
 }

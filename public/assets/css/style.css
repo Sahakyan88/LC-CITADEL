@@ -12,6 +12,28 @@ body {
   font-family: "Open Sans", sans-serif;
   color: #444444;
 }
+#thank-you{
+  display: none;
+  background-color: #22bca0;
+  color: white;
+  width: 100px;
+  height: 100px;
+  font-size: 50px;
+  position: fixed;
+  top: 22%;
+}
+#error-you{
+  display: none;
+  background-color: red;
+  color: white;
+  width: 100px;
+  height: 100px;
+  font-size: 50px;
+  position: fixed;
+  top: 22%;
+}
+
+
 
 a {
   color: #1bac91;
@@ -491,6 +513,9 @@ h6 {
   #hero h1 {
     font-size: 28px;
     line-height: 36px;
+  }
+  .profile-top-mobile{
+    width: 100%;
   }
 
   #hero h2 {

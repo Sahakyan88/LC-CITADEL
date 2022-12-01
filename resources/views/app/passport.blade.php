@@ -5,7 +5,7 @@
         <div class="container">
             <div class="row contact mt-5" style="box-shadow: 0 0 24px 0 rgb(0 0 0 / 12%);">
                 @include('components.menu-profile')
-                <div class="col-sm-8 mt-5 contact">
+                <div class="col-sm-8 mt-5 contact profile-top-mobile">
                     <div data-aos="fade-up">
                         <h5 class="service-detail__title">{{ config()->get('lang.' . App::getLocale() . '.passport') }}
                         </h5>
@@ -15,7 +15,7 @@
                             </div>
                         @endif
                         <div class="php-email-form">
-                            <div class="center">
+                            <div >
                                 <div class="form-input">
                                     <div class="preview">
                                         @if ($image[0]->image_file_name)
@@ -29,10 +29,10 @@
                                             @csrf
                                             @method('DELETE')
                                             <input type="hidden" value="{{ $image[0]->id }}" name="image_id">
-                                            <div style="text-align: center"> <button style="background-color: red;" type="submit">Delete Image</button></div>
+                                            <div style="text-align: center"> <button style="background-color: red;" type="submit">{{ config()->get('lang.' . App::getLocale() . '.delete_image') }}</button></div>
                                         </form>
                                     @else
-                                        <label for="file-ip-1">Upload Image</label>
+                                        <label for="file-ip-1">{{ config()->get('lang.' . App::getLocale() . '.upload_image') }}</label>
                                     @endif
                                     <form method="POST" enctype="multipart/form-data"
                                         action="{{ route('imagePassport') }}">
@@ -44,9 +44,11 @@
                                     <button style="display: none"
                                         type="submit">{{ config()->get('lang.' . App::getLocale() . '.save') }}</button>
                                 @else
-                                    <button style="margin-left: 65px;"
+                                <div class="vit-lamg">
+                                    <button
                                         type="submit">{{ config()->get('lang.' . App::getLocale() . '.save') }}</button>
-                                @endif
+                                </div>
+                                        @endif
                                 </form>
                             </div>
                         </div>

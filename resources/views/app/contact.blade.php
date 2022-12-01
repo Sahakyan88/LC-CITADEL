@@ -51,34 +51,42 @@
                         referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
-            <div class="row mt-5 justify-content-center" data-aos="fade-up">
-                <div class="col-lg-10">
-                    <form id="send-form" method="post" class="php-email-form contact-page">
-                        @csrf
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <input type="text" name="name" class="form-control"
-                                    placeholder="{{ config()->get('lang.' . App::getLocale() . '.name') }}">
+            <div>
+                <div class="row mt-5 justify-content-center" data-aos="fade-up">
+                    <div class="text-center" id="thank-you">
+                        <div>&#10004;</div>
+                    </div>
+                    <div class="text-center" id="error-you">
+                        <span>&#10006;</span>
+                    </div>
+                    <div class="col-lg-10">
+
+                        <form id="send-form" method="post" class="php-email-form contact-page">
+                            @csrf
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <input type="text" name="name" class="form-control"
+                                        placeholder="{{ config()->get('lang.' . App::getLocale() . '.name') }}">
+                                </div>
+                                <div class="col-md-6 form-group mt-3 mt-md-0">
+                                    <input type="email" class="form-control" name="email"
+                                        placeholder="{{ config()->get('lang.' . App::getLocale() . '.email') }}">
+                                </div>
                             </div>
-                            <div class="col-md-6 form-group mt-3 mt-md-0">
-                                <input type="email" class="form-control" name="email"
-                                    placeholder="{{ config()->get('lang.' . App::getLocale() . '.email') }}">
+                            <div class="form-group mt-3">
+                                <input type="text" class="form-control" name="subject"
+                                    placeholder="{{ config()->get('lang.' . App::getLocale() . '.subject') }}">
                             </div>
-                        </div>
-                        <div class="form-group mt-3">
-                            <input type="text" class="form-control" name="subject"
-                                placeholder="{{ config()->get('lang.' . App::getLocale() . '.subject') }}">
-                        </div>
-                        <div class="form-group mt-3">
-                            <textarea class="form-control" name="message" rows="5"
-                                placeholder="{{ config()->get('lang.' . App::getLocale() . '.message') }}"></textarea>
-                        </div>
-                        <div class="text-center"><button
-                                type="submit">{{ config()->get('lang.' . App::getLocale() . '.send') }}</button></div>
-                    </form>
+                            <div class="form-group mt-3">
+                                <textarea class="form-control" name="message" rows="5"
+                                    placeholder="{{ config()->get('lang.' . App::getLocale() . '.message') }}"></textarea>
+                            </div>
+                            <div class="text-center"><button
+                                    type="submit">{{ config()->get('lang.' . App::getLocale() . '.send') }}</button></div>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
     </section>
     @push('script')
         {{-- <script src="{{ asset('assets/js/main.js') }}"></script> --}}
@@ -100,13 +108,18 @@
                     dataType: 'json',
                     success: function(response) {
                         if (response.status == 1) {
+
                             location.reload();
+
                         }
+                        $('#thank-you').show();
                     },
                     error: function(response) {
                         if (response.responseJSON.errors) {
+                            $('#error-you').show();
                             errors = response.responseJSON.errors
                             $.each(errors, function(key, value) {
+
                                 if ($("#" + key).length > 0) {
                                     $("#" + key).after('<label class="error">' + value +
                                         '</label>');
