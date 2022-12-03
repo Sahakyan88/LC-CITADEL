@@ -108,11 +108,9 @@
                     dataType: 'json',
                     success: function(response) {
                         if (response.status == 1) {
-
+                            $('#thank-you').show();
                             location.reload();
-
                         }
-                        $('#thank-you').show();
                     },
                     error: function(response) {
                         if (response.responseJSON.errors) {
