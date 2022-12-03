@@ -14,7 +14,21 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
+    'payment' => [
+        'ARCA_registerUrl' => env('ARCA_REGISTRATION_URL'),
+        'ARCA_statusUrl' => env('ARCA_STATUS_URL'),
+        'ARCA_username' => env('ARCA_USERNAME'),
+        'ARCA_password' =>env('ARCA_PASSWORD'),
+        'return_url'=> env('APP_URL') . '/payment/checkPayment',
+        'description' => [
+            'en' => 'LC-Citadel | Payment',
+            'am' => 'LC-Citadel | Օնլայն Վճարում',
+        ],
 
+        'ARCA_bindingUrl' => env('ARCA_BINDING_URL'),
+        'ARCA_username_binding' =>env('ARCA_USERNAME_BINDING'),
+        'ARCA_password_binding' =>env('ARCA_PASSWORD_BINDING'),
+    ],
     /*
     |--------------------------------------------------------------------------
     | Application Environment

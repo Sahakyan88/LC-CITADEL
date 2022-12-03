@@ -32,6 +32,7 @@ return [
         'new_pass'=>'Նոր գաղտնաբառ',
         'confirm_pass'=>'Կրկնիր նոր գաղտնաբառը',
         'save'=>'Պահպանել',
+        'amd'=>'դր․'
     ],
     'en' => [
         'get_started' => 'Learn more',
@@ -64,6 +65,7 @@ return [
         'new_pass'=>'New Password',
         'confirm_pass'=>'Confirm Password',
         'save'=>'Save',
+        'amd'=>'AMD'
     ],
     'ru' => [
         'get_started' => 'Узнать больше',
@@ -96,5 +98,6 @@ return [
         'new_pass'=>'Новый пароль',
         'confirm_pass'=>'Подтвердить пароль',
         'save'=>'Сохранить',
+        'amd'=>'драм'
     ]
 ];

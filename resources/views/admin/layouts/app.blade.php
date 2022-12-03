@@ -30,7 +30,7 @@
     <!-- * * * * * * When using an image, we recommend the SVG format.-->
     <!-- * * * * * * Dimensions: Maximum height: 32px, maximum width: 240px-->
     <a class="navbar-brand" href="{{ route('dashboard') }}">
-        <img style="width: 20%" src="{{ asset('assets/img/nkar.png') }}">
+
         LC-CITADEL
         <?php /* <!-- <img src="{!! asset('backend/img/logo.png') !!}" style="height: 25px;" /> --> */ ?>
     </a>

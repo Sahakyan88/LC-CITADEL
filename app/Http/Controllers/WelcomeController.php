@@ -20,7 +20,7 @@ class WelcomeController extends Controller
 {
     public function homepage()
     {
-       
+
 
         $lang = App::getLocale();
         $faq    =  DB::table('faq')->where('published',1)->get();
@@ -37,7 +37,7 @@ class WelcomeController extends Controller
         )
         ->where('dictionary.published', 1)
         ->orderBy('published', 'DESC')->get();
-       
+
         $homeimage = DB::table('home')
         ->select(
             'home.title_'.$lang.' as title','home.description_'.$lang.' as description',
@@ -47,7 +47,7 @@ class WelcomeController extends Controller
         ->where('home.published', 1)
         ->leftJoin('images', 'images.id', '=', 'home.image_id')
         ->orderBy('published', 'DESC')->get();
-       
+
         view()->share('menu', 'home');
         view()->share('homeimage', $homeimage);
         view()->share('dictionary', $dictionary);
@@ -60,7 +60,7 @@ class WelcomeController extends Controller
         $lang = App::getLocale();
         $services = DB::table('services')
         ->select(
-            'services.title_'.$lang.' as title','services.body_'.$lang.' as body',
+            'services.title_'.$lang.' as title','services.body_'.$lang.' as body','services.id as service_id',
             'services.image_id',
             'services.price',
             'images.filename as image_file_name',
@@ -68,7 +68,6 @@ class WelcomeController extends Controller
         ->where('services.published', 1)
         ->leftJoin('images', 'images.id', '=', 'services.image_id')
         ->orderBy('published', 'DESC')->get();
-       
         $dictionary = DB::table('dictionary')
     ->select(
         'dictionary.service_'.$lang.' as service',
@@ -139,7 +138,7 @@ class WelcomeController extends Controller
     }
     public function send(Request $request)
     {
-        
+
     if($request->message){
         $settings = Settings::where('key','sait_settings')->first();
         $site_settings = json_decode($settings->value);

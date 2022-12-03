@@ -37,7 +37,7 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout')->middle
 
 
 Route::group(['prefix' => $local], function() {
-    
+
 Route::post('/contact-request', [WelcomeController::class, 'send'])->name('send');
 Route::get('/', [WelcomeController::class, 'homepage'])->name('homepage');
 Route::get('/contact', [WelcomeController::class, 'contact'])->name('contact');
@@ -52,3 +52,4 @@ Route::get('order-data-edit',[AuthController::class, 'orderGet'])->name('profile
 
 });
 
+Route::post('/createServiceOrder/{id}',[\App\Http\Controllers\Payment\PaymentController::class, 'createServiceOrder']);
