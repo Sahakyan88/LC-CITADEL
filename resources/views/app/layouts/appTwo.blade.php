@@ -23,11 +23,16 @@
     <link href="{{ asset('assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
 </head>
+
 <body>
     @if (!Auth::user())
         <style>
             body {
                 overflow: hidden;
+            }
+
+            .fixed-top {
+                background: #b8c2c1 !important;
             }
         </style>
 
@@ -48,8 +53,7 @@
         @yield('sectionTwo')
 
         <footer id="footer">
-            <div class="footer-top">
-            </div>
+
             <div class="container">
                 <div class="copyright">
                     &copy; 2022 <strong><span>LC-CITADEL</span></strong>

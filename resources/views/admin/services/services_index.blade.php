@@ -9,7 +9,7 @@
                     <div class="col-auto mt-4">
                         <h1 class="page-header-title">
                         <div class="page-header-icon"><i data-feather="folder"></i></div>
-                        Insurance
+                        Services
                         </h1>
                     </div>
                 </div>
@@ -184,7 +184,7 @@
 
             $('#dataTable').on('click', '.item_edit', function (e) {
                 editId = $(this).attr('edit_item_id');
-                itemPopup.setTitle('Edit Insurance');
+                itemPopup.setTitle('Edit Services');
                 itemPopup.load("{{route('aGetServices')}}?id="+editId, function () {
                     this.open();
                 });
@@ -192,7 +192,7 @@
 
             $('#add_item').on('click', function (e) {
                 Loading.add($('#add_item'));
-                itemPopup.setTitle('Add Insurance');
+                itemPopup.setTitle('Add Services');
                 itemPopup.load("{{route('aGetServices')}}", function () {
                     this.open();
                 });

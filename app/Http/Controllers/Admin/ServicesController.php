@@ -104,6 +104,8 @@ class ServicesController extends Controller
 
         $item->published   = $data['published'];
         $item->price       = $data['price'];
+        $item->featured    = isset($data['featured']) ? 1 : 0;
+
         $item->save();
         $id = $item->id;
 

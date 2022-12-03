@@ -103,6 +103,12 @@
                                                             Price:
                                                             <input class="form-control" type="number" value="{{ $item->price }}" name="price">
                                                         </div>
+                                                        <div class="form-group col-md-6">
+                                                            Other Services:
+                                                            <?php $checked = $item->featured == '1' ? 'checked' : ''; ?>
+                                                            <input class="admin_checkbox" value="1" style="width: 20px; height: 20px;"
+                                                                type="checkbox" name="featured" <?= $checked ?> />
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

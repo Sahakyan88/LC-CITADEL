@@ -8,7 +8,7 @@ class GalleryList implements FilterInterface
 {
     public function applyFilter(Image $image)
     {
-    	return $image->fit(1000, 600, function ($constraint) {
+    	return $image->fit(80, 80, function ($constraint) {
             $constraint->aspectRatio();
 		    $constraint->upsize();
 		});

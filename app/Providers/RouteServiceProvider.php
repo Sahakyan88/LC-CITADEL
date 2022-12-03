@@ -70,11 +70,6 @@ class RouteServiceProvider extends ServiceProvider
         $request = app(\Illuminate\Http\Request::class);
         $locale = $request->segment(1);
 
-        if($locale == 'am' && $locale == 'en'){
-            header("Location: /");
-            exit();
-        }
-        // TODO ACTIVE LANG
         $activeLangs = array('am','en','ru');
         
         if ( ! in_array($locale, $activeLangs)) {

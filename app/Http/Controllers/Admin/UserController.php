@@ -9,6 +9,8 @@ use App\Models\Notification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use App\Models\Admin\ImageDB;
+
 class UserController extends Controller
 {
     public function usersIndex(){
@@ -41,19 +43,20 @@ class UserController extends Controller
         return $data;
     }
     public function userGet(Request $request){
-    
         $id = (int)$request['id'];
         $page = (isset($request['page']) && $request['page'] == 'verification' ) ? true : false;
         $item = $id ? Users::find($id) : new Users();   
         if($id){
             $item = Users::find($id);
-            $mode = "edit";
+            if ($item->image_id) {
+                $imageDb = new ImageDB();
+                $item->image = $imageDb->get($item->image_id);
+            }
+            $mode = 'edit';
         }else{
-            return json_encode(array('status' => 0, 'message' => 'User is required.'));
-            
-            $item = new Users(); 
-            $item->id = 0;
-            $mode = "add";
+            $item = new Service();
+            $item->created_at = date("Y-m-d H:i:s");
+            $mode= "add";
         }
 
         $data = json_encode(

@@ -1,7 +1,7 @@
 @extends('app.layouts.appTwo')
 @section('sectionTwo')
     @if (!Auth::user())
-        <section style="height: 77vh" class="contact  section-bg mt-5">
+        <section style="height: 87vh" class="contact  section-bg mt-5">
             <style>
                 .mobile-nav-toggle {
                     display: none;
@@ -19,14 +19,16 @@
                                     <input type="email" class="form-control" name="email" id="email"
                                         placeholder="Your Email"@if ($old = old('email')) value="{{ $old }}" @endif>
                                     @error('email')
-                                        <p style="color: red">{{ $message }}</p>
+                                    <p class="error">{{ $message }}</p>
+
                                     @enderror
                                 </div>
                                 <div class="form-group">
                                     <input type="password" class="form-control" id="password" name="password"
                                         placeholder="Password"@if ($old = old('password')) value="{{ $old }}" @endif>
                                     @error('password')
-                                        <p style="color: red">{{ $message }}</p>
+                                    <p class="error">{{ $message }}</p>
+
                                     @enderror
                                 </div>
                             </div>
