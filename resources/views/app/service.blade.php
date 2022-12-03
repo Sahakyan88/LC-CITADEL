@@ -33,9 +33,6 @@
                     @endforeach
                 </div>
             </div>
-
-        </section>
-
         @endif
         @if (count($servicesOther) > 0)
             <div class="container" style="margin-top: 10%">
