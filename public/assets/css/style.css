@@ -32,7 +32,51 @@ body {
   position: fixed;
   top: 22%;
 }
+.prof-order-block{
+  overflow: auto;
+    height: 330px;
 
+}
+.order-profile{
+  line-height: 30px;
+  margin-top: 2px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: flex-end;
+  justify-content: flex-start;
+}
+
+
+.title-order{
+  font-weight: 600;
+}
+.amount{
+  color: #a7c3be;
+  font-size: 25px;
+}
+.date-prof{
+  color: #1bac91 ;
+  font-weight: 700;
+  text-align: end;
+}
+.psuccess{
+  background-color: RGB(25, 135, 84);
+  color: white;
+  font-size: 15px;
+  text-align: center;
+  border-radius: 9px;
+  padding: 6px;
+}
+.psecondary{
+  background-color: #6c757d;
+  color: white;
+  font-size: 15px;
+  text-align: center;
+  border-radius: 9px;
+  padding: 6px;
+
+}
 
 
 a {

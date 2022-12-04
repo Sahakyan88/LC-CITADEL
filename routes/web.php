@@ -58,8 +58,6 @@ Route::get('/personal-info', [AuthController::class, 'personaIinfo'])->name('per
 Route::get('/profile-password', [AuthController::class, 'profilePassword'])->name('profilepassword')->middleware('auth');
 Route::get('/passport', [AuthController::class, 'passport'])->name('passportGet')->middleware('auth');
 Route::post('/change-password', [AuthController::class, 'changePassword'])->name('changepassword')->middleware('auth');
-Route::get('order-data-profile',[AuthController::class, 'orderData'])->name('orderDataProfile')->middleware('auth');
-Route::get('order-data-edit',[AuthController::class, 'orderGet'])->name('profileGetOrder')->middleware('auth');
 
 });
 

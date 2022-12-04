@@ -17,14 +17,16 @@ class Order extends Model
         'status',
         'product',
         'session_id',
+        'user_id',
+        'service_id',
         'total_amount'
     ];
 
     /**
      * @var string[]
      */
-    protected $casts = [
-        'user' => 'json',
-        'product' => 'array',
-    ];
+    // protected $casts = [
+    //     'user' => 'json',
+    //     'product' => 'array',
+    // ];
 }

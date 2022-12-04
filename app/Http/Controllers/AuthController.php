@@ -18,6 +18,7 @@ use Response;
 use File;
 use App\Models\ImageDB;
 use Redirect;
+use App;
 use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
@@ -41,7 +42,21 @@ class AuthController extends Controller
      * @return void
      */
     public function ordersPprofile(Request $request){
-        return view('app.orders-profile');
+
+        $lang = App::getLocale();
+        $order = DB::table('orders')->select(
+        'orders.id as id',
+        'orders.status',
+        'orders.total_amount as amount',
+        'services.title_'.$lang.' as title',
+        'orders.created_at as date',
+        'orders.status_been',
+     
+        )->leftJoin('users', 'users.id', '=', 'orders.user_id')
+        ->leftJoin('services', 'services.id', '=', 'orders.service_id')
+        ->where('orders.status', 'paid')   
+        ->where('users.id', Auth::user()->id)->get();    
+        return view('app.orders-profile',compact('order'));
     }
 
     public function personaIinfo(){
@@ -88,44 +103,7 @@ class AuthController extends Controller
             return redirect()->back()->withSuccess('Image Delete Successfully!');
         }
     }
-    public function  orderData(Request $request){
-        $model = new Order();
-
-        $filter = array(
-            'status' => $request->input('filter_status'),
-            'category' => $request->input('filter_category'),
-        );
-
-        $items = $model->getAll(
-            $request->input('start'),
-            $request->input('length'),
-            $filter,
-            $request->input('sort_field'),
-            $request->input('sort_dir'),
-        );
-
-        $data = json_encode(array('data' => $items['data'], 'recordsFiltered' => $items['count'], 'recordsTotal'=> $items['count']));
-        return $data;
-    }
-    public function orderGet(Request $request){
-
-        $id = (int)$request['id'];
-        if($id){
-            $item = Order::find($id);
-            $mode = 'edit';
-        }
-        $data = json_encode(
-            array('data' =>
-                (String) view('app.orders-item-profile', array(
-                    'item'=>$item,
-                    'mode' => $mode,
-                )),
-                'status' => 1)
-            );
-
-        return $data;
-    }
-
+ 
     public function signup(RegisterRequest $request)
     {
         Auth::login($user = User::create([

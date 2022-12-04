@@ -14,6 +14,8 @@ use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\FaqController;
 use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Admin\ServicesController;
+use App\Http\Controllers\Admin\OneTimePaymentControler;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -81,7 +83,15 @@ Route::group(['middleware' => 'adminauth'], function () {
     Route::get('team-data',[TeamController::class, 'teamData'])->name('aTeamData');
     Route::post('team-remove',[TeamController::class, 'removeTeam'])->name('aRemoveTeam');
     Route::post('team-ordering',[TeamController::class, 'reorderingHome'])->name('aTeamSort');
+    
+    
+    Route::get('one-payments',[OneTimePaymentControler::class, 'onePayment'])->name('onePayments');
+    Route::get('data-payments',[OneTimePaymentControler::class, 'onePaymentData'])->name('aonePaymentData');
+    Route::get('get-payments',[OneTimePaymentControler::class, 'onePaymentGet'])->name('aGetOnePayment');
+    Route::post('save-payments',[OneTimePaymentControler::class, 'aPaymentOneSave'])->name('paymentOneSave');
 
+
+    
     Route::post('upload-image',[ImageController::class, 'upload'])->name('aUpload');
     Route::post('remove-image',[ImageController::class, 'remove'])->name('aRemoveImage');
 

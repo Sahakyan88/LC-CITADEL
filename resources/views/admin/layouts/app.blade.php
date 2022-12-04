@@ -106,6 +106,11 @@
                         <div class="nav-link-icon"><i data-feather="dollar-sign"></i></div>
                         Services
                     </a>
+                    <a class="nav-link @if(isset($menu) && $menu == 'onePayments') active @endif"
+                    href="{{ route('onePayments') }}">
+                     <div class="nav-link-icon"><i data-feather="dollar-sign"></i></div>
+                     One time payments
+                 </a>
                     <a class="nav-link @if(isset($menu) && ($menu =='faq')) active @endif"
                        href="{{ route('adminFaq') }}">
                         <div class="nav-link-icon"><i data-feather="help-circle"></i></div>

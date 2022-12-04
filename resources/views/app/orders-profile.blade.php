@@ -1,158 +1,32 @@
-
 @extends('app.layouts.app')
 @section('content')
-
-<link href="{!! asset('assets/css/profile/styles.css') !!}" media="all" rel="stylesheet" type="text/css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
-<section class="service-detail">
-    <div class="container">
-        <div class="row contact mt-5" style="box-shadow: 0 0 24px 0 rgb(0 0 0 / 12%);" >
-            @include("components.menu-profile")
-            <div class="col-lg-8 mt-5">
-                <div class="service-detail__text">
-                        <div class="card">
-                            <div class="card-header"></div>
-                            <div class="card-body">
-                                
-                                <div class="table-responsive">
-                                        <table class="table table-bordered table-hover " id="dataTable" width="100%" cellspacing="0">
-                                            <thead>
-                                            <tr>
-                                                <th>ID</th>
-                                                <th>Date</th>
-                                                <th>Price</th>
-                                                <th>Status</th>
-                                                <th>Show</th>
-                                            </tr>
-                                        </thead>
-                                        <tfoot>
-                                            <tr>
-                                                <th>ID</th>
-                                                <th>Date</th>
-                                                <th>Price</th>
-                                                <th>Status</th>
-                                                <th>Show</th>
-                                            </tr>
-                                        </tfoot>
-                                        <tbody></tbody>
-                                    </table>
-                                </div>
-                            </div>
+    <section class="service-detail">
+        <div class="container">
+            <div class="row contact mt-5" style="box-shadow: 0 0 24px 0 rgb(0 0 0 / 12%);">
+                @include('components.menu-profile')
+                <div class="col-sm-8 mt-5 contact profile-top-mobile">
+                    <div data-aos="fade-up">
+                        <h5 class="service-detail__title">{{ config()->get('lang.' . App::getLocale() . '.services') }}</h5>
+                        <div class="prof-order-block">
+                            @if (count($order) > 0)
+                                @foreach ($order as $order)
+                                    <div class="php-email-form order-profile">
+                                        <div class="col-sm-12 title-order">{{ $order->title }}</div>
+                                        <div class="col-sm-12 amount">{{ $order->amount }}$</div>
+                                        @if ($order->status_been == 0)
+                                            <div class="psecondary col-sm-2 mt-3">Not Done</div>
+                                        @else
+                                            <div class="psuccess col-sm-2 mt-3">Done</div>
+                                        @endif
+                                        <hr>
+                                        <div class="col-sm-12 date-prof">{{ $order->date }}</div>
+                                    </div>
+                                @endforeach
+                            @endif
                         </div>
-                    
-                
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-</section>
-
-<script src="{!! asset('backend/vendor/popup.js') !!}" type="text/javascript"></script>
-
-<div id="modal-container"></div>
-
-@push('css')
-    <link href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
-@endpush
-@push('script')
-    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
-
-   <script>
-        $(document).ready(function() {
-            const capitalize = (s) => {
-                if (typeof s !== 'string') return ''
-                return s.charAt(0).toUpperCase() + s.slice(1)
-            }
-
-            var dataTable =  $('#dataTable').DataTable({
-                "processing": true,
-                "serverSide": true,
-                'searching': false,
-                "ajax": {
-                    "url": "{{ route('orderDataProfile') }}",
-                    "data": function(data){
-                        data['sort_field'] = data.columns[data.order[0].column].name;
-                        data['sort_dir'] =  data.order[0].dir;
-
-                        delete data.columns;
-                        delete data.order;
-                        delete data.search;
-
-                        var filter_status = $('#filter_status').val();
-                        data.filter_status = filter_status;
-                        
-                        var filter_category = $('#filter_category').val();
-                        data.filter_category = filter_category;
-                    }
-                },
-                "fnDrawCallback": function( oSettings ) {
-                    feather.replace();
-                    $('[data-toggle="popover"]').popover();
-                },
-                "columns": [
-                    { "data": 'id', 'name': 'orders.id',"orderable": true},
-                    { "data": 'created_at', 'name': 'orders.created_at',"orderable": true},
-                    { "data": "total", "name":'total', "orderable": true },
-                    { "data": "status", "name":'status', "orderable": true , "sClass": "content-middel",
-                    render: function ( data, type, row, meta) {
-                        switch(row.status){
-                            case 'approved':
-                                colorClass = 'badge-success';
-                                break;
-                            case 'waiting':
-                                colorClass = 'badge-info';
-                                break;
-                            case 'declined':
-                                colorClass = 'badge-danger';
-                                break;
-                            default:
-                                colorClass = 'badge-danger';
-                        }
-                        str = capitalize(row.status.replace("_", " "));
-	            	    // return capitalize(str)
-                        return '<div style="font-size:12px;" class="badge '+colorClass+' badge-pill">'+str+'</div>';
-	                }},
-                    { "data": "id", "name":'edit', "orderable": false, "sClass": "content-middel", 
-	            	    render: function ( data, type, row, meta) {
-	            	    return '<a href="javascript:;" edit_item_id="'+row.id+'" class="item_edit"><button class="btn btn-datatable btn-icon btn-transparent-dark"><i data-feather="edit"></i></button></a>';
-	                }},
-                ],
-                "columnDefs": [
-                    {"width": "5%", "targets": 0},
-                    {"width": "5%", "targets": 1},
-                    {"width": "5%", "targets": 2},
-                    {"width": "5%", "targets": 3},
-                    {"width": "5%", "targets": 4},
-                ],
-                "order": [
-                    ['0', "desc"]
-                ]
-            });
-
-            $('#filter_status, #filter_category').change(function(){
-                dataTable.draw();
-            });
-
-            var itemPopup = new Popup;
-            itemPopup.init({
-                size:'modal-xl',
-                identifier:'edit-item',
-                class: 'modal',
-                minHeight: '200',
-            })
-            window.itemPopup = itemPopup;
-
-            $('#dataTable').on('click', '.item_edit', function (e) {
-                editId = $(this).attr('edit_item_id');
-                itemPopup.setTitle('Order');
-                itemPopup.load("{{route('profileGetOrder')}}?id="+editId, function () {
-                    console.log(6585);
-                    this.open();
-                });
-            });
-        });
-    </script>
-@endpush
+    </section>
 @endsection
