@@ -61,7 +61,7 @@ class AuthController extends Controller
 
     public function personaIinfo(){
 
-        return view('app.login');
+        return view('app.personalinfo');
     }
     public function passport(){
         $image = DB::table('users')
@@ -116,7 +116,7 @@ class AuthController extends Controller
             'password'          => Hash::make($request->password),
 
         ]));
-        return  back();
+        return redirect()->route('personalinfo');
     }
     public function logout(Request $request)
     {
@@ -135,7 +135,7 @@ class AuthController extends Controller
         $request->authenticate();
         $request->session()->regenerate();
 
-        return  back();      
+        return redirect()->route('personalinfo');
     }
     public function saveProfile(Request $request)
     {

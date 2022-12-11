@@ -1,7 +1,7 @@
 @extends('app.layouts.appTwo')
 @section('sectionTwo')
     @if (!Auth::user())
-        <section style="height: 90vh" class="contact  section-bg mt-4">
+        <section style="height: 90vh;overflow:auto" class="contact  section-bg mt-4">
             <style>
                 .mobile-nav-toggle {
                     display: none;
@@ -30,7 +30,7 @@
                                         @enderror
                                     </div>
                                     <div class="form-group ">
-                                        <input type="number" name="phone" class="form-control" id="phone"
+                                        <input type="text" name="phone" class="form-control" id="phone"
                                             placeholder="Your Phone Number"@if ($old = old('phone')) value="{{ $old }}" @endif>
                                         @error('phone')
                                         <p class="error">{{ $message }}</p>
@@ -72,7 +72,6 @@
                 </div>
             </div>
         </section>
-    @else
-        @include('components.profile')
+
     @endif
 @endsection

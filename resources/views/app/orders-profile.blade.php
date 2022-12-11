@@ -14,7 +14,7 @@
                                         <div class="col-sm-12 title-order">{{ $order->title }}</div>
                                         <div class="col-sm-12 amount">{{ $order->amount }}$</div>
                                         @if ($order->status_been == 0)
-                                            <div class="psecondary col-sm-2 mt-3">Not Done</div>
+                                            <div class="psecondary col-sm-2 mt-3">Upcoming</div>
                                         @else
                                             <div class="psuccess col-sm-2 mt-3">Done</div>
                                         @endif

@@ -22,7 +22,7 @@
                                                         aria-label="Default select example">
                                                         <option @if ($item->been == 1) selected @endif value="1">Done
                                                         </option>
-                                                        <option @if ($item->been == 0) selected @endif value="0">Not Done
+                                                        <option @if ($item->been == 0) selected @endif value="0">Upcoming
                                                         </option>
                                                     </select>
                                                     </span>

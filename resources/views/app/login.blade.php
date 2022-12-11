@@ -40,7 +40,6 @@
                 </div>
             </div>
         </section>
-    @else
-        @include('components.profile')
+
     @endif
 @endsection

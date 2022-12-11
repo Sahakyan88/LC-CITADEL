@@ -110,7 +110,6 @@
             </nav>
         </div>
     </header>
-    <main id="main">
         @yield('content')
         <footer id="footer">
             <div class="footer-top">
