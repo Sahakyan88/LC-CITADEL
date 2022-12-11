@@ -37,8 +37,8 @@
                                 <div class="form-group">
                                     <div class="custom-control custom-checkbox">
                                         <input class="custom-control-input" id="rememberPasswordCheck" name="remember" type="checkbox" value="1"/>
-                                        <label class="custom-control-label" for="rememberPasswordCheck">Remember
-                                            password</label>
+                                        <span class="custom-control-label" for="rememberPasswordCheck">Remember
+                                            password</span>
                                     </div>
                                 </div>
                                 <!-- Form Group (login box)-->

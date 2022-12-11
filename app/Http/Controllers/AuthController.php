@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\Auth\PasswordRequest;
+use App\Http\Requests\Auth\RegisterEdRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
@@ -100,10 +101,22 @@ class AuthController extends Controller
             $path = 'passport/'.$file->filename;
             File::delete($path);
             $file->delete();
-            return redirect()->back()->withSuccess('Image Delete Successfully!');
+            return redirect()->back()->withSuccess('Image delete successfully!');
         }
     }
  
+    public function edUser(RegisterEdRequest $request)
+    {
+        $user =Auth::user();
+        $user->first_name = $request['first_name'];
+        $user->last_name = $request['last_name'];
+        $user->phone = $request['phone'];
+        $user->save();
+        if($user->save()){
+            return redirect()->back()->withSuccess('Personal information was changed successfully!');
+        }
+      
+    }
     public function signup(RegisterRequest $request)
     {
         Auth::login($user = User::create([

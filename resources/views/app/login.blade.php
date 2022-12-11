@@ -19,17 +19,21 @@
                                     <input type="email" class="form-control" name="email" id="email"
                                         placeholder="Your Email"@if ($old = old('email')) value="{{ $old }}" @endif>
                                     @error('email')
-                                    <p class="error">{{ $message }}</p>
-
+                                        <p class="error">{{ $message }}</p>
                                     @enderror
                                 </div>
                                 <div class="form-group">
                                     <input type="password" class="form-control" id="password" name="password"
                                         placeholder="Password"@if ($old = old('password')) value="{{ $old }}" @endif>
                                     @error('password')
-                                    <p class="error">{{ $message }}</p>
-
+                                        <p class="error">{{ $message }}</p>
                                     @enderror
+                                </div>
+                                <div class="form-group chekc-terms">
+                                    <input class="custom-control-input" id="rememberPasswordCheck" name="remember"
+                                        type="checkbox" value="1" />
+                                    <label style="margin-left: 10px" class="custom-control-label"
+                                        for="rememberPasswordCheck">Remember me</label>
                                 </div>
                             </div>
                             <div class="text-center"><button type="submit">Sign In</button></div>
@@ -40,6 +44,5 @@
                 </div>
             </div>
         </section>
-
     @endif
 @endsection

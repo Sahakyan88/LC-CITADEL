@@ -55,6 +55,7 @@ Route::get('/services', [WelcomeController::class, 'service'])->name('service');
 Route::get('/about', [WelcomeController::class, 'about'])->name('about');
 Route::get('/orders-profile', [AuthController::class, 'ordersPprofile'])->name('ordersprofile')->middleware('auth');
 Route::get('/personal-info', [AuthController::class, 'personaIinfo'])->name('personalinfo')->middleware('auth');
+Route::post('/user-info', [AuthController::class, 'edUser'])->name('edUserinfo')->middleware('auth');;
 Route::get('/profile-password', [AuthController::class, 'profilePassword'])->name('profilepassword')->middleware('auth');
 Route::get('/passport', [AuthController::class, 'passport'])->name('passportGet')->middleware('auth');
 Route::post('/change-password', [AuthController::class, 'changePassword'])->name('changepassword')->middleware('auth');

@@ -31,7 +31,6 @@
         <style>
             .fixed-top.scrolled {
                 background: #b8c2c1 !important;
-                transition: background-color 200ms linear;
             }
         </style>
     @else
