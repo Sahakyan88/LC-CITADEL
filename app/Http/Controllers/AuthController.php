@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
-    
+
     /*
     |--------------------------------------------------------------------------
     | Login Controller
@@ -51,11 +51,11 @@ class AuthController extends Controller
         'services.title_'.$lang.' as title',
         'orders.created_at as date',
         'orders.status_been',
-     
+
         )->leftJoin('users', 'users.id', '=', 'orders.user_id')
-        ->leftJoin('services', 'services.id', '=', 'orders.service_id')
-        ->where('orders.status', 'paid')   
-        ->where('users.id', Auth::user()->id)->get();    
+        ->leftJoin('services', 'services.id', '=', 'orders.product_id')
+        ->where('orders.status', 'paid')
+        ->where('users.id', Auth::user()->id)->get();
         return view('app.orders-profile',compact('order'));
     }
 
@@ -103,7 +103,7 @@ class AuthController extends Controller
             return redirect()->back()->withSuccess('Image Delete Successfully!');
         }
     }
- 
+
     public function signup(RegisterRequest $request)
     {
         Auth::login($user = User::create([
@@ -135,7 +135,7 @@ class AuthController extends Controller
         $request->authenticate();
         $request->session()->regenerate();
 
-        return  back();      
+        return  back();
     }
     public function saveProfile(Request $request)
     {
@@ -174,10 +174,10 @@ class AuthController extends Controller
             $obj_user->save();
             return redirect()->back()->withSuccess('Password was changed successfully!');
         } else {
-         
+
             return redirect()->back()->withSuccess('Old Password invalid', 'Old Password invalid');
         }
     }
-     
+
 
 }

@@ -58,7 +58,12 @@ Route::get('/personal-info', [AuthController::class, 'personaIinfo'])->name('per
 Route::get('/profile-password', [AuthController::class, 'profilePassword'])->name('profilepassword')->middleware('auth');
 Route::get('/passport', [AuthController::class, 'passport'])->name('passportGet')->middleware('auth');
 Route::post('/change-password', [AuthController::class, 'changePassword'])->name('changepassword')->middleware('auth');
+Route::get('/payment-success',[\App\Http\Controllers\Payment\PaymentController::class, 'payment_success'])->name('payment_success');
 
 });
 
 Route::post('/createServiceOrder/{id}',[\App\Http\Controllers\Payment\PaymentController::class, 'createServiceOrder']);
+Route::post('/createPackageOrder/{id}',[\App\Http\Controllers\Payment\SubscriptionController::class, 'createPackageOrder']);
+Route::get('/payment/checkPayment',[\App\Http\Controllers\Payment\PaymentController::class,'checkPayment']);
+Route::get('/payment/checkSubscription',[\App\Http\Controllers\Payment\SubscriptionController::class,'checkSubscription']);
+Route::get('/billSubscription', [\App\Http\Controllers\Payment\SubscriptionController::class,'bill']);

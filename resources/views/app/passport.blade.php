@@ -14,6 +14,11 @@
                                 <p>{{ Session::get('success') }}</p>
                             </div>
                         @endif
+                        @if(auth()->user()['image_id'] == null)
+                        <div class="alert alert-warning" role="alert">
+                            {{ config()->get('lang.' . App::getLocale() . '.must-upload-passport') }}
+                        </div>
+                        @endif
                         <div class="php-email-form">
                             <div >
                                 <div class="form-input">

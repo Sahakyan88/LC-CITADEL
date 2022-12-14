@@ -10,12 +10,12 @@ class Payment extends Model
 
     protected $fillable = [
         'order_id',
-        'email',
         'status',
         'type',
         'status_log',
         'log',
         'session_id',
+        'ameria_payment_id'
     ];
 
     protected $casts = [
