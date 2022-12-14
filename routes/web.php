@@ -46,7 +46,7 @@ Route::get('/register', [WelcomeController::class, 'register'])->name('register-
 
 Route::post('/sign-up', [AuthController::class, 'signup'])->name('signup');
 Route::post('/sign-in', [AuthController::class, 'signin'])->name('signin');
-// Route::get('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 Route::post('/save-image', [AuthController::class, 'storeImage'])->name('imagePassport')->middleware('auth');
 Route::delete('/delete-image', [AuthController::class, 'deleteImage'])->name('deleteImage')->middleware('auth');
 Route::get('/not-found', [WelcomeController::class, 'notFound'])->name('notfound');
