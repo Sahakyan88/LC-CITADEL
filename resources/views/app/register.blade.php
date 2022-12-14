@@ -2,11 +2,6 @@
 @section('sectionTwo')
     @if (!Auth::user())
         <section style="height: 90vh;overflow:auto" class="contact  section-bg mt-4">
-            <style>
-                .mobile-nav-toggle {
-                    display: none;
-                }
-            </style>
             <div class="container col-sm-4 ">
                 <div class="row">
                     <div class="form-group ">
@@ -51,15 +46,15 @@
                                             <p class="error">{{ $message }}</p>
                                         @enderror
                                     </div>
-                                   
+
                                     <div class="form-group chekc-terms">
-
-                                        <input type="checkbox" name="checkbox"
-                                            @if ($old = old('checkbox')) value="{{ $old }}" @endif>
-                                        <span style="margin-left: 10px"><span>I agree to the<span> <a target="_blank"
-                                                        class="pdf" href="{{ asset('assets/pdf/terms.pdf') }}">Terms and
-                                                        Conditions</a></span>
-
+                                        <label class="rember">
+                                            <input type="checkbox" name="checkbox" class="input-remeber"
+                                                @if ($old = old('checkbox')) value="{{ $old }}" @endif>I
+                                            agree to the
+                                            <a target="_blank" class="pdf"
+                                                href="{{ asset('assets/pdf/terms.pdf') }}">Terms and Conditions</a>
+                                        </label>
                                     </div>
                                     @error('checkbox')
                                         <p class="error">{{ $message }}</p>
@@ -69,7 +64,7 @@
                                     <button type="submit">Sign Up</button>
                                 </div>
                                 <br>
-                                <p>Already a member? <a href="{{ route('login-user') }}">Sign In</a></p>
+                                <p class="text-center">Already a member? <a href="{{ route('login-user') }}">Sign In</a></p>
                             </form>
                         </div>
                     </div>

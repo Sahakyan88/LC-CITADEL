@@ -20,8 +20,7 @@
     </header>
     <div class="container mt-n10">
         <div class="card">
-            <div class="card-header">
-            </div>
+           
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
@@ -31,6 +30,7 @@
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Email</th>
+                                <th>Verified</th>
                                 <th>Edit</th>
                             </tr>
                         </thead>
@@ -40,7 +40,8 @@
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Email</th>
-                                <th>Edit</th>
+                                <th>Email</th>
+                                <th>Verified</th>
                             </tr>
                         </tfoot>
                         <tbody></tbody>
@@ -94,17 +95,31 @@
                     { "data": "first_name", "name":'first_name', "orderable": true },
                     { "data": "last_name", "name":'last_name', "orderable": true },
                     { "data": "email", "name":'email', "orderable": true },
+                    { "data": "email_verified_at", "name":'email_verified_at', "orderable": true , "sClass": "content-middel",
+                    render: function ( data, type, row, meta) {
+                        switch(row.email_verified_at){
+                            case null:
+                                colorClass = 'badge-danger';
+                                status = 'not verified';
+                                break;
+                            default:
+                                status = 'verified' 
+                                colorClass = 'badge-success';
+                        }
+                        return '<div style="font-size:12px;" class="badge '+colorClass+' badge-pill">'+status+'</div>';
+	                }},
                     { "data": "id", "name":'edit', "orderable": false, "sClass": "content-middel", 
 	            	    render: function ( data, type, row, meta) {
 	            	    return '<a href="javascript:;" edit_item_id="'+row.id+'" class="item_edit"><button class="btn btn-datatable btn-icon btn-transparent-dark"><i data-feather="edit"></i></button></a>';
 	                }},
                 ],
                 "columnDefs": [
-                    {"width": "10%", "targets": 0},
-                    {"width": "25%", "targets": 1},
-                    {"width": "25%", "targets": 2},
-                    {"width": "40%", "targets": 3},
+                    {"width": "5%", "targets": 0},
+                    {"width": "20%", "targets": 1},
+                    {"width": "20%", "targets": 2},
+                    {"width": "25%", "targets": 3},
                     {"width": "5%", "targets": 4},
+                    {"width": "5%", "targets": 5},
                 ],
                 "order": [
                     ['0', "desc"]

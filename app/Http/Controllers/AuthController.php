@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Validator;
 use Session;
+use Mail;
 use App\Models\User;
 use App\Models\Order;
+use App\Models\UserVerify;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\Auth\LoginRequest;
@@ -13,6 +15,8 @@ use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\Auth\PasswordRequest;
 use App\Http\Requests\Auth\RegisterEdRequest;
 use Illuminate\Support\Facades\Auth;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Response;
@@ -20,6 +24,7 @@ use File;
 use App\Models\ImageDB;
 use Redirect;
 use App;
+use Str;
 use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
@@ -35,7 +40,6 @@ class AuthController extends Controller
     | to conveniently provide its functionality to your applications.
     |
     */
-
 
     /**
      * Create a new controller instance.
@@ -107,19 +111,24 @@ class AuthController extends Controller
  
     public function edUser(RegisterEdRequest $request)
     {
-        $user =Auth::user();
-        $user->first_name = $request['first_name'];
-        $user->last_name = $request['last_name'];
-        $user->phone = $request['phone'];
-        $user->save();
-        if($user->save()){
-            return redirect()->back()->withSuccess('Personal information was changed successfully!');
+        
+        $data = array();
+        $data['first_name']      = $request['first_name'];
+        $data['last_name']       = $request['last_name'];
+        $data['phone']           = $request['phone'];
+
+        if(User::where('id', Auth::guard('web')->user()->id)->update($data)){
+            Session::flash('success', 'save successfully!');
+            return back();
         }
+        Session::flash('success', 'Something wrong, please try later!');
+        return back();
       
     }
     public function signup(RegisterRequest $request)
     {
-        Auth::login($user = User::create([
+       
+        Auth::login( $user = User::create([
 
             'first_name'        => $request->first_name,
             'last_name'         => $request->last_name,
@@ -129,8 +138,10 @@ class AuthController extends Controller
             'password'          => Hash::make($request->password),
 
         ]));
+
         return redirect()->route('personalinfo');
-    }
+    } 
+ 
     public function logout(Request $request)
     {
 
@@ -145,40 +156,23 @@ class AuthController extends Controller
 
     public function signin(LoginRequest $request){
 
-        $request->authenticate();
-        $request->session()->regenerate();
-
-        return redirect()->route('personalinfo');
-    }
-    public function saveProfile(Request $request)
-    {
-
-        $request->validate([
-            'first_name'      => 'required|string|max:255',
-            'last_name'       => 'required|string|max:255',
-            'phone'          => 'required|numeric',
-            'email'           => ['required','string',Rule::unique('users')->ignore(Auth::guard('web')->user()->id),
-            ],
-        ]);
-        $data = array();
-        $data['first_name']      = $request['first_name'];
-        $data['last_name']       = $request['last_name'];
-        $data['email']           = $request['email'];
-        $data['phone']           = $request['phone'];
-
-        if(User::where('id', Auth::guard('web')->user()->id)->update($data)){
-            Session::flash('success', 'save successfully!');
-            return back();
+            $request->authenticate();
+            $request->session()->regenerate();
+            return redirect()->route('personalinfo');
+            
         }
-        return json_encode(array('status' => 0, 'message' => 'Something wrong, please try later!'));
-    }
     public function profilePassword()
     {
         return view('app.change-password');
 
     }
-    public function changePassword(PasswordRequest $request)
+    public function changePassword(Request $request)
     {
+        $request->validate([
+            'old_password' => 'required|min:6',
+            'new_password' =>'required|min:6',
+            'confirm_password' => 'required|min:6|same:new_password'
+        ]);
         $current_password = Auth::user()->password;
         if (Hash::check($request['old_password'], $current_password)) {
             $user_id = Auth::id();

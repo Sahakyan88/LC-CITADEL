@@ -150,6 +150,9 @@ class WelcomeController extends Controller
         view()->share('menu', 'register');
         return view('app.register');
     }
+    public function notFound(){
+        return view('notfound');
+    }
 
     public function send(Request $request)
     {
@@ -159,10 +162,12 @@ class WelcomeController extends Controller
         $site_settings = json_decode($settings->value);
 
         $contact_email = $site_settings->email;
+    
         $data = array();
         $data['email'] = $request['email'];
         $data['name'] = isset($request['name']) ? $request['name'] : '-----';
         $data['subject'] = isset($request['subject']) ? $request['subject'] : '-----';
+        $data['phone'] = isset($request['phone']) ? $request['phone'] : '-----';
         $data['msg'] = $request['message'];
 
         $mail = Mail::send('emails.contact', $data, function ($message) use ($contact_email) {

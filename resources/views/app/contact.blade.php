@@ -73,9 +73,15 @@
                                         placeholder="{{ config()->get('lang.' . App::getLocale() . '.email') }}">
                                 </div>
                             </div>
-                            <div class="form-group mt-3">
-                                <input type="text" class="form-control" name="subject"
-                                    placeholder="{{ config()->get('lang.' . App::getLocale() . '.subject') }}">
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <input type="text" class="form-control" name="phone"
+                                        placeholder="{{ config()->get('lang.' . App::getLocale() . '.phone') }}">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <input type="text" class="form-control" name="subject"
+                                        placeholder="{{ config()->get('lang.' . App::getLocale() . '.subject') }}">
+                                </div>
                             </div>
                             <div class="form-group mt-3">
                                 <textarea class="form-control" name="message" rows="5"
@@ -89,7 +95,6 @@
             </div>
     </section>
     @push('script')
-        {{-- <script src="{{ asset('assets/js/main.js') }}"></script> --}}
         <script src="{{ asset('assets/vendor/jquery/jquery-v3.6.0.js') }}"></script>
         <script src="{{ asset('assets/vendor/validate/js/validate.js') }}"></script>
         <script src="{{ asset('assets/js/script.js') }}"></script>
