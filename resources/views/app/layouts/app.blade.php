@@ -27,11 +27,10 @@
     <?php
     $lang = App::getLocale();
     ?>
-    @if (request()->is($lang.''))
+    @if (request()->is($lang . ''))
         <style>
             .fixed-top.scrolled {
                 background: #b8c2c1 !important;
-                transition: background-color 200ms linear;
             }
         </style>
     @else
@@ -45,7 +44,8 @@
         <div class="container d-flex justify-content-between">
 
             <div class="logo">
-                <h1><a href="{{ route('homepage') }}"><img src="{{ asset('assets/img/nkar.png') }}"><span class="mobilee-logo">LC-Citadel</span></a></h1>
+                <h1><a href="{{ route('homepage') }}"><img src="{{ asset('assets/img/nkar.png') }}"><span
+                            class="mobilee-logo">LC-Citadel</span></a></h1>
             </div>
             <nav id="navbar" class="navbar">
                 <ul>
@@ -62,11 +62,16 @@
                     <li><a class="nav-link scrollto {{ request()->is('contact') ? 'active' : '' }}{{ request()->is($lang . '/contact') ? 'active' : '' }}"
                             href="{{ route('contact') }}">{{ config()->get('lang.' . App::getLocale() . '.contact_us') }}</a>
                     </li>
-                    @if (Auth::user())
+                  
+                    @if (Auth::user() && Auth::user()->email_verified_at != null)
                         <li><a class="nav-link scrollto {{ request()->is('login') ? 'active' : '' }} {{ request()->is('register') ? 'active' : '' }} {{ request()->is($lang . '/personal-info') ? 'active' : '' }}
-                            {{ request()->is($lang .'/passport') ? 'active' : '' }}  {{ request()->is($lang . '/profile-password') ? 'active' : '' }} {{ request()->is($lang . '/orders-profile') ? 'active' : '' }}"
+                            {{ request()->is($lang . '/passport') ? 'active' : '' }}  {{ request()->is($lang . '/profile-password') ? 'active' : '' }} {{ request()->is($lang . '/orders-profile') ? 'active' : '' }}"
                                 href="{{ route('personalinfo') }}">{{ config()->get('lang.' . App::getLocale() . '.profile') }}</a>
                         </li>
+                    @elseif(Auth::user() && Auth::user()->email_verified_at == null)
+                    <li><a class="nav-link scrollto {{ request()->is('logout') ? 'active' : '' }} {{ request()->is($lang . '/logout') ? 'active' : '' }}"
+                        href="{{ route('logout') }}">logout</a>
+                </li>
                     @else
                         <li><a class="nav-link scrollto {{ request()->is('register-user') ? 'active' : '' }} {{ request()->is($lang . '/register-user') ? 'active' : '' }}"
                                 href="{{ route('login-user') }}">{{ config()->get('lang.' . App::getLocale() . '.sign_in') }}</a>
@@ -112,7 +117,8 @@
     </header>
     <main id="main">
         @yield('content')
-        <footer id="footer">
+
+        <footer id="footer" >
             <div class="footer-top">
                 <div class="container">
                     <div class="row">
@@ -184,26 +190,27 @@
                 </div>
             </div>
         </footer>
-        <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
-                class="bi bi-arrow-up-short"></i></a>
-        <script src="{{ asset('assets/vendor/aos/aos.js') }}"></script>
-        <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-        <script src="{{ asset('assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
-        <script src="{{ asset('assets/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
-        <script src="{{ asset('assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
-        <script src="{{ asset('assets/js/main.js') }}"></script>
-        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
-        @stack('script')
-        <script>
-            $(document).ready(function() {
-                $(document).scroll(function() {
-                    var $nav = $(".fixed-top");
-                    $nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height());
-                });
+    </main>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
+    <script src="{{ asset('assets/vendor/aos/aos.js') }}"></script>
+    <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/js/main.js') }}"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+    @stack('script')
+    <script>
+        $(document).ready(function() {
+            $(document).scroll(function() {
+                var $nav = $(".fixed-top");
+                $nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height());
             });
-        </script>
+        });
+    </script>
 
 </body>
 

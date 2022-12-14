@@ -29,11 +29,15 @@
         <style>
             body {
                 overflow: hidden;
+                background-color: #f2f9f8;
+                
             }
-
             .fixed-top {
                 background: #b8c2c1 !important;
             }
+            .mobile-nav-toggle {
+                    display: none;
+                }
         </style>
 
         <header id="header" class="fixed-top d-flex align-items-center">
@@ -52,7 +56,7 @@
 
         @yield('sectionTwo')
 
-        <footer id="footer">
+        <footer id="footer" class="footerTwo">
 
             <div class="container">
                 <div class="copyright">

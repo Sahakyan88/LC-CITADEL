@@ -112,7 +112,7 @@
                                 break;
                                 case 0:
                                 colorClass = 'badge-danger';
-                                status = 'Not Done';
+                                status = 'Upcoming';
                                 break;
                             default:
                                 status = 'error' 

@@ -358,37 +358,7 @@
 
 
 
-	//Contact Form Validationauth-page
-	if ($('#register-form').length) {
-		$('#register-form').validate({
-			rules: {
-				first_name: {
-					required: true
-				},
-				last_name: {
-					required: true
-				},
-				phone: {
-					required: true
-				},
-				password: {
-					minlength: 6,
-					required: true
-				},
-				email: {
-					required: true,
-					email: true,
-					remote:{
-						url:"/checkMail",
-						type:"get"
-					},
 
-				},
-				
-			},
-	
-		});
-	}
 	//Contact Form Validation
 	if ($('#send-form').length) {
 		$('#send-form').validate({
@@ -400,6 +370,9 @@
 					required: true
 				},
 				message: {
+					required: true
+				},
+				phone: {
 					required: true
 				},
 				email: {

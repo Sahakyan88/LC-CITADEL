@@ -19,6 +19,8 @@ class Users extends Model
 										'users.first_name',
 										'users.last_name',
 										'users.email',
+										'users.email_verified_at',
+										
 										));
 										             
 		if($length != '-1'){

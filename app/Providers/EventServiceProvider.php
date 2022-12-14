@@ -6,12 +6,16 @@ use App\Events\SendTempPassword;
 use App\Listeners\SendNotificationEmail;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
+use  App\Listeners\LogVerifiedUser;
 
 class EventServiceProvider extends ServiceProvider
 {
     protected $listen = [
-        SendTempPassword::class => [
-            SendNotificationEmail::class,
+        Registered::class => [
+            SendEmailVerificationNotification::class,
+        ],
+        Verified::class => [
+            LogVerifiedUser::class,
         ],
     ];
 

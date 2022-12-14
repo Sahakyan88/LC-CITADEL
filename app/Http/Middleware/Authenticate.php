@@ -18,7 +18,7 @@ class Authenticate extends Middleware
             if($request->header('Authorization')){
                 return route('wrong-token');
             }
-            return route('404');
+            return route('notfound');
         }
     }
 }

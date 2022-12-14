@@ -33,7 +33,7 @@ class RegisterRequest extends FormRequest
             'password' => 'required|min:6',
             'last_name' => 'required',
             'first_name' => 'required',
-            'phone' => 'required|string',
+            'phone' => 'required|numeric',
             'checkbox' =>'accepted'
 
         ];
@@ -47,6 +47,7 @@ class RegisterRequest extends FormRequest
                 'password.min' => 'Minimum password length is 6',
                 'last_name.required' => 'Last name is required',
                 'first_name.required' => 'First name is required',
+                'phone.numeric' => 'The value should be a number',
                 'phone.required' => 'Phone number is required',
                 'checkbox.accepted' => 'Please indicate that you have read and agree to the Terms and Conditions',
             ];
