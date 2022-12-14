@@ -16,13 +16,11 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('product_id')->nullable();
             $table->enum('status', [Order::PENDING_STATUS, Order::PAID_STATUS, Order::COMPLETED_STATUS])->default(Order::PENDING_STATUS);
-            $table->bigInteger('total_amount')->default(0);
-            $table->string('session_id');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');;
-            $table->unsignedBigInteger('product_id');
-            $table->foreign('product_id')->references('id')->on('services')->onDelete('cascade');
+            $table->unsignedBigInteger('total_amount')->nullable();
+            $table->string('session_id')->nullable();
             $table->integer('status_been')->default(0);
             $table->timestamps();
         });
