@@ -13,13 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('service_user', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('order_id')->nullable();
-            $table->string('ameria_payment_id')->nullable();
-            $table->enum('status', ['pending', 'approved'])->default('pending');
-            $table->enum('type', ['one_time_service', 'package'])->default('one_time_service');
-            $table->string('session_id')->nullable();
+            $table->unsignedBigInteger('service_id');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('service_user');
     }
 };

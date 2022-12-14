@@ -24,12 +24,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('cancelOrder')->everyMinute();
+//        $schedule->command('cancelOrder')->everyMinute();
     }
 
     /**
      * Register the commands for the application.
-     *
+     *https://stackoverflow.com/questions/68942391/laravel-how-to-make-a-function-that-runs-the-same-time-every-day
      * @return void
      */
     protected function commands()

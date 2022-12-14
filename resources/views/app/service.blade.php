@@ -21,7 +21,7 @@
                                 <h4 class="title"><a href="">{{ $service->price }} {{ config()->get('lang.' . App::getLocale() . '.amd') }}</a></h4>
                                 <div class="description"><?php echo $service->body; ?> </div>
                                 <div class="text-center">
-                                    <form action="{{url('/createServiceOrder/' . $service->service_id)}}" method="POST">
+                                    <form action="{{url('/createPackageOrder/' . $service->service_id)}}" method="POST">
                                         @csrf
                                         <button
                                             class="btn btn-success">{{ config()->get('lang.' . App::getLocale() . '.get_insurance') }}

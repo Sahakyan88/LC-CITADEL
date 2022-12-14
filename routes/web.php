@@ -53,7 +53,7 @@ Route::get('/not-found', [WelcomeController::class, 'notFound'])->name('notfound
 
 
 Route::get('forget-password', [ForgotPasswordController::class, 'showForgetPasswordForm'])->name('forget.password.get');
-Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post'); 
+Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post');
 Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
 Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 
@@ -70,9 +70,16 @@ Route::post('/user-info', [AuthController::class, 'edUser'])->name('edUserinfo')
 Route::get('/profile-password', [AuthController::class, 'profilePassword'])->name('profilepassword')->middleware('auth');
 Route::get('/passport', [AuthController::class, 'passport'])->name('passportGet')->middleware('auth');
 Route::post('/change-password', [AuthController::class, 'changePassword'])->name('changepassword')->middleware('auth');
+Route::get('/payment-success',[\App\Http\Controllers\Payment\PaymentController::class, 'payment_success'])->name('payment_success');
 
  });
 
  Route::post('/createServiceOrder/{id}',[\App\Http\Controllers\Payment\PaymentController::class, 'createServiceOrder']);
 
+
+Route::post('/createServiceOrder/{id}',[\App\Http\Controllers\Payment\PaymentController::class, 'createServiceOrder']);
+Route::post('/createPackageOrder/{id}',[\App\Http\Controllers\Payment\SubscriptionController::class, 'createPackageOrder']);
+Route::get('/payment/checkPayment',[\App\Http\Controllers\Payment\PaymentController::class,'checkPayment']);
+Route::get('/payment/checkSubscription',[\App\Http\Controllers\Payment\SubscriptionController::class,'checkSubscription']);
+Route::get('/billSubscription', [\App\Http\Controllers\Payment\SubscriptionController::class,'bill']);
 

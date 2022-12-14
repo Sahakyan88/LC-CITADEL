@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Validator;
 use Session;
 use Mail;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\UserVerify;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
@@ -29,7 +29,7 @@ use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
-    
+
     /*
     |--------------------------------------------------------------------------
     | Login Controller
@@ -50,17 +50,17 @@ class AuthController extends Controller
 
         $lang = App::getLocale();
         $order = DB::table('orders')->select(
-        'orders.id as id',
-        'orders.status',
-        'orders.total_amount as amount',
-        'services.title_'.$lang.' as title',
-        'orders.created_at as date',
-        'orders.status_been',
-     
+            'orders.id as id',
+            'orders.status',
+            'orders.total_amount as amount',
+            'services.title_'.$lang.' as title',
+            'orders.created_at as date',
+            'orders.status_been',
+
         )->leftJoin('users', 'users.id', '=', 'orders.user_id')
-        ->leftJoin('services', 'services.id', '=', 'orders.service_id')
-        ->where('orders.status', 'paid')   
-        ->where('users.id', Auth::user()->id)->get();    
+            ->leftJoin('services', 'services.id', '=', 'orders.product_id')
+            ->where('orders.status', 'paid')
+            ->where('users.id', Auth::user()->id)->get();
         return view('app.orders-profile',compact('order'));
     }
 
@@ -70,14 +70,14 @@ class AuthController extends Controller
     }
     public function passport(){
         $image = DB::table('users')
-        ->select(
-            'users.image_id',
-            'images.filename as image_file_name',
-            'images.id',
-        )
-        ->where('users.id', Auth::user()->id)
-        ->leftJoin('images', 'images.id', '=', 'users.image_id')
-        ->get();
+            ->select(
+                'users.image_id',
+                'images.filename as image_file_name',
+                'images.id',
+            )
+            ->where('users.id', Auth::user()->id)
+            ->leftJoin('images', 'images.id', '=', 'users.image_id')
+            ->get();
         return view('app.passport',compact('image'));
     }
     public function  storeImage(Request $request){
@@ -108,10 +108,10 @@ class AuthController extends Controller
             return redirect()->back()->withSuccess('Image delete successfully!');
         }
     }
- 
+
     public function edUser(RegisterEdRequest $request)
     {
-        
+
         $data = array();
         $data['first_name']      = $request['first_name'];
         $data['last_name']       = $request['last_name'];
@@ -123,11 +123,11 @@ class AuthController extends Controller
         }
         Session::flash('success', 'Something wrong, please try later!');
         return back();
-      
+
     }
     public function signup(RegisterRequest $request)
     {
-       
+
         Auth::login( $user = User::create([
 
             'first_name'        => $request->first_name,
@@ -140,8 +140,8 @@ class AuthController extends Controller
         ]));
 
         return redirect()->route('personalinfo');
-    } 
- 
+    }
+
     public function logout(Request $request)
     {
 
@@ -156,11 +156,11 @@ class AuthController extends Controller
 
     public function signin(LoginRequest $request){
 
-            $request->authenticate();
-            $request->session()->regenerate();
-            return redirect()->route('personalinfo');
-            
-        }
+        $request->authenticate();
+        $request->session()->regenerate();
+        return redirect()->route('personalinfo');
+
+    }
     public function profilePassword()
     {
         return view('app.change-password');
@@ -181,10 +181,10 @@ class AuthController extends Controller
             $obj_user->save();
             return redirect()->back()->withSuccess('Password was changed successfully!');
         } else {
-         
+
             return redirect()->back()->withSuccess('Old Password invalid', 'Old Password invalid');
         }
     }
-     
+
 
 }

@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('session_id');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');;
-            $table->unsignedBigInteger('service_id');
-            $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
+            $table->unsignedBigInteger('product_id');
+            $table->foreign('product_id')->references('id')->on('services')->onDelete('cascade');
             $table->integer('status_been')->default(0);
             $table->timestamps();
         });

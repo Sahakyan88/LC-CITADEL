@@ -36,7 +36,8 @@ return [
         'new_pass'=>'Նոր գաղտնաբառ',
         'confirm_pass'=>'Կրկնիր նոր գաղտնաբառը',
         'save'=>'Պահպանել',
-        'amd'=>'դր․'
+        'amd'=>'դր․',
+        'must-upload-passport'=>'Խնդրում ենք ներբեռնել անձնագրի նկարը՝  ապահովագրական փաթեթ ակտիվացնելու կամ ծառայություն գնելու համար:'
     ],
     'en' => [
         'get_started' => 'Learn more',
@@ -73,7 +74,8 @@ return [
         'new_pass'=>'New Password',
         'confirm_pass'=>'Confirm Password',
         'save'=>'Save',
-        'amd'=>'AMD'
+        'amd'=>'AMD',
+        'must-upload-passport'=>'Please upload your passport image to activate any insurance package or buy a service!'
     ],
     'ru' => [
         'get_started' => 'Узнать больше',
@@ -110,6 +112,7 @@ return [
         'new_pass'=>'Новый пароль',
         'confirm_pass'=>'Подтвердить пароль',
         'save'=>'Сохранить',
-        'amd'=>'драм'
+        'amd'=>'драм',
+        'must-upload-passport'=>'Пожалуйста, загрузите изображение паспорта, чтобы активировать любой страховой пакет или купить услугу!'
     ]
 ];
