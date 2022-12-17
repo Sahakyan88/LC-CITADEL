@@ -21,6 +21,7 @@ class PaymentController extends Controller
 {
     public function createServiceOrder($id)
     {
+     
         if (!Auth::check()) {
             return redirect()->to('/login');
         } else {
@@ -29,7 +30,11 @@ class PaymentController extends Controller
             if ($user['image_id'] == null) {
                 return redirect()->to("/$lang/passport");
             }
+            if($user['pay_allowed'] == 0){
+                return redirect()->to("/$lang/contract");
+            }
         }
+        exit();
         /**********Data For Service*******************/
         $service = Service::where('id', $id)->first();
         /**********Data For Order*******************/

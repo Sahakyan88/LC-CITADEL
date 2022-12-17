@@ -20,9 +20,9 @@
                                                     Status:
                                                     <select class="form-select form-control" name="been"
                                                         aria-label="Default select example">
-                                                        <option @if ($item->been == 1) selected @endif value="1">Done
+                                                        <option @if ($item->been == 'past') selected @endif value="past">past
                                                         </option>
-                                                        <option @if ($item->been == 0) selected @endif value="0">Upcoming
+                                                        <option @if ($item->been == 'upcoming') selected @endif value="upcoming">upcoming
                                                         </option>
                                                     </select>
                                                     </span>

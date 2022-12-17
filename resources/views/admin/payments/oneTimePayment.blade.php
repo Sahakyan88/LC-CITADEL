@@ -20,6 +20,14 @@
     <div class="container mt-n10">
         <div class="card">
             <div class="card-body">
+                <div class="form-group col-md-2">
+                    <div class="small text-muted">Status</div>
+                    <select class="form-control" name="filter_status" id="filter_status">
+                        <option value=''>-- All--</option>
+                        <option value='upcoming'>Upcoming</option>
+                        <option value='past'>Past</option>
+                    </select>
+                </div>
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
                         <thead>
@@ -27,22 +35,24 @@
                                 <th>ID</th>
                                 <th>F.Name</th>
                                 <th>L.Name</th>
+                                <th>Phone</th>
                                 <th>Service</th>
-                                <th>Amount</th>
+                                <th>AMD</th>
                                 <th>Date</th>
-                                <th>Status</th>
+                                <th>status_been</th>
                                 <th>Edit</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
                                 <th>ID</th>
+                                <th>F.Name</th>
                                 <th>L.Name</th>
-                                <th>L.Name</th>
+                                <th>Phone</th>
                                 <th>Service</th>
-                                <th>Amount</th>
+                                <th>AMD</th>
                                 <th>Date</th>
-                                <th>Status</th>
+                                <th>status_been</th>
                                 <th>Edit</th>
                             </tr>
                         </tfoot>
@@ -100,25 +110,25 @@
                     { "data": "id", "name":'id', "orderable": true },
                     { "data": "first_name", "name":'first_name', "orderable": true },
                     { "data": "last_name", "name":'last_name', "orderable": true },
+                    { "data": "phone", "name":'phone', "orderable": true },
                     { "data": "title", "name":'title', "orderable": true },
                     { "data": "amount", "name":'amount', "orderable": true },
                     { "data": "date", "name":'date', "orderable": true },
-                    { "data": "published", "name":'published', "orderable": true , "sClass": "content-middel",
+                    { "data": "status_been", "name":'status_been', "orderable": true , "sClass": "content-middel",
                     render: function ( data, type, row, meta) {
                         switch(row.status_been){
-                            case 1:
+                            case 'past':
                                 colorClass = 'badge-success';
-                                status = 'Done';
-                                break;
-                                case 0:
+                            break;
+                            case 'upcoming':
                                 colorClass = 'badge-danger';
-                                status = 'Upcoming';
                                 break;
                             default:
-                                status = 'error' 
                                 colorClass = 'badge-danger';
                         }
-                        return '<div style="font-size:12px;" class="badge '+colorClass+' badge-pill">'+status+'</div>';
+                        str = capitalize(row.status_been.replace("_", " "));
+	            	    // return capitalize(str)
+                        return '<div style="font-size:12px;" class="badge '+colorClass+' badge-pill">'+str+'</div>';
 	                }},
                     { "data": "id", "name":'edit', "orderable": false, "sClass": "content-middel selectOff", 
 	            	    render: function ( data, type, row, meta) {
@@ -129,11 +139,12 @@
                     {"width": "1%", "targets": 0},
                     {"width": "10%", "targets": 1},
                     {"width": "10%", "targets": 2},
-                    {"width": "20%", "targets": 3},
+                    {"width": "10%", "targets": 3},
                     {"width": "10%", "targets": 4},
-                    {"width": "45%", "targets": 5},
-                    {"width": "5%", "targets": 6},
+                    {"width": "1%", "targets": 5},
+                    {"width": "45%", "targets": 6},
                     {"width": "5%", "targets": 7},
+                    {"width": "5%", "targets": 8},
                 ],
                 "order": [
                     ['0', "desc"]

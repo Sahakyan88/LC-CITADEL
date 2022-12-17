@@ -31,7 +31,6 @@
                                             type="checkbox" value="1" />Remember me</label>
                                         </div>
                                         <div><a class="mt-4" href="{{ route('forget.password.get') }}">Forgot password ?</a></div>
-
                                     </div>
                                 </div>
                                 <div class="text-center"><button type="submit">Sign In</button></div>

@@ -10,18 +10,26 @@
                         <div class="prof-order-block">
                             @if (count($order) > 0)
                                 @foreach ($order as $order)
-                                    <div class="php-email-form order-profile">
+                                    <div class="php-email-form">
                                         <div class="col-sm-12 title-order">{{ $order->title }}</div>
-                                        <div class="col-sm-12 amount">{{ $order->amount }}$</div>
-                                        @if ($order->status_been == 0)
-                                            <div class="psecondary col-sm-2 mt-3">Upcoming</div>
+                                        <div class="col-sm-12 amount">{{ $order->amount }}
+                                            {{ config()->get('lang.' . App::getLocale() . '.amd') }}</div>
+                                        @if ($order->status_been == 'upcoming')
+                                            <div class="psuccess col-sm-2 mt-3"></div>
+                                            <span class="badge bg-success">Upcoming</span>
                                         @else
-                                            <div class="psuccess col-sm-2 mt-3">Done</div>
+                                        <span class="badge bg-danger">Past</span>
                                         @endif
                                         <hr>
-                                        <div class="col-sm-12 date-prof">{{ $order->date }}</div>
+                                        <div class="col-sm-12 date-prof">Վճարը կատարվել է՝ {{ $order->date }}</div>
                                     </div>
                                 @endforeach
+                            @else
+                                <div class="php-email-form text-center">
+                                    <p> Ակտիվ ծառայություններ չկան </p>
+                                    <a class="btn package-button" href="{{ route('service') }}" class="btn mt-4"
+                                        type="submit">Ակտիվացնել</a>
+                                </div>
                             @endif
                         </div>
                     </div>

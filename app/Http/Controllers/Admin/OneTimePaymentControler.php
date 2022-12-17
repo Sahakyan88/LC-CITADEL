@@ -28,7 +28,7 @@ class OneTimePaymentControler extends Controller
       
         $model = new Order();
         $filter = array('search' => $request->input('search'),
-        'status' => $request->input('filter_status'),
+        'status_been' => $request->input('filter_status'),
         'featured'=> $request->input('featured',false));
 
     $items = $model->getAll(

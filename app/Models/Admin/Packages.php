@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class Order extends Model
+class Packages extends Model
 {
     use HasFactory;
 	protected $table = 'orders';
@@ -19,25 +19,25 @@ class Order extends Model
         'users.last_name',
         'users.phone',
         'services.title_am as title',
-        'orders.created_at as date',
-        'orders.status_been',
+        'package_user.created_at as date',
+        'package_user.paid_at as paid',
      
         ))->leftJoin('users', 'users.id', '=', 'orders.user_id')
         ->leftJoin('services', 'services.id', '=', 'orders.product_id')
-        ->where('orders.status', 'completed')
-        ->where('services.featured', 1);    
+        ->leftJoin('package_user', 'package_user.user_id', '=', 'orders.user_id')
+        ->where('services.featured', 0);    
       
 		if($length != '-1'){
 			$query->skip($start)->take($length);
 		}
-        if(isset($filter['status_been'])){
-			$query->where('orders.status_been',$filter['status_been']);    
+        if(isset($filter['status'])){
+			$query->where('orders.status',$filter['status']);    
 		}
 		if( isset($filter['search']) && strlen($filter['search']) > 0 ){
 			$query->where('users.first_name', 'LIKE', '%'. $filter['search'] .'%')->orWhere('users.last_name', 'LIKE', '%'. $filter['search'] .'%')->where('users.id', '=', 'orders.user_id');
 		}
        
-        $query->orderBy($sort_field, $sort_dir);
+		$query->orderBy($sort_field, $sort_dir);
 		$data = $query->get();
 		$count  = DB::select( DB::raw("SELECT FOUND_ROWS() AS recordsTotal;"))[0];
 		$return['data'] = $data;

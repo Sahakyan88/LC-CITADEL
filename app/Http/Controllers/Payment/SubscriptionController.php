@@ -31,6 +31,9 @@ class SubscriptionController extends Controller
             if ($user['image_id'] == null) {
                 return redirect()->to("/$lang/passport");
             }
+            if($user['pay_allowed'] == 0){
+                return redirect()->to("/$lang/contract");
+            }
         }
         /**********Data For Order*******************/
         $service = Service::where('id', $id)->first();
@@ -279,5 +282,9 @@ class SubscriptionController extends Controller
 //        $response = Http::post('https://servicestest.ameriabank.am/VPOS/api/VPOS/DeactivateBinding', $query1);
 //        return $response = $response->json();
 //        /*********************************/
+   }
+   public function cancelRequest(Request $request){
+    dd($request->all());
+
    }
 }

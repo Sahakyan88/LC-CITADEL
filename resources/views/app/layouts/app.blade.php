@@ -69,8 +69,18 @@
                                 href="{{ route('personalinfo') }}">{{ config()->get('lang.' . App::getLocale() . '.profile') }}</a>
                         </li>
                     @elseif(Auth::user() && Auth::user()->email_verified_at == null)
-                    <li><a class="nav-link scrollto {{ request()->is('logout') ? 'active' : '' }} {{ request()->is($lang . '/logout') ? 'active' : '' }}"
-                        href="{{ route('logout') }}">logout</a>
+                    <li>
+                        
+                        <div class="dropdown lang-left">
+                            <button class="btn dropdown-toggle" id="dropdownMenuButton2"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ Auth::user()->first_name }}
+                            </button>
+                            <ul class="dropdown-menu lang" aria-labelledby="dropdownMenuButton1">
+                                <a class="nav-link scrollto {{ request()->is('logout') ? 'active' : '' }} {{ request()->is($lang . '/logout') ? 'active' : '' }}"
+                                    href="{{ route('logout') }}">logout</a>
+                            </ul>
+                        </div>
                 </li>
                     @else
                         <li><a class="nav-link scrollto {{ request()->is('register-user') ? 'active' : '' }} {{ request()->is($lang . '/register-user') ? 'active' : '' }}"

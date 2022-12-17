@@ -22,6 +22,7 @@ class Users extends Model
 										'users.email_verified_at',
 										
 										));
+		$query->where('users.email_verified_at','!=',null);
 										             
 		if($length != '-1'){
 			$query->skip($start)->take($length);

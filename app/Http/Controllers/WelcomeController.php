@@ -9,19 +9,20 @@ use App\Models\Service;
 use App\Models\Admin\Settings;
 use App\Models\Requests;
 use App\Models\Doc;
+use App\Http\Requests\RequestPayAllowed;
 use App;
 use App\Models\Admin\slider;
+use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
 use PDF;
+use Auth;
 use Mail;
 
 class WelcomeController extends Controller
 {
     public function homepage()
     {
-
-
         $lang = App::getLocale();
         $faq    =  DB::table('faq')->where('published',1)->get();
         $faq = DB::table('faq')
@@ -152,6 +153,17 @@ class WelcomeController extends Controller
     }
     public function notFound(){
         return view('notfound');
+    }
+    public function contract(){
+        
+        return view('contract');
+    }
+    public function contractCheck(RequestPayAllowed $request){
+        $lang = App::getLocale() ?? 'en';
+        $user=User::where('id',Auth::user()->id)->first();
+        $user->pay_allowed=$request->pay_allowed;
+        $user->save();
+        return redirect()->to("/$lang/services");
     }
 
     public function send(Request $request)

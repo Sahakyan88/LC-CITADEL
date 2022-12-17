@@ -25,6 +25,12 @@ $lang = App::getLocale();
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link  show  {{ request()->is('package-profile') ? 'active' : '' }} {{ request()->is($lang . '/package-profile') ? 'active' : '' }}"
+                            href="{{ route('packageprofile') }}" class="arrow icon-right-arrow">
+                            <h4>{{ config()->get('lang.' . App::getLocale() . '.plans') }}</h4>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link  show  {{ request()->is('passport') ? 'active' : '' }} {{ request()->is($lang . '/passport') ? 'active' : '' }}"
                             href="{{ route('passportGet') }}" class="arrow icon-right-arrow">
                             <h4>{{ config()->get('lang.' . App::getLocale() . '.passport') }}</h4>
