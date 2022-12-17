@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class Packages extends Model
+class PackagesDeactivated extends Model
 {
     use HasFactory;
 	protected $table = 'orders';
@@ -21,19 +21,18 @@ class Packages extends Model
         'services.title_am as title',
         'package_user.created_at as date',
         'package_user.paid_at as paid',
+        'package_user.is_blocked',
      
         ))->leftJoin('users', 'users.id', '=', 'orders.user_id')
         ->leftJoin('services', 'services.id', '=', 'orders.product_id')
         ->leftJoin('package_user', 'package_user.user_id', '=', 'orders.user_id')
-        ->where('services.featured', 0);    
+        ->where('package_user.is_blocked', 1)
+        ->where('services.featured', 0);
+     
       
 		if($length != '-1'){
 			$query->skip($start)->take($length);
 		}
-        if(isset($filter['status'])){
-			$query->where('orders.status',$filter['status']);    
-		}
-        
 		if( isset($filter['search']) && strlen($filter['search']) > 0 ){
 			$query->where('users.first_name', 'LIKE', '%'. $filter['search'] .'%')->orWhere('users.last_name', 'LIKE', '%'. $filter['search'] .'%')->where('users.id', '=', 'orders.user_id');
 		}
@@ -42,7 +41,6 @@ class Packages extends Model
 		$data = $query->get();
 		$count  = DB::select( DB::raw("SELECT FOUND_ROWS() AS recordsTotal;"))[0];
 		$return['data'] = $data;
-
 		$return['count'] = $count->recordsTotal;
     	return $return;
     }

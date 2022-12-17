@@ -10,7 +10,7 @@
                     <div class="col-auto mt-4">
                         <h1 class="page-header-title">
                         <div class="page-header-icon"><i data-feather="users"></i></div>
-                        One Time Payment
+                        Deactivated
                         </h1>
                     </div>
                 </div>
@@ -20,14 +20,6 @@
     <div class="container mt-n10">
         <div class="card">
             <div class="card-body">
-                <div class="form-group col-md-2">
-                    <div class="small text-muted">Status</div>
-                    <select class="form-control" name="filter_status" id="filter_status">
-                        <option value=''>-- All--</option>
-                        <option value='upcoming'>Upcoming</option>
-                        <option value='past'>Past</option>
-                    </select>
-                </div>
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
                         <thead>
@@ -35,12 +27,11 @@
                                 <th>ID</th>
                                 <th>F.Name</th>
                                 <th>L.Name</th>
+                                <th>Registered</th>
                                 <th>Phone</th>
                                 <th>Service</th>
                                 <th>Price</th>
-                                <th>Date</th>
-                                <th>status_been</th>
-                                <th>Edit</th>
+                                <th>Paid</th>
                             </tr>
                         </thead>
                         <tfoot>
@@ -48,13 +39,11 @@
                                 <th>ID</th>
                                 <th>F.Name</th>
                                 <th>L.Name</th>
+                                <th>Registered</th>
                                 <th>Phone</th>
                                 <th>Service</th>
                                 <th>Price</th>
-                                <th>Date</th>
-                                <th>status_been</th>
-                                <th>Edit</th>
-                            </tr>
+                                <th>Paid</th>
                         </tfoot>
                         <tbody></tbody>
                     </table>
@@ -83,7 +72,7 @@
                 "serverSide": true,
                 'searching': true,
                 "ajax": {
-                    "url": "{{ route('aonePaymentData') }}",
+                    "url": "{{ route('aDeactivatedData') }}",
                     "data": function(data){
                      
                         data['sort_field'] = data.columns[data.order[0].column].name;
@@ -110,41 +99,22 @@
                     { "data": "id", "name":'id', "orderable": true },
                     { "data": "first_name", "name":'first_name', "orderable": true },
                     { "data": "last_name", "name":'last_name', "orderable": true },
+                    { "data": "date", "name":'date', "orderable": true },
                     { "data": "phone", "name":'phone', "orderable": true },
                     { "data": "title", "name":'title', "orderable": true },
                     { "data": "amount", "name":'amount', "orderable": true },
-                    { "data": "date", "name":'date', "orderable": true },
-                    { "data": "status_been", "name":'status_been', "orderable": true , "sClass": "content-middel",
-                    render: function ( data, type, row, meta) {
-                        switch(row.status_been){
-                            case 'past':
-                                colorClass = 'badge-success';
-                            break;
-                            case 'upcoming':
-                                colorClass = 'badge-danger';
-                                break;
-                            default:
-                                colorClass = 'badge-danger';
-                        }
-                        str = capitalize(row.status_been.replace("_", " "));
-	            	    // return capitalize(str)
-                        return '<div style="font-size:12px;" class="badge '+colorClass+' badge-pill">'+str+'</div>';
-	                }},
-                    { "data": "id", "name":'edit', "orderable": false, "sClass": "content-middel selectOff", 
-	            	    render: function ( data, type, row, meta) {
-	            	    return '<a href="javascript:;" edit_item_id="'+row.id+'" class="item_edit"><button class="btn btn-datatable btn-icon btn-transparent-dark"><i data-feather="edit"></i></button></a>';
-	                }},
+                    { "data": "paid", "name":'paid', "orderable": true },
+                   
                 ],
                 "columnDefs": [
                     {"width": "1%", "targets": 0},
                     {"width": "10%", "targets": 1},
                     {"width": "10%", "targets": 2},
                     {"width": "10%", "targets": 3},
-                    {"width": "10%", "targets": 4},
-                    {"width": "1%", "targets": 5},
-                    {"width": "45%", "targets": 6},
-                    {"width": "5%", "targets": 7},
-                    {"width": "5%", "targets": 8},
+                    {"width": "40%", "targets": 4},
+                    {"width": "10%", "targets": 5},
+                    {"width": "1%", "targets": 6},
+                    {"width": "25%", "targets": 7},
                 ],
                 "order": [
                     ['0', "desc"]
@@ -166,14 +136,7 @@
                 class: 'modal',
                 minHeight: '200',
             })
-            window.itemPopup = itemPopup;
-            $('#dataTable').on('click', '.item_edit', function (e) {
-                editId = $(this).attr('edit_item_id');
-                itemPopup.setTitle('One Time Payment');
-                itemPopup.load("{{route('aGetOnePayment')}}?id="+ editId, function () {
-                    this.open();
-                });
-            });
+            
         });
     </script>
 @endpush

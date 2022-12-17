@@ -29,6 +29,7 @@
                         <option value='completed'>Completed</option>
                     </select>
                 </div>
+                <div style="margin-top: -64px;" class="col-md-2 float-right"><a class="btn btn-outline-info" href="{{ route('deactivatedPage') }}">Deactivated({{$deacivated  }})</a></div>
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
                         <thead>
@@ -39,8 +40,8 @@
                                 <th>Registered</th>
                                 <th>Phone</th>
                                 <th>Service</th>
-                                <th>AMD</th>
-                                <th>Created</th>
+                                <th>Price</th>
+                                <th>Paid</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -52,8 +53,8 @@
                                 <th>Registered</th>
                                 <th>Phone</th>
                                 <th>Service</th>
-                                <th>AMD</th>
-                                <th>Created</th>
+                                <th>Price</th>
+                                <th>Paid</th>
                                 <th>Status</th>
                         </tfoot>
                         <tbody></tbody>

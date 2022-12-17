@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Admin\OnePayment;
 use App\Models\Admin\Packages;
+use App\Models\Admin\PackagesDeactivated;
 use App\Models\Notification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -16,10 +17,27 @@ class PackagesPaymentControler extends Controller
 {
     public function packagesPayments(){
     
+        $deacivated = DB::table('orders')->select(array(DB::raw('SQL_CALC_FOUND_ROWS orders.id'), 
+        'orders.id as DT_RowId',
+        'orders.total_amount as amount',
+        'users.first_name',
+        'users.last_name',
+        'users.phone',
+        'services.title_am as title',
+        'package_user.created_at as date',
+        'package_user.paid_at as paid',
+        'package_user.is_blocked',
+     
+        ))->leftJoin('users', 'users.id', '=', 'orders.user_id')
+        ->leftJoin('services', 'services.id', '=', 'orders.product_id')
+        ->leftJoin('package_user', 'package_user.user_id', '=', 'orders.user_id')
+        ->where('package_user.is_blocked', 1)
+        ->where('services.featured', 0)->count();;
+     
         $page = (isset($_GET['page'])) ? $_GET['page'] : false;
         view()->share('page', $page);
         view()->share('menu', 'packagesPayments');
-        return view('admin.package.package');
+        return view('admin.package.package',compact('deacivated'));
     }
 
     public function packagesData(Request $request){
