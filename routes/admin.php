@@ -14,6 +14,7 @@ use App\Http\Controllers\Payment\SubscriptionController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\PackagesPaymentControler;
+use App\Http\Controllers\Admin\DeactivatedControler;
 use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Admin\ServicesController;
 use App\Http\Controllers\Admin\OneTimePaymentControler;
@@ -90,7 +91,7 @@ Route::group(['middleware' => 'adminauth'], function () {
     Route::get('data-payments',[OneTimePaymentControler::class, 'onePaymentData'])->name('aonePaymentData');
     Route::get('get-payments',[OneTimePaymentControler::class, 'onePaymentGet'])->name('aGetOnePayment');
     Route::post('save-payments',[OneTimePaymentControler::class, 'aPaymentOneSave'])->name('paymentOneSave');
-
+    
     Route::get('packages-payments',[PackagesPaymentControler::class, 'packagesPayments'])->name('packages');
     Route::get('packages-data',[PackagesPaymentControler::class, 'packagesData'])->name('aPackagesData');
     Route::post('cancel-request',[SubscriptionController::class, 'cancelRequest'])->name('cancelRequest');
@@ -98,6 +99,8 @@ Route::group(['middleware' => 'adminauth'], function () {
     Route::post('upload-image',[ImageController::class, 'upload'])->name('aUpload');
     Route::post('remove-image',[ImageController::class, 'remove'])->name('aRemoveImage');
 
+    Route::get('deactivated',[DeactivatedControler::class, 'index'])->name('deactivatedPage');
+    Route::get('data-deactivated',[DeactivatedControler::class, 'deactivatedData'])->name('aDeactivatedData');
 
     Route::get('/clear', function() {
         Artisan::call('cache:clear');
