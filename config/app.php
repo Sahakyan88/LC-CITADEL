@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'LC-Citadel'),
     'payment' => [
         'return_url'=> 'https://servicestest.ameriabank.am/VPOS/Payments/Pay?',
         'AmeriaClientID'=>env('AMERIA_CLIENT_ID'),
@@ -74,7 +74,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => env('APP_TIMEZONE','UTC'),
 
     /*
     |--------------------------------------------------------------------------
@@ -102,7 +102,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'am',
 
     /*
     |--------------------------------------------------------------------------

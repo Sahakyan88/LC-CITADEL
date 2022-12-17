@@ -128,7 +128,7 @@ class PaymentController extends Controller
             "Password" => $payment['AmeriaPassword'],
             "Currency" => "AMD",
             "Amount" => (int)$paymentInfo['total_amount'],
-            "OrderID" => 2910025,
+            "OrderID" => 2910026,
             "BackURL" => env('APP_URL') . '/payment/checkPayment',
             "Description" => 'LC-CITADEL'
         ];
@@ -217,7 +217,7 @@ class PaymentController extends Controller
                 return redirect('/am/payment-success')->with(['user' => $user, 'service' => $service]);
             }
         }
-        return abort(500);
+        return $response['Description'] ?? [];
     }
 
     public function payment_success()
