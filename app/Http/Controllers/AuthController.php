@@ -59,8 +59,10 @@ class AuthController extends Controller
 
         )->leftJoin('users', 'users.id', '=', 'orders.user_id')
             ->leftJoin('services', 'services.id', '=', 'orders.product_id')
-            ->where('orders.status', 'paid')
+            ->where('services.featured', 1)
+            ->where('orders.status', 'completed')
             ->where('users.id', Auth::user()->id)->get();
+            
         return view('app.orders-profile',compact('order'));
     }
 
@@ -186,5 +188,25 @@ class AuthController extends Controller
         }
     }
 
+    public function packageProfile()
+    {
+        $lang = App::getLocale();
+        $packages = DB::table('orders')->select(
+            'orders.id as id',
+            'orders.status',
+            'orders.total_amount as amount',
+            'services.title_'.$lang.' as title',
+            'package_user.created_at as date',
+            'package_user.paid_at as paid',
 
+        )->leftJoin('users', 'users.id', '=', 'orders.user_id')
+            ->leftJoin('services', 'services.id', '=', 'orders.product_id')
+            ->where('services.featured', 0)
+            ->where('orders.status', 'completed')
+            ->where('users.id', Auth::user()->id)
+            ->leftJoin('package_user', 'package_user.user_id', '=', 'orders.user_id')->get();
+
+        return view('app.packageprofile',compact('packages'));
+
+    }
 }

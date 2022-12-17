@@ -1,7 +1,6 @@
 
 @extends('admin.layouts.app')
 @section('content')
-@include('admin.blocks.uploader')
 
 <main>
     <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
@@ -11,7 +10,7 @@
                     <div class="col-auto mt-4">
                         <h1 class="page-header-title">
                         <div class="page-header-icon"><i data-feather="users"></i></div>
-                        Users
+                        Packages Payments
                         </h1>
                     </div>
                 </div>
@@ -20,29 +19,42 @@
     </header>
     <div class="container mt-n10">
         <div class="card">
-           
             <div class="card-body">
+            <div class="form-group col-md-2">
+                    <div class="small text-muted">Status</div>
+                    <select class="form-control" name="filter_status" id="filter_status">
+                        <option value=''>-- All--</option>
+                        <option value='pending'>Pending</option>
+                        <option value='paid'>Paid</option>
+                        <option value='completed'>Completed</option>
+                    </select>
+                </div>
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Email</th>
-                                <th>Verified</th>
-                                <th>Edit</th>
+                                <th>F.Name</th>
+                                <th>L.Name</th>
+                                <th>Registered</th>
+                                <th>Phone</th>
+                                <th>Service</th>
+                                <th>AMD</th>
+                                <th>Created</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
                                 <th>ID</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Email</th>
-                                <th>Verified</th>
-                                <th>Edit</th>
-                            </tr>
+                                <th>F.Name</th>
+                                <th>L.Name</th>
+                                <th>Registered</th>
+                                <th>Phone</th>
+                                <th>Service</th>
+                                <th>AMD</th>
+                                <th>Created</th>
+                                <th>Status</th>
                         </tfoot>
                         <tbody></tbody>
                     </table>
@@ -58,21 +70,22 @@
 @push('script')
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
-    <script src="{!! asset('backend/plugins/tinymce/tinymce.min.js') !!}" type="text/javascript"></script>
-
     <script>
+      
         $(document).ready(function() {
             const capitalize = (s) => {
                 if (typeof s !== 'string') return ''
                 return s.charAt(0).toUpperCase() + s.slice(1)
             }
             var dataTable =  $('#dataTable').DataTable({
+                
                 "processing": true,
                 "serverSide": true,
                 'searching': true,
                 "ajax": {
-                    "url": "{{ route('aUserData') }}",
+                    "url": "{{ route('aPackagesData') }}",
                     "data": function(data){
+                     
                         data['sort_field'] = data.columns[data.order[0].column].name;
                         data['sort_dir'] =  data.order[0].dir;
                         data['search'] = data.search.value;
@@ -86,42 +99,55 @@
                         var filter_verification = $('#filter_verification').val();
                         data.filter_verification = filter_verification;
                     }
+                   
                 },
                 "fnDrawCallback": function( oSettings ) {
                     feather.replace();
                     $('[data-toggle="popover"]').popover();
                 },
+                
                 "columns": [
-	            // }},
                     { "data": "id", "name":'id', "orderable": true },
                     { "data": "first_name", "name":'first_name', "orderable": true },
                     { "data": "last_name", "name":'last_name', "orderable": true },
-                    { "data": "email", "name":'email', "orderable": true },
-                    { "data": "email_verified_at", "name":'email_verified_at', "orderable": true , "sClass": "content-middel",
+                    { "data": "date", "name":'date', "orderable": true },
+                    { "data": "phone", "name":'phone', "orderable": true },
+                    { "data": "title", "name":'title', "orderable": true },
+                    { "data": "amount", "name":'amount', "orderable": true },
+                    { "data": "paid", "name":'paid', "orderable": true },
+                    { "data": "status", "name":'status', "orderable": true , "sClass": "content-middel",
                     render: function ( data, type, row, meta) {
-                        switch(row.email_verified_at){
-                            case null:
+                        switch(row.status){
+                            case 'paid':
+                                colorClass = 'badge-secondary';
+                                break;
+                            case 'pending':
+                                colorClass = 'badge-info';
+                            break;
+                            case 'completed':
+                                colorClass = 'badge-success';
+                            break;
+                            case 'canceled':
                                 colorClass = 'badge-danger';
-                                status = 'not verified';
                                 break;
                             default:
-                                status = 'verified' 
-                                colorClass = 'badge-success';
+                                colorClass = 'badge-danger';
                         }
-                        return '<div style="font-size:12px;" class="badge '+colorClass+' badge-pill">'+status+'</div>';
-	                }},
-                    { "data": "id", "name":'edit', "orderable": false, "sClass": "content-middel", 
-	            	    render: function ( data, type, row, meta) {
-	            	    return '<a href="javascript:;" edit_item_id="'+row.id+'" class="item_edit"><button class="btn btn-datatable btn-icon btn-transparent-dark"><i data-feather="edit"></i></button></a>';
+                        str = capitalize(row.status.replace("_", " "));
+	            	    // return capitalize(str)
+                        return '<div style="font-size:12px;" class="badge '+colorClass+' badge-pill">'+str+'</div>';
 	                }},
                 ],
                 "columnDefs": [
-                    {"width": "5%", "targets": 0},
-                    {"width": "20%", "targets": 1},
-                    {"width": "20%", "targets": 2},
-                    {"width": "25%", "targets": 3},
-                    {"width": "5%", "targets": 4},
-                    {"width": "5%", "targets": 5},
+                    {"width": "1%", "targets": 0},
+                    {"width": "10%", "targets": 1},
+                    {"width": "10%", "targets": 2},
+                    {"width": "10%", "targets": 3},
+                    {"width": "40%", "targets": 4},
+                    {"width": "10%", "targets": 5},
+                    {"width": "1%", "targets": 6},
+                    {"width": "25%", "targets": 7},
+                    {"width": "1%", "targets": 8},
                 ],
                 "order": [
                     ['0', "desc"]
@@ -138,21 +164,13 @@
 
             var itemPopup = new Popup;
             itemPopup.init({
-                size:'modal-xl',
+                size:'modal-lg',
                 identifier:'edit-item',
                 class: 'modal',
                 minHeight: '200',
             })
-            window.itemPopup = itemPopup;
-            $('#dataTable').on('click', '.item_edit', function (e) {
-                editId = $(this).attr('edit_item_id');
-                itemPopup.setTitle(' Users');
-                itemPopup.load("{{route('aGetUser')}}?id="+ editId, function () {
-                    this.open();
-                });
-            });
+            
         });
-  
     </script>
 @endpush
 @endsection

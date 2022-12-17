@@ -1,6 +1,11 @@
 @extends('app.layouts.app')
 
 @section('content')
+<style>
+.bottom-language{
+    display: none;
+}
+</style>
     <section id="contact" class=" services section-bg ">
         <div class="container">
             <div class="row justify-content-center">
@@ -15,7 +20,7 @@
                             @endif
 
                             {{ __('Before proceeding, please check your email for a verification link.') }}
-                            {{ __('If you did not receive the email') }},
+                            {{ __('If you did not receive the email') }}
                             <form method="POST" action="{{ route('verification.resend') }}" class="php-email-form ">
                                 @csrf
                                 <div class="text-center mt-2">
@@ -23,9 +28,29 @@
                                 </div>
                             </form>
                         </div>
-                    </div>
+                    </div>                                  
                 </div>
             </div>
         </div>
     </section>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script>
+        jQuery(document).ready(function($) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: "POST",
+                url: "{{ route('verification.resend') }}",
+                dataType: 'JSON',
+                data: {
+                    _token: "<?php echo csrf_token(); ?>",
+                },
+                success: function(response) {
+                }
+            });
+        });
+    </script>
 @endsection

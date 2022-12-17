@@ -47,8 +47,8 @@ Route::get('/register', [WelcomeController::class, 'register'])->name('register-
 Route::post('/sign-up', [AuthController::class, 'signup'])->name('signup');
 Route::post('/sign-in', [AuthController::class, 'signin'])->name('signin');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
-Route::post('/save-image', [AuthController::class, 'storeImage'])->name('imagePassport')->middleware('auth');
-Route::delete('/delete-image', [AuthController::class, 'deleteImage'])->name('deleteImage')->middleware('auth');
+Route::post('/save-image', [AuthController::class, 'storeImage'])->name('imagePassport')->middleware(['auth','verified']);
+Route::delete('/delete-image', [AuthController::class, 'deleteImage'])->name('deleteImage')->middleware(['auth','verified']);
 Route::get('/not-found', [WelcomeController::class, 'notFound'])->name('notfound');
 
 
@@ -64,12 +64,16 @@ Route::get('/', [WelcomeController::class, 'homepage'])->name('homepage');
 Route::get('/contact', [WelcomeController::class, 'contact'])->name('contact');
 Route::get('/services', [WelcomeController::class, 'service'])->name('service');
 Route::get('/about', [WelcomeController::class, 'about'])->name('about');
-Route::get('/orders-profile', [AuthController::class, 'ordersPprofile'])->name('ordersprofile');
-Route::get('/personal-info', [HomeController::class, 'index'])->name('personalinfo')->middleware('verified');
-Route::post('/user-info', [AuthController::class, 'edUser'])->name('edUserinfo')->middleware('auth');;
-Route::get('/profile-password', [AuthController::class, 'profilePassword'])->name('profilepassword')->middleware('auth');
-Route::get('/passport', [AuthController::class, 'passport'])->name('passportGet')->middleware('auth');
-Route::post('/change-password', [AuthController::class, 'changePassword'])->name('changepassword')->middleware('auth');
+Route::get('/orders-profile', [AuthController::class, 'ordersPprofile'])->name('ordersprofile')->middleware(['auth','verified']);;
+Route::get('/personal-info', [HomeController::class, 'index'])->name('personalinfo')->middleware(['auth','verified']);
+Route::post('/user-info', [AuthController::class, 'edUser'])->name('edUserinfo')->middleware(['auth','verified']);
+Route::get('/profile-password', [AuthController::class, 'profilePassword'])->name('profilepassword')->middleware(['auth','verified']);
+Route::get('/passport', [AuthController::class, 'passport'])->name('passportGet')->middleware(['auth','verified']);
+Route::post('/change-password', [AuthController::class, 'changePassword'])->name('changepassword')->middleware(['auth','verified']);
+Route::get('/package-profile', [AuthController::class, 'packageProfile'])->name('packageprofile')->middleware(['auth','verified']);
+Route::get('/contract', [WelcomeController::class, 'contract'])->name('contract')->middleware(['auth','verified']);
+Route::post('/contract-check', [WelcomeController::class, 'contractCheck'])->name('contractCheck')->middleware(['auth','verified']);
+
 Route::get('/payment-success',[\App\Http\Controllers\Payment\PaymentController::class, 'payment_success'])->name('payment_success');
 
  });

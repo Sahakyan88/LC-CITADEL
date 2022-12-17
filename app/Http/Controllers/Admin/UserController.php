@@ -48,6 +48,21 @@ class UserController extends Controller
         $item = $id ? Users::find($id) : new Users();   
         if($id){
             $item = Users::find($id);
+            $packages = DB::table('orders')->select(
+                'orders.id as id',
+                'orders.status',
+                'orders.total_amount as amount',
+                'services.title_am as title',
+                'package_user.created_at as date',
+                'orders.user_id',
+                'package_user.paid_at as paid',
+    
+            )->leftJoin('users', 'users.id', '=', 'orders.user_id')
+                ->leftJoin('services', 'services.id', '=', 'orders.product_id')
+                ->where('services.featured', 0)
+                ->where('orders.status', 'completed')
+                ->where('users.id', $id)
+                ->leftJoin('package_user', 'package_user.user_id', '=', 'orders.user_id')->get();
             if ($item->image_id) {
                 $imageDb = new ImageDB();
                 $item->image = $imageDb->get($item->image_id);
@@ -61,7 +76,7 @@ class UserController extends Controller
 
         $data = json_encode(
             array('data' => 
-                (String) view('admin.users.item', array('item'=>$item,'mode' => $mode,  'page' => $page)),'status' => 1)
+                (String) view('admin.users.item', array('item'=>$item,'mode' => $mode, 'packages'=>$packages, 'page' => $page)),'status' => 1)
             );
         return $data; 
     }

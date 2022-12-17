@@ -21,7 +21,7 @@ return new class extends Migration
             $table->enum('status', [Order::PENDING_STATUS, Order::PAID_STATUS, Order::COMPLETED_STATUS])->default(Order::PENDING_STATUS);
             $table->unsignedBigInteger('total_amount')->nullable();
             $table->string('session_id')->nullable();
-            $table->integer('status_been')->default(0);
+            $table->string('status_been')->default('upcoming');
             $table->timestamps();
         });
     }
