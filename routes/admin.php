@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\DeactivatedControler;
 use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Admin\ServicesController;
 use App\Http\Controllers\Admin\OneTimePaymentControler;
+use App\Http\Controllers\Admin\FileUploadController;
 
 
 /*
@@ -98,6 +99,9 @@ Route::group(['middleware' => 'adminauth'], function () {
 
     Route::post('upload-image',[ImageController::class, 'upload'])->name('aUpload');
     Route::post('remove-image',[ImageController::class, 'remove'])->name('aRemoveImage');
+
+    Route::post('upload-file',[FileUploadController::class, 'upload'])->name('aUploaFfile');
+    Route::post('remove-file',[FileUploadController::class, 'remove'])->name('aRemoveFile');
 
     Route::get('deactivated',[DeactivatedControler::class, 'index'])->name('deactivatedPage');
     Route::get('data-deactivated',[DeactivatedControler::class, 'deactivatedData'])->name('aDeactivatedData');

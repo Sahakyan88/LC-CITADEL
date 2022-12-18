@@ -47,6 +47,10 @@ class ServicesController extends Controller
                 $imageDb = new ImageDB();
                 $item->image = $imageDb->get($item->image_id);
             }
+            if ($item->file_id) {
+                $imageDb = new ImageDB();
+                $item->file = $imageDb->get($item->file_id);
+            }
             $mode = 'edit';
         }else{
             $item = new Service();
@@ -70,6 +74,7 @@ class ServicesController extends Controller
         $validator  = Validator::make($request->all(), [
             'title_en'      => 'required',
             'image'         => 'required',
+            'file'         => 'required',
             'price'         => 'required',
             'body_en'       => 'required'
         ]);
@@ -96,6 +101,11 @@ class ServicesController extends Controller
         $item->image_id = $data['image'];
         if ($item->image_id) {
             $imageDB = ImageDB::find($item->image_id);
+            $imageDB->save();
+        }
+        $item->file_id = $data['file'];
+        if ($item->file_id) {
+            $imageDB = ImageDB::find($item->file_id);
             $imageDB->save();
         }
         $translateHelper = new Translate();

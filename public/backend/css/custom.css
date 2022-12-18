@@ -32,6 +32,7 @@ a.loading, span.loading, button.loading, button.loading:hover, a.loading:hover, 
     padding: 0 !important;
     margin: 0 !important;
   }
+  
   .content-middel{
     text-align: center;
 }
