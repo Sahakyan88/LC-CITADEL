@@ -1,7 +1,9 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +19,26 @@ use Illuminate\Support\Facades\Artisan;
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
+
+Artisan::command('logs:clear', function() {
+
+    exec('rm -f ' . storage_path('logs/*.log'));
+
+    exec('rm -f ' . base_path('*.log'));
+
+    $this->comment('Logs have been cleared!');
+
+})->describe('Clear log file');
+
+Artisan::command('logs:truncate', function() {
+
+ DB::table('error_logs')
+     ->whereMonth('created_at', '=', Carbon::now()->subMonth()->month)
+     ->delete();
+    DB::table('action_logs')
+        ->whereMonth('created_at', '=', Carbon::now()->subMonth()->month)
+        ->delete();
+    $this->comment('Logs have been deleted!');
+
+})->describe('Clear log tables');
+
