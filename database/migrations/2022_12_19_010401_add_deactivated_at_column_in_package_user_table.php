@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('services', function (Blueprint $table) {
-            $table->integer('file_id')->after('image_id')->nullable();
+        Schema::table('package_user', function (Blueprint $table) {
+            $table->dateTime('deactivated_at')->after('paid_at')->nullable();
         });
     }
 
@@ -25,7 +25,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('services', function (Blueprint $table) {
+        Schema::table('package_user', function (Blueprint $table) {
             //
         });
     }

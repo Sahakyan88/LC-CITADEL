@@ -53,19 +53,19 @@ Route::group(['middleware' => 'adminauth'], function () {
 
     Route::post('save-profile',[AuthController::class, 'saveProfile'])->name('adminSaveProfile');
     Route::post('change-password',[AuthController::class, 'changePassword'])->name('adminChangePassword');
-   
+
     Route::get('dictionary',[DictionaryController::class, 'index'])->name('adminDictionary');
     Route::get('dictionary-data',[DictionaryController::class, 'data'])->name('aDictionaryData');
     Route::get('dictionary-get',[DictionaryController::class, 'get'])->name('aGetDictionary');
     Route::post('dictionary-save',[DictionaryController::class, 'save'])->name('DictionarySave');
-   
+
     Route::get('faq',[FaqController::class, 'faq'])->name('adminFaq');
     Route::get('faq-data',[FaqController::class, 'faqData'])->name('aFaqData');
     Route::get('faq-get',[FaqController::class, 'getFaq'])->name('aGetFaq');
     Route::post('faq-save',[FaqController::class, 'saveFaq'])->name('adminFaqSave');
     Route::post('faq-remove',[FaqController::class, 'removeFaq'])->name('aRemoveFaq');
     Route::post('faq-ordering',[FaqController::class, 'reorderingFaq'])->name('aFaqSort');
-    
+
     Route::get('services',[ServicesController::class, 'services'])->name('adminServices');
     Route::get('services-data',[ServicesController::class, 'servicesData'])->name('aServicesData');
     Route::get('services-get',[ServicesController::class, 'getServices'])->name('aGetServices');
@@ -86,15 +86,14 @@ Route::group(['middleware' => 'adminauth'], function () {
     Route::get('team-data',[TeamController::class, 'teamData'])->name('aTeamData');
     Route::post('team-remove',[TeamController::class, 'removeTeam'])->name('aRemoveTeam');
     Route::post('team-ordering',[TeamController::class, 'reorderingHome'])->name('aTeamSort');
-    
+
     Route::get('one-payments',[OneTimePaymentControler::class, 'onePayment'])->name('onePayments');
     Route::get('data-payments',[OneTimePaymentControler::class, 'onePaymentData'])->name('aonePaymentData');
     Route::get('get-payments',[OneTimePaymentControler::class, 'onePaymentGet'])->name('aGetOnePayment');
     Route::post('save-payments',[OneTimePaymentControler::class, 'aPaymentOneSave'])->name('paymentOneSave');
-    
+
     Route::get('packages-payments',[PackagesPaymentControler::class, 'packagesPayments'])->name('packages');
     Route::get('packages-data',[PackagesPaymentControler::class, 'packagesData'])->name('aPackagesData');
-    Route::post('cancel-request',[SubscriptionController::class, 'cancelRequest'])->name('cancelRequest');
 
     Route::post('upload-image',[ImageController::class, 'upload'])->name('aUpload');
     Route::post('remove-image',[ImageController::class, 'remove'])->name('aRemoveImage');

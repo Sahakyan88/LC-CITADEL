@@ -8,7 +8,7 @@
         });
     }
 </script>
-    
+
 <div class="row">
     <div class="col-xxl-12">
         <div class="card mb-4">
@@ -28,29 +28,23 @@
                                         </div>
                                     </div>
                                     @if (count($packages) > 0)
-                                        <div class="card-header">Packages</div>
+                                        <div class="card-header text-center">Active Packages</div>
                                         @foreach ($packages as $package)
                                             <div class="prof-order-block  mt-5">
-                                                <div class="php-email-form order-profile">
+                                                <div class="php-email-form order-profile text-center">
                                                     <div class="col-sm-12 title-order">{{ $package->title }}</div>
                                                     <div class="col-sm-12 amount">{{ $package->amount }}
-                                                        դր</div>
+                                                        AMD</div>
                                                     <div class="col-sm-2 mt-3 "></div>
                                                     <hr>
-                                                    <div class="col-sm-12 date-prof">Առաջին Վճարումը կատարվել է՝
-                                                        {{ $package->date }}
-                                                    </div>
-                                                    <div class="col-sm-12 date-prof">Հաջորդ Վճարումը կատարվել է՝
-                                                        {{ $package->paid }}
-                                                    </div>
                                                 </div>
                                                 <div class="text-center">
-                                                    <form id="save-item-form" method="post">
+                                                    <form id="save-item-form" method="post" >
                                                         @csrf
-                                                    <input type="hidden" class="hidden_id" name="user_id" value="{{ $package->user_id }}" />
-
-                                                    <button type="button" onclick="saveItem()" id="saveItemBtn"
-                                                        class="btn btn-success mt-4 ">Ապակտիվացնել</button>
+                                                    <input type="hidden" class="hidden_id" name="package_user_id" value="{{ $package->package_user_id }}" />
+                                                    <input type="hidden" class="hidden_id" name="package_id" value="{{ $package->id }}" />
+                                                    <button type="button"  id="saveItemBtn" onclick="saveItem()"
+                                                        class="btn btn-success mt-4 mb-2 ">DEACTIVATE</button>
                                                     </form>
                                                 </div>
                                             </div>
@@ -166,7 +160,7 @@
                                 var data = $('#save-item-form').serializeFormJSON();
                                 $.ajax({
                                     type: "POST",
-                                    url: "{{ route('cancelRequest') }}",
+                                    url: "{{ route('deactivatePackage') }}",
                                     data: data,
                                     dataType: 'json',
                                     success: function(response) {

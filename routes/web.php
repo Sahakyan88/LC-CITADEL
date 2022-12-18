@@ -87,4 +87,4 @@ Route::post('/createPackageOrder/{id}',[\App\Http\Controllers\Payment\Subscripti
 Route::get('/payment/checkPayment',[\App\Http\Controllers\Payment\PaymentController::class,'checkPayment']);
 Route::get('/payment/checkSubscription',[\App\Http\Controllers\Payment\SubscriptionController::class,'checkSubscription']);
 Route::get('/billSubscription', [\App\Http\Controllers\Payment\SubscriptionController::class,'bill']);
-
+Route::post('/deactivatePackage',[\App\Http\Controllers\Payment\SubscriptionController::class, 'deactivate'])->name('deactivatePackage');

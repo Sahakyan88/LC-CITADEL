@@ -18,8 +18,8 @@ class PackagesDeactivated extends Model
             'users.last_name',
             'users.phone',
             'services.title_am as title',
-            'users.created_at as date',
-            'package_user.paid_at as paid',
+            'package_user.paid_at as date',
+            'package_user.deactivated_at as deactivated',
             'package_user.is_blocked',
         ))
             ->leftJoin('services', 'services.id', '=', 'package_user.package_id')

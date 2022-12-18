@@ -25,7 +25,8 @@ class SubscriptionController extends Controller
 {
     protected PaymentService $paymentService;
 
-    public function __construct(PaymentService $paymentService){
+    public function __construct(PaymentService $paymentService)
+    {
         $this->paymentService = $paymentService;
     }
 
@@ -51,7 +52,7 @@ class SubscriptionController extends Controller
         /**********Data For Payment*******************/
         $paymentInfo = $this->paymentService->takePaymentInfo((int)$service['price'], $Order->id, $user['id'], $lang, 'package');
         /************Create Payment************/
-        $response_data = $this->createPayment($paymentInfo);
+        $response_data = $this->createPayment($paymentInfo,$id);
         $response = $response_data['response'];
         $pay = $response_data['pay'];
         /*********************************** */
@@ -61,17 +62,17 @@ class SubscriptionController extends Controller
                     'ameria_payment_id' => $response['PaymentID']
                 ]);
             } catch (Exception $e) {
-                 $this->paymentService->error_log('Update PaymentId', $response, 'package', $e->getMessage());
+                $this->paymentService->error_log('Update PaymentId', $response, 'package', $e->getMessage());
                 return response($e->getMessage(), 500);
             }
             $redirect_url = 'https://servicestest.ameriabank.am/VPOS/Payments/Pay' . "?lang=$lang&id=" . $response['PaymentID'];
             return redirect($redirect_url);
         }
-         $this->paymentService->error_log('Error ResponseCode', $response, 'package', $response['ResponseCode']);
+        $this->paymentService->error_log('Error ResponseCode', $response, 'package', $response['ResponseCode']);
         return response('Payment was rejected by AMERIA!!!', 500);
     }
 
-    private function createPayment(array $paymentInfo)
+    private function createPayment(array $paymentInfo,$service_id)
     {
         /********Create Payment*************/
         $payment = config('app.payment');
@@ -84,7 +85,7 @@ class SubscriptionController extends Controller
             ];
             $pay = Payment::create($data);
         } catch (Exception $e) {
-             $this->paymentService->error_log('Create Payment', $paymentInfo, 'package', $e->getMessage());
+            $this->paymentService->error_log('Create Payment', $paymentInfo, 'package', $e->getMessage());
             return response($e->getMessage(), 500);
         }
         $query = [
@@ -100,14 +101,15 @@ class SubscriptionController extends Controller
         ];
 //        /********Save card info for binding*************/
         Card::create([
-            'user_id'=>\auth()->user()->id,
-            'card_holder_id'=>'ele585b2tc3cev45f5ra43pg581f70lf02aa'
+            'user_id' => \auth()->user()->id,
+            'card_holder_id' => 'ele585b2tc3cev45f5ra43pg581f70lf02aa',
+            'service_id'=>$service_id
         ]);
-         $this->paymentService->action_log('Ameria Create Payment Request', $paymentInfo, $paymentInfo['type']);
+        $this->paymentService->action_log('Ameria Create Payment Request', $paymentInfo, $paymentInfo['type']);
         /************** ******************/
         $response = Http::post($payment['AmeriaRegisterUrl'], $query);
         /********Action Log*************/
-         $this->paymentService->action_log('Ameria  Payment Response', $response->json(), $paymentInfo['type']);
+        $this->paymentService->action_log('Ameria  Payment Response', $response->json(), $paymentInfo['type']);
         /************** ******************/
         return ['response' => $response->json(), 'pay' => $pay];
     }
@@ -139,10 +141,10 @@ class SubscriptionController extends Controller
             "Password" => $payment_info['AmeriaPassword'],
             "PaymentID" => $request['paymentID']
         ];
-         $this->paymentService->action_log('Ameria Check Payment Request', $payment, $payment['type']);
+        $this->paymentService->action_log('Ameria Check Payment Request', $payment, $payment['type']);
         $response = Http::post('https://servicestest.ameriabank.am/VPOS/api/VPOS/GetPaymentDetails', $query);
         $response = $response->json();
-         $this->paymentService->action_log('Ameria Check Payment Response', $response, $payment['type']);
+        $this->paymentService->action_log('Ameria Check Payment Response', $response, $payment['type']);
         if (isset($response['ResponseCode']) && $response['ResponseCode'] == '00') {
             Payment::where('id', $payment->id)->update([
                 'status' => 'approved'
@@ -153,7 +155,7 @@ class SubscriptionController extends Controller
             DB::table('package_user')->insert([
                 'user_id' => $user,
                 'package_id' => $product,
-                'paid_at'=>Carbon::now()->format('Y-m-d H:i:s'),
+                'paid_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ]);
@@ -211,25 +213,47 @@ class SubscriptionController extends Controller
         $response = Http::post('https://servicestest.ameriabank.am/VPOS/api/VPOS/ActivateBinding', $query1);
         return $response = $response->json();
         /*********************************/
+    }
 
-//        /********Deactivate binding************* IT WORKS*/
-////        {
-////            "ResponseCode": "00",
-////              "ResponseMessage": "Transaction Completed",
-////             "CardHolderID": "ele585b2tc3cev45f5ra43pg521f70lf028f"
-////}
-//        $query1 = [
-//            "ClientID" => $payment['AmeriaClientID'],
-//            "Username" => $payment['AmeriaUsername'],
-//            "Password" => $payment['AmeriaPassword'],
-//            "PaymentType" => 6, "CardHolderID" => 'ele585b2tc3cev45f5ra43pg521f70lf028f',
-//        ];
-//        $response = Http::post('https://servicestest.ameriabank.am/VPOS/api/VPOS/DeactivateBinding', $query1);
-//        return $response = $response->json();
-//        /*********************************/
-   }
-   public function cancelRequest(Request $request){
-    dd($request->all());
+    public function cancelRequest(Request $request)
+    {
+        dd($request->all());
 
-   }
+    }
+
+    /********Deactivate binding**************/
+    public function deactivate(Request $request)
+    {
+//            "ResponseCode": "00",
+//              "ResponseMessage": "Transaction Completed",
+//             "CardHolderID": "ele585b2tc3cev45f5ra43pg521f70lf028f"
+//}
+        $payment = config('app.payment');
+        $data = DB::table('package_user')->where('package_user.id', $request['package_user_id'])
+            ->select('users.id as user_id', 'cards.card_holder_id', 'package_user.id')
+            ->join('users', 'package_user.user_id', '=', 'users.id')
+            ->join('cards', 'users.id', '=', 'cards.user_id')
+            ->join('services', 'package_user.package_id', '=', 'services.id')
+            ->where('cards.package_id','=', $request['package_id'])->get();
+        $query1 = [
+            "ClientID" => $payment['AmeriaClientID'],
+            "Username" => $payment['AmeriaUsername'],
+            "Password" => $payment['AmeriaPassword'],
+            "PaymentType" => 6,
+            "CardHolderID" => $data[0]->card_holder_id
+        ];
+        $response = Http::post('https://servicestest.ameriabank.am/VPOS/api/VPOS/DeactivateBinding', $query1);
+        $response = $response->json();
+        if ($response['ResponseCode'] == '00') {
+            DB::table('package_user')->where('id', $request['package_user_id'])->update([
+                'deactivated_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'is_blocked' => 1
+            ]);
+            $this->paymentService->action_log('Deactivate Response', $response, 'package');
+            return json_encode(array('status' => 1));
+        } else {
+            $this->paymentService->error_log('Deactivate Response', $response, 'package',$response['ResponseMessage']);
+            return json_encode(array('status' => 0)) ;
+        }
+    }
 }

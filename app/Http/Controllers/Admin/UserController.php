@@ -26,7 +26,7 @@ class UserController extends Controller
 
         $filter = array('search' => $request->input('search'),
                         'status' => $request->input('filter_status'),
-                        'verify' => $request->input('filter_verification'));    
+                        'verify' => $request->input('filter_verification'));
 
         $items = $model->getAll(
             $request->input('start'),
@@ -45,24 +45,22 @@ class UserController extends Controller
     public function userGet(Request $request){
         $id = (int)$request['id'];
         $page = (isset($request['page']) && $request['page'] == 'verification' ) ? true : false;
-        $item = $id ? Users::find($id) : new Users();   
         if($id){
             $item = Users::find($id);
-            $packages = DB::table('orders')->select(
-                'orders.id as id',
-                'orders.status',
-                'orders.total_amount as amount',
-                'services.title_am as title',
-                'package_user.created_at as date',
-                'orders.user_id',
-                'package_user.paid_at as paid',
-    
-            )->leftJoin('users', 'users.id', '=', 'orders.user_id')
-                ->leftJoin('services', 'services.id', '=', 'orders.product_id')
-                ->where('services.featured', 0)
-                ->where('orders.status', 'completed')
-                ->where('users.id', $id)
-                ->leftJoin('package_user', 'package_user.user_id', '=', 'orders.user_id')->get();
+            $packages = DB::table('package_user')
+                ->where('user_id', $id)
+                ->where('is_blocked',0)
+                ->where('deactivated_at','=',null)
+                ->select(
+                    'package_user.user_id as user_id',
+                    'package_user.id as package_user_id',
+                    'services.price as amount',
+                    'services.id as id',
+                    'services.title_en as title',
+                    'package_user.created_at as date',
+                    'package_user.paid_at as paid')
+                ->leftJoin('users', 'users.id', '=', 'package_user.user_id')
+                ->leftJoin('services', 'services.id', '=', 'package_user.package_id')->get();
             if ($item->image_id) {
                 $imageDb = new ImageDB();
                 $item->image = $imageDb->get($item->image_id);
@@ -75,10 +73,10 @@ class UserController extends Controller
         }
 
         $data = json_encode(
-            array('data' => 
+            array('data' =>
                 (String) view('admin.users.item', array('item'=>$item,'mode' => $mode, 'packages'=>$packages, 'page' => $page)),'status' => 1)
             );
-        return $data; 
+        return $data;
     }
 
     public function auserSave(Request $request){
@@ -88,7 +86,7 @@ class UserController extends Controller
             'first_name' => 'required',
             'last_name'  => 'required'
         ]);
-      
+
         if ($validator->fails()) {
             return response()->json([
                 'status'  => 0,
@@ -106,11 +104,11 @@ class UserController extends Controller
         $item->first_name = $request['first_name'];
         $item->last_name  = $request['last_name'];
         $item->email      = $request['email'];
-       
+
         $item->save();
         return json_encode(array('status' => 1));
     }
-    
+
     public function verify(Request $request){
         $validator = \Validator::make($request->all(), [
             'verify_id' => 'required|int',
@@ -121,23 +119,23 @@ class UserController extends Controller
         {
             return response()->json(['message' => $validator->errors()], 401);
         }
-        
+
         $id = (int)$request['verify_id'];
-        
+
         $verification =  DB::table('verification')->select('*')->where('id', $id)->first();
         if(!$verification){
             return json_encode(array('status' => 0, 'message' => 'User not submit'));
         }
-        
+
         $data = array();
         $data['status'] = $request['status'];
         $data['message'] = $request['message'];
-        
+
         DB::table('verification')->where('id', $id)->update($data);
-        
+
         if($verification->status != $request['status']){
             DB::table('users')->where('id', $verification->user_id)->update(['verify'=> $request['status']]);
-            
+
             if(in_array($request['status'],['approved','declined'])){
                 $notification = new Notification();
                 $description = $request['status'] == 'approved' ? 'Verification is successfull.' : 'Verification is faild.';
