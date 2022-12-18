@@ -21,7 +21,7 @@ class PaymentController extends Controller
 {
     public function createServiceOrder($id)
     {
-     
+
         if (!Auth::check()) {
             return redirect()->to('/login');
         } else {
@@ -34,7 +34,6 @@ class PaymentController extends Controller
                 return redirect()->to("/$lang/contract");
             }
         }
-        exit();
         /**********Data For Service*******************/
         $service = Service::where('id', $id)->first();
         /**********Data For Order*******************/
@@ -133,7 +132,7 @@ class PaymentController extends Controller
             "Password" => $payment['AmeriaPassword'],
             "Currency" => "AMD",
             "Amount" => (int)$paymentInfo['total_amount'],
-            "OrderID" => 2910026,
+            "OrderID" => 2910029,
             "BackURL" => env('APP_URL') . '/payment/checkPayment',
             "Description" => 'LC-CITADEL'
         ];
@@ -219,7 +218,7 @@ class PaymentController extends Controller
             if ($response) {
                 $user = User::where('id', $user)->first();
                 $service = Service::where('id', $product)->first();
-                return redirect('/am/payment-success')->with(['user' => $user, 'service' => $service]);
+                return redirect("/$lang/payment-success");
             }
         }
         return $response['Description'] ?? [];

@@ -6,7 +6,6 @@
     body {
         text-align: center;
         padding: 40px 0;
-        background: #EBF0F5;
     }
     h1 {
         color: #88B04B;
@@ -41,10 +40,8 @@
     <div style="border-radius:200px; height:200px; width:200px; background: #F8FAF5; margin:0 auto;">
         <i class="checkmark">✓</i>
     </div>
-    <h1>Success</h1>
-    <p>We received your purchase request;<br/> we'll be in touch shortly!</p>
-    {{\Illuminate\Support\Facades\Session::get('user')}}
-    {{\Illuminate\Support\Facades\Session::get('service')}}
+    <h1>{{config()->get('lang.' . App::getLocale() . '.payment_success')}}</h1>
+    <p>{{config()->get('lang.' . App::getLocale() . '.in_touch')}} </p>
 </div>
 </body>
 </html>
