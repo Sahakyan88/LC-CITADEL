@@ -1,5 +1,6 @@
 <?php
-
+/** Payment for packages adn subscriptions
+ */
 namespace App\Http\Controllers\Payment;
 
 use App\Http\Controllers\Controller;
@@ -10,6 +11,7 @@ use App\Models\Order;
 use App\Models\Payment;
 use App\Models\Service;
 use App\Models\User;
+use App\Services\PaymentService;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
@@ -21,6 +23,12 @@ use Illuminate\Support\Str;
 
 class SubscriptionController extends Controller
 {
+    protected PaymentService $paymentService;
+
+    public function __construct(PaymentService $paymentService){
+        $this->paymentService = $paymentService;
+    }
+
     public function createPackageOrder($id)
     {
         if (!Auth::check()) {
@@ -37,16 +45,13 @@ class SubscriptionController extends Controller
         }
         /**********Data For Order*******************/
         $service = Service::where('id', $id)->first();
-
-        $orderInfo = $this->takeOrderInfo(Order::PENDING_STATUS, $user, $service);
-
+        $orderInfo = $this->paymentService->takeOrderInfo(Order::PENDING_STATUS, $user, $service);
         /************Create Order************/
-        $Order = $this->createOrder($orderInfo);
+        $Order = $this->paymentService->createOrder($orderInfo, 'package');
         /**********Data For Payment*******************/
-        $paymentInfo = $this->takePaymentInfo((int)$service['price'], $Order->id, $user['id'], $lang, 'package');
-
+        $paymentInfo = $this->paymentService->takePaymentInfo((int)$service['price'], $Order->id, $user['id'], $lang, 'package');
         /************Create Payment************/
-        $response_data = $this->createPayment($paymentInfo, $lang);
+        $response_data = $this->createPayment($paymentInfo);
         $response = $response_data['response'];
         $pay = $response_data['pay'];
         /*********************************** */
@@ -56,63 +61,17 @@ class SubscriptionController extends Controller
                     'ameria_payment_id' => $response['PaymentID']
                 ]);
             } catch (Exception $e) {
-                $this->error_log('Update PaymentId', $response, 'package', $e->getMessage());
+                 $this->paymentService->error_log('Update PaymentId', $response, 'package', $e->getMessage());
                 return response($e->getMessage(), 500);
             }
-            $redirect_url = env('AMERIA_REDIRECT_URL') . "?lang=$lang&id=" . $response['PaymentID'];
+            $redirect_url = 'https://servicestest.ameriabank.am/VPOS/Payments/Pay' . "?lang=$lang&id=" . $response['PaymentID'];
             return redirect($redirect_url);
         }
-        $this->error_log('Error ResponseCode', $response, 'package', $response['ResponseCode']);
+         $this->paymentService->error_log('Error ResponseCode', $response, 'package', $response['ResponseCode']);
         return response('Payment was rejected by AMERIA!!!', 500);
     }
 
-    private function takeOrderInfo($status, $user, $product): array
-    {
-        /**********Data For Orders Table*************/
-        $orderInfo = [];
-
-        /**********Order's Status*************/
-        $orderInfo['status'] = $status;
-
-        /**********Order's User*************/
-        $orderInfo['user_id'] = $user['id'];
-
-        /**********Total Amount*************/
-        $orderInfo['total_amount'] = $product['price'];
-
-        /******Order's Products******/
-        $orderInfo['product_id'] = $product['id'];
-
-        /**********Order's Status*************/
-        $orderInfo['session_id'] = session()->getId();
-
-        return $orderInfo;
-    }
-
-    private function createOrder(array $orderInfo)
-    {
-        $this->action_log('Create Order', $orderInfo, 'package');
-        try {
-            return Order::create($orderInfo);
-        } catch (Exception $e) {
-            $this->error_log('Create Order', $orderInfo, 'package', $e->getMessage());
-            return response('Something Went Wrong!!', 500);
-        }
-    }
-
-    private function takePaymentInfo(int $total_amount, $order_id, $user_id, $lang, $type): array
-    {
-        /**********Payment Info*********/
-        $paymentInfo = [];
-        $paymentInfo['total_amount'] = $total_amount;
-        $paymentInfo['lang'] = $lang;
-        $paymentInfo['user_id'] = $user_id;
-        $paymentInfo['order_id'] = $order_id;
-        $paymentInfo['type'] = $type;
-        return $paymentInfo;
-    }
-
-    private function createPayment(array $paymentInfo, $lang)
+    private function createPayment(array $paymentInfo)
     {
         /********Create Payment*************/
         $payment = config('app.payment');
@@ -125,54 +84,32 @@ class SubscriptionController extends Controller
             ];
             $pay = Payment::create($data);
         } catch (Exception $e) {
-            $this->error_log('Create Payment', $paymentInfo, 'package', $e->getMessage());
+             $this->paymentService->error_log('Create Payment', $paymentInfo, 'package', $e->getMessage());
             return response($e->getMessage(), 500);
         }
-
         $query = [
             "ClientID" => $payment['AmeriaClientID'],
             "Username" => $payment['AmeriaUsername'],
             "Password" => $payment['AmeriaPassword'],
             "Currency" => "AMD",
             "Amount" => (int)$paymentInfo['total_amount'],
-            "OrderID" => 2910052,
+            "OrderID" => 2910057,
             "BackURL" => env('APP_URL') . '/payment/checkSubscription',
             "Description" => 'LC-CITADEL',
-            "CardHolderID" => 'ele585b2tc3cev45f5ra43pg521f70lf028f',
+            "CardHolderID" => 'ele585b2tc3cev45f5ra43pg581f70lf02aa',
         ];
 //        /********Save card info for binding*************/
         Card::create([
             'user_id'=>\auth()->user()->id,
-            'card_holder_id'=>'ele585b2tc3cev45f5ra43pg521f70lf028f'
+            'card_holder_id'=>'ele585b2tc3cev45f5ra43pg581f70lf02aa'
         ]);
-        $this->action_log('Ameria Create Payment Request', $paymentInfo, $paymentInfo['type']);
+         $this->paymentService->action_log('Ameria Create Payment Request', $paymentInfo, $paymentInfo['type']);
         /************** ******************/
         $response = Http::post($payment['AmeriaRegisterUrl'], $query);
         /********Action Log*************/
-        $this->action_log('Ameria  Payment Response', $response->json(), $paymentInfo['type']);
+         $this->paymentService->action_log('Ameria  Payment Response', $response->json(), $paymentInfo['type']);
         /************** ******************/
         return ['response' => $response->json(), 'pay' => $pay];
-    }
-
-    private function error_log($name, $data, $type, $error)
-    {
-        return ErrorLog::create([
-            'name' => $name,
-            'data' => $data,
-            'type' => $type,
-            'error' => $error,
-            'session_id' => session()->getId()
-        ]);
-    }
-
-    public function action_log($name, $data, $type)
-    {
-        return ActionLog::create([
-            'name' => $name,
-            'data' => $data,
-            'type' => $type,
-            'session_id' => session()->getId()
-        ]);
     }
 
     public function checkSubscription(Request $request)
@@ -183,16 +120,29 @@ class SubscriptionController extends Controller
         $Order = Order::where('session_id', '=', $payment['session_id'])->orderBy('created_at', 'desc')->first();
         $product = $Order['product_id'];
         $user = $Order['user_id'];
-
+        try {
+            Order::where('id', '=', $Order['id'])->update([
+                'status' => 'paid'
+            ]);
+        } catch (Exception $e) {
+            $paymentInfo = [];
+            $paymentInfo['total_amount'] = $Order['total_amount'];
+            $paymentInfo['lang'] = $lang;
+            $paymentInfo['user_id'] = $Order['user_id'];
+            $paymentInfo['order_id'] = $Order['id'];
+            $paymentInfo['type'] = 'package';
+            $this->paymentService->error_log('Update Order Status', $paymentInfo, 'package', $e->getMessage());
+            return response($e->getMessage(), 500);
+        }
         $query = [
             "Username" => $payment_info['AmeriaUsername'],
             "Password" => $payment_info['AmeriaPassword'],
             "PaymentID" => $request['paymentID']
         ];
-        $this->action_log('Ameria Check Payment Request', $payment, $payment['type']);
+         $this->paymentService->action_log('Ameria Check Payment Request', $payment, $payment['type']);
         $response = Http::post('https://servicestest.ameriabank.am/VPOS/api/VPOS/GetPaymentDetails', $query);
         $response = $response->json();
-        $this->action_log('Ameria Check Payment Response', $response, $payment['type']);
+         $this->paymentService->action_log('Ameria Check Payment Response', $response, $payment['type']);
         if (isset($response['ResponseCode']) && $response['ResponseCode'] == '00') {
             Payment::where('id', $payment->id)->update([
                 'status' => 'approved'
@@ -207,16 +157,11 @@ class SubscriptionController extends Controller
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ]);
-            //TODO SEND TICKET MAIL TO USER  $response = $this->sendTicketsMail($lang, $products, $user, $orderId);
-
             if ($response) {
-                $user = User::where('id', $user)->first();
-                $service = Service::where('id', $product)->first();
-                return redirect('/am/payment-success')->with(['user' => $user, 'service' => $service]);
+                return redirect("/$lang/payment-success");
             }
         }
-
-        return abort(500);
+        return $response['Description'] ?? [];
     }
 
     public function bill()
