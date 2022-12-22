@@ -48,21 +48,16 @@ class UserController extends Controller
         $item = $id ? Users::find($id) : new Users();   
         if($id){
             $item = Users::find($id);
-            $packages = DB::table('orders')->select(
-                'orders.id as id',
-                'orders.status',
-                'orders.total_amount as amount',
-                'services.title_am as title',
-                'package_user.created_at as date',
-                'orders.user_id',
-                'package_user.paid_at as paid',
-    
-            )->leftJoin('users', 'users.id', '=', 'orders.user_id')
-                ->leftJoin('services', 'services.id', '=', 'orders.product_id')
-                ->where('services.featured', 0)
-                ->where('orders.status', 'completed')
-                ->where('users.id', $id)
-                ->leftJoin('package_user', 'package_user.user_id', '=', 'orders.user_id')->get();
+            $packages = DB::table('package_user')->where('user_id', $id)    
+            ->where('is_blocked',0)    
+            ->where('deactivated_at','=',null)    
+            ->select('services.price as amount',   
+             'services.title_am as title',  
+               'package_user.created_at as date',    
+               'package_user.paid_at as paid')    
+               ->leftJoin('users', 'users.id', '=', 'package_user.user_id')    
+               ->leftJoin('services', 'services.id', '=', 'package_user.package_id')->get();
+
             if ($item->image_id) {
                 $imageDb = new ImageDB();
                 $item->image = $imageDb->get($item->image_id);

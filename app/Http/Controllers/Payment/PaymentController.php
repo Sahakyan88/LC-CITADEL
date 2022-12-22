@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Payment;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Service;
+use App\Models\UserContact;
 use App\Models\User;
 use App\Models\Payment;
 use App\Services\PaymentService;
@@ -34,9 +35,15 @@ class PaymentController extends Controller
             if ($user['image_id'] == null) {
                 return redirect()->to("/$lang/passport");
             }
-            if($user['pay_allowed'] == 0){
-                return redirect()->to("/$lang/contract");
-            }
+
+
+
+
+            $userContact=UserContact::find($user->id);
+            $service = Service::where('id', $id)->first(['file_id']);    
+            $file_id = $service->file_id;   
+       
+                return redirect()->to("/am/contract/$file_id");
         }
         /**********Data For Service*******************/
         $service = Service::where('id', $id)->first();

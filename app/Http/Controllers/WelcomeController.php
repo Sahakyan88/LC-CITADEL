@@ -12,7 +12,7 @@ use App\Models\Doc;
 use App\Http\Requests\RequestPayAllowed;
 use App;
 use App\Models\Admin\slider;
-use App\Models\User;
+use App\Models\UserContact;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
 use PDF;
@@ -154,15 +154,18 @@ class WelcomeController extends Controller
     public function notFound(){
         return view('notfound');
     }
-    public function contract(){
-        
-        return view('contract');
+    public function contract($id){    
+
+        $file = DB::table('images')->where('id',$id)->first();   
+         return view('contract',['file_path'=>$file->filename,'id'=>$id])
+         ;
     }
     public function contractCheck(RequestPayAllowed $request){
+
         $lang = App::getLocale() ?? 'en';
-        $user=User::where('id',Auth::user()->id)->first();
-        $user->pay_allowed=$request->pay_allowed;
-        $user->save();
+        $userCotact=UserContact::where('user_id',Auth::user()->id)->first();
+        $userCotact->pay_allowed=$request->pay_allowed;
+        $userCotact->save();
         return redirect()->to("/$lang/services");
     }
 

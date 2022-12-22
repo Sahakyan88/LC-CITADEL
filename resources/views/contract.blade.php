@@ -27,17 +27,23 @@
                     <div class="card">
                         <div class="card-header"><img style="width: 5%" src="{{ asset('assets/img/nkar.png') }}">LC-CITADEL
                         </div>
+                       
                         <div class="card-body">
                             <p>Ծառայությունից օգտվելու համար խնդրում ենք հաստատել որ ծանոթացել եք պայմանագրի կետերին:
                                 <a target="_blank" class="pdf"
-                                    href="{{ asset('assets/pdf/contract.pdf') }}">Պայամանագիր</a>
+                                    href="{{ asset('content/' . $file_path) }}">Պայամանագիր</a>
                             </p>
                         </div>
                         <div class="card-footer">
                             <div class="text-center">
                                 <form method="post" action="{{ route('contractCheck') }}">
                                     @csrf
-                                   <div class="mb-2"> <input name="pay_allowed" class="pay_allowed" type="checkbox" value="1" /> Հաստատել</div>
+                                   <div class="mb-2"> 
+                                    <input name="service_id"  class="pay_allowed" type="hidden" value="{{ $id }}" />
+
+                                    <input name="pay_allowed" class="pay_allowed" type="checkbox" value="1" />
+                                     Հաստատել
+                                    </div>
                                     @error('pay_allowed')
                                         <p class="error">{{ $message }}</p>
                                     @enderror

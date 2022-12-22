@@ -9,6 +9,7 @@ use Mail;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\UserVerify;
+use App\Models\UserContact;
 use Illuminate\Http\Request;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
@@ -138,10 +139,17 @@ class AuthController extends Controller
             'email'             => $request->email,
             'terms'             => $request->checkbox,
             'password'          => Hash::make($request->password),
+           
 
         ]));
+      
 
-        return redirect()->route('personalinfo');
+      
+            return redirect()->route('personalinfo');
+        
+
+
+       
     }
 
     public function logout(Request $request)

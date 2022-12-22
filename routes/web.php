@@ -72,7 +72,7 @@ Route::get('/profile-password', [AuthController::class, 'profilePassword'])->nam
 Route::get('/passport', [AuthController::class, 'passport'])->name('passportGet')->middleware(['auth','verified']);
 Route::post('/change-password', [AuthController::class, 'changePassword'])->name('changepassword')->middleware(['auth','verified']);
 Route::get('/package-profile', [AuthController::class, 'packageProfile'])->name('packageprofile')->middleware(['auth','verified']);
-Route::get('/contract', [WelcomeController::class, 'contract'])->name('contract')->middleware(['auth','verified']);
+Route::get('/contract/{id}', [WelcomeController::class, 'contract'])->name('contract')->middleware(['auth','verified']);
 Route::post('/contract-check', [WelcomeController::class, 'contractCheck'])->name('contractCheck')->middleware(['auth','verified']);
 
 Route::get('/payment-success',[\App\Http\Controllers\Payment\PaymentController::class, 'payment_success'])->name('payment_success');
