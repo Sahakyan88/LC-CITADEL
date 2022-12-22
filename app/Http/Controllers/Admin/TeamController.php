@@ -1,9 +1,7 @@
 <?php
 namespace App\Http\Controllers\Admin;
-
 use App\Models\Admin\Team;
 use App\Helpers\Translate;
-
 use App\Http\Controllers\Controller;
 use Validator;
 use Illuminate\Http\Request;
@@ -20,14 +18,13 @@ class TeamController extends Controller
         return view('admin.team.index');
     }
 
-
     public function teamData(Request $request){
         $model = new Team();
         $filter = array('search' => $request->input('search'),
             'status' => $request->input('filter_status'),
             'featured'=> $request->input('featured',false));
 
-        $items = $model->getAll(
+            $items = $model->getAll(
             $request->input('start'),
             $request->input('length'),
             $filter,
@@ -83,8 +80,8 @@ class TeamController extends Controller
         $validated = $validator->validated();
 
         $data = $request->all();
-
         $id = $request->input('id');
+
         if (!$id) {
             $item = new Team();
             $max = DB::table('teams')->max('ordering');

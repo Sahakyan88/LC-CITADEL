@@ -1,4 +1,5 @@
 var SUpload = function () {
+  
     return {
         //main function to initiate the module
         init: function (options) {
@@ -88,6 +89,7 @@ var SUpload = function () {
     };
 };
 var SUploadFile = function () {
+
   return {
       //main function to initiate the module
       init: function (options) {
@@ -127,6 +129,7 @@ var SUploadFile = function () {
                   }
           });
           var uploader = new ss.SimpleUpload({
+
               button: options.button,
               url: "/admin/upload-file", // server side handler
               responseType: 'json',
@@ -142,6 +145,8 @@ var SUploadFile = function () {
                 Loading.add($('#uploadBtnFile'));  
               },
               onComplete: function( filename, response ) {
+                var filnames= document.getElementById("custom");
+                filnames.innerHTML = filename;
                 if(response.status == 1){
                     if(options.original == 1){
                       var n = Date.now();

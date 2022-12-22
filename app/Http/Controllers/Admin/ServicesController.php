@@ -74,7 +74,7 @@ class ServicesController extends Controller
         $validator  = Validator::make($request->all(), [
             'title_en'      => 'required',
             'image'         => 'required',
-            'file'         => 'required',
+            'file'          => 'required',
             'price'         => 'required',
             'body_en'       => 'required'
         ]);

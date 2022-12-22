@@ -19,13 +19,10 @@ class faqController extends Controller
         view()->share('menu', 'faq');
         return view('admin.faq.faq_index');
     }
-
-
     public function faqData(Request $request){
         $model = new Faq();
         $filter = array('search' => $request->input('search'),
             'status' => $request->input('filter_status'),
-            //'featured'=> $request->input('featured',false)
         );
 
         $items = $model->getAll(
@@ -94,7 +91,6 @@ class faqController extends Controller
         $item = $translateHelper->make($item,$data);
 
         $item->published   = $data['published'];
-        
         $item->save();
         $id = $item->id;
 
@@ -140,7 +136,6 @@ class faqController extends Controller
                 $newOrdering--;
             }
         }
-        // DB::table('settings')->where('key', 'sync_time')->update(['value' => date("Y-m-d H:i:s")]);
         exit() ;
     }
 }

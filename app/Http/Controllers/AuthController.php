@@ -5,15 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Validator;
 use Session;
-use Mail;
 use App\Models\User;
 use App\Models\Order;
-use App\Models\UserVerify;
-use App\Models\UserContact;
 use Illuminate\Http\Request;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
-use App\Http\Requests\Auth\PasswordRequest;
 use App\Http\Requests\Auth\RegisterEdRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Providers\RouteServiceProvider;
@@ -23,7 +19,6 @@ use Illuminate\Validation\Rule;
 use Response;
 use File;
 use App\Models\ImageDB;
-use Redirect;
 use App;
 use Str;
 use Illuminate\Support\Facades\DB;
@@ -130,7 +125,6 @@ class AuthController extends Controller
     }
     public function signup(RegisterRequest $request)
     {
-
         Auth::login( $user = User::create([
 
             'first_name'        => $request->first_name,
@@ -140,16 +134,8 @@ class AuthController extends Controller
             'terms'             => $request->checkbox,
             'password'          => Hash::make($request->password),
            
-
         ]));
-      
-
-      
             return redirect()->route('personalinfo');
-        
-
-
-       
     }
 
     public function logout(Request $request)

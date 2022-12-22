@@ -1,14 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Admin\PackagesDeactivated;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
-use App\Models\Admin\ImageDB;
 
 class DeactivatedControler extends Controller
 {
@@ -25,7 +21,7 @@ class DeactivatedControler extends Controller
         'status' => $request->input('filter_status'),
         'featured'=> $request->input('featured',false));
 
-    $items = $model->getAll(
+        $items = $model->getAll(
         $request->input('start'),
         $request->input('length'),
         $filter,

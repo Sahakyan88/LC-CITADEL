@@ -47,7 +47,6 @@ class FileUploadController extends Controller
         }else{
             $model = new ImageDB();
            
-
             if($avatar){
                 $image = $model->addAvatar($image,$avatar); 
                 return Response::json(['status' => 1, 'imageId'=> $avatar, 'path' => $image ]);

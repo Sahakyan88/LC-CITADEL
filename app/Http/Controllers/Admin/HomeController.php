@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Admin\Home;
 use App\Helpers\Translate;
-
 use App\Http\Controllers\Controller;
 use Validator;
 use Illuminate\Http\Request;
@@ -69,9 +68,8 @@ class HomeController extends Controller
 
     public function saveHome(Request $request){
 
-
         $validator  = Validator::make($request->all(), [
-            'image'         => 'required',
+            'image'  => 'required',
         ]);
 
         if ($validator->fails()) {

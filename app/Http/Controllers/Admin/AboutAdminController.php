@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
 use App\Models\Admin\About;
 use App\Helpers\Translate;
 use App\Http\Controllers\Controller;
@@ -13,12 +12,12 @@ use App\Models\Admin\ImageDB;
 class AboutAdminController extends Controller
 {
     public function homeAbout(Request $request){
+
         $page = (isset($_GET['page'])) ? $_GET['page'] : false;
         view()->share('page', $page);
         view()->share('menu', 'about');
         return view('admin.about.index');
     }
-
 
     public function aboutData(Request $request){
         $model = new About();

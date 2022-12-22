@@ -4,14 +4,9 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\Dictionary;
-use App\Models\Admin\Settings;
 use Illuminate\Routing\Redirector;
 use Response;
 use View;
-use File;
-use ZipArchive;
-use RecursiveIteratorIterator;
-use RecursiveDirectoryIterator;
 use DB;
 use App\Helpers\Translate;
 use Validator;
@@ -105,14 +100,12 @@ class DictionaryController extends Controller
             $item = Dictionary::find($id);
             if (!$item) return json_encode(array('status' => 0, 'message' => "Can't save"));
         }
-
         $translateHelper = new Translate();
         $item->multilangualFiled =  ['faq','service','team','contact'];
         $item = $translateHelper->make($item,$data);
-
         $item->published   = $data['published'];
-
         $item->save();
+
         $id = $item->id;
         if (isset($publishedNotification)) {
             return json_encode(array('status' => 1, 'message' => "Can't publish Without image", 'published' => 0));

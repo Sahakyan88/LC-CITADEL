@@ -32,7 +32,6 @@
                                                 </div>
                                                 <div
                                                     class="image-action @if ($item->image) fileExist @else fileNotExist @endif">
-                                                    <div>size (370 x 313)</div>
                                                     <div class="img-not-exist">
                                                         <span id="uploadBtn" class="btn btn-success">Select image
                                                         </span>
@@ -52,11 +51,14 @@
                                                     <a class="thumbnail"
                                                         href="@if ($item->file) {{ $item->file->path }}@endif"></a>
                                                     
-                                                        <input type="hidden"  name="file" class="coverFile"
+                                                        <input type="hidden"  name="file" class="coverFile" 
                                                         value="@if ($item->file) {{ $item->file->id }} @endif" />
                                                 </div>
                                                 <div
                                                     class="image-action @if ($item->file) fileExist @else fileNotExist @endif">
+                                                    <i style="font-size: 40px;
+                                                    color: red;" class="fas fa-file-pdf"></i>
+                                                    <div id="custom"></div>
                                                     <div>*Upload PDF file</div>
                                                     <div class="img-not-exist">
                                                         <span id="uploadBtnFile" class="btn btn-success">Select file
@@ -120,6 +122,7 @@
                                                         </div>
                                                     </div>
                                                 @endforeach
+                                                
                                                 <div class="form-row">
                                                     <div class="form-group col-md-6">
                                                         Status:
@@ -165,14 +168,6 @@
 </div>
 
 <script>
-    $('#inputGroupFile02').on('change', function(e) {
-
-        var fileName = e.target.files[0].name;
-        $(this).next('.custom-file-label').html(fileName);
-        $('.fa-file-word').css("display", "block");
-        $('.custom').html(fileName);
-    })
-
     function saveItem() {
         tinyMCE.triggerSave()
         Loading.add($('#saveItemBtn'));
@@ -212,7 +207,6 @@
             imageIdReturnEl: ".cover",
             services: "{{ $item->id }}"
         });
-
         initTinymce();
         var uploadFile = new SUploadFile;
         uploadFile.init({
@@ -221,7 +215,6 @@
             imageIdReturnEl: ".coverFile",
             services: "{{ $item->id }}"
         });
-
         $(document).on('focusin', function(e) {
             if ($(e.target).closest(".tox-dialog").length) {
                 e.stopImmediatePropagation();

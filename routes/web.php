@@ -1,17 +1,13 @@
 <?php
 
 use App\Http\Controllers\WelcomeController;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\PaypalController;
-use App\Http\Controllers\StripeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use Illuminate\Support\Facades\Route;
-
 use Illuminate\Support\Facades\Request;
+use App\Http\Controllers\Payment\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -75,16 +71,16 @@ Route::get('/package-profile', [AuthController::class, 'packageProfile'])->name(
 Route::get('/contract/{id}', [WelcomeController::class, 'contract'])->name('contract')->middleware(['auth','verified']);
 Route::post('/contract-check', [WelcomeController::class, 'contractCheck'])->name('contractCheck')->middleware(['auth','verified']);
 
-Route::get('/payment-success',[\App\Http\Controllers\Payment\PaymentController::class, 'payment_success'])->name('payment_success');
+Route::get('/payment-success',[PaymentController::class, 'payment_success'])->name('payment_success');
 
  });
 
- Route::post('/createServiceOrder/{id}',[\App\Http\Controllers\Payment\PaymentController::class, 'createServiceOrder']);
+ Route::post('/createServiceOrder/{id}',[PaymentController::class, 'createServiceOrder']);
 
 
-Route::post('/createServiceOrder/{id}',[\App\Http\Controllers\Payment\PaymentController::class, 'createServiceOrder']);
-Route::post('/createPackageOrder/{id}',[\App\Http\Controllers\Payment\SubscriptionController::class, 'createPackageOrder']);
-Route::get('/payment/checkPayment',[\App\Http\Controllers\Payment\PaymentController::class,'checkPayment']);
-Route::get('/payment/checkSubscription',[\App\Http\Controllers\Payment\SubscriptionController::class,'checkSubscription']);
-Route::get('/billSubscription', [\App\Http\Controllers\Payment\SubscriptionController::class,'bill']);
-Route::post('/deactivatePackage',[\App\Http\Controllers\Payment\SubscriptionController::class, 'deactivate'])->name('deactivatePackage');
+Route::post('/createServiceOrder/{id}',[PaymentController::class, 'createServiceOrder']);
+Route::post('/createPackageOrder/{id}',[SubscriptionController::class, 'createPackageOrder']);
+Route::get('/payment/checkPayment',[PaymentController::class,'checkPayment']);
+Route::get('/payment/checkSubscription',[SubscriptionController::class,'checkSubscription']);
+Route::get('/billSubscription', [SubscriptionController::class,'bill']);
+Route::post('/deactivatePackage',[SubscriptionController::class, 'deactivate'])->name('deactivatePackage');

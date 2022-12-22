@@ -4,18 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\Gallery;
 use App\Models\Service;
 use App\Models\Admin\Settings;
 use App\Models\Requests;
-use App\Models\Doc;
 use App\Http\Requests\RequestPayAllowed;
 use App;
-use App\Models\Admin\slider;
 use App\Models\UserContact;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
-use PDF;
 use Auth;
 use Mail;
 

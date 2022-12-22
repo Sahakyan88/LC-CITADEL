@@ -36,9 +36,6 @@ class PaymentController extends Controller
                 return redirect()->to("/$lang/passport");
             }
 
-
-
-
             $userContact=UserContact::find($user->id);
             $service = Service::where('id', $id)->first(['file_id']);    
             $file_id = $service->file_id;   

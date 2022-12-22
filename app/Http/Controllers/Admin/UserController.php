@@ -5,7 +5,6 @@ use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Admin\Users;
-use App\Models\Notification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -14,8 +13,8 @@ use App\Models\Admin\ImageDB;
 class UserController extends Controller
 {
     public function usersIndex(){
-        $page = (isset($_GET['page'])) ? $_GET['page'] : false;
 
+        $page = (isset($_GET['page'])) ? $_GET['page'] : false;
         view()->share('page', $page);
         view()->share('menu', 'users');
         return view('admin.users.users');
@@ -28,7 +27,7 @@ class UserController extends Controller
                         'status' => $request->input('filter_status'),
                         'verify' => $request->input('filter_verification'));
 
-        $items = $model->getAll(
+            $items = $model->getAll(
             $request->input('start'),
             $request->input('length'),
             $filter,
@@ -109,42 +108,6 @@ class UserController extends Controller
         return json_encode(array('status' => 1));
     }
 
-    public function verify(Request $request){
-        $validator = \Validator::make($request->all(), [
-            'verify_id' => 'required|int',
-            'status' => 'required|in:base,pending,declined,approved',
-        ]);
-
-        if ($validator->fails())
-        {
-            return response()->json(['message' => $validator->errors()], 401);
-        }
-
-        $id = (int)$request['verify_id'];
-
-        $verification =  DB::table('verification')->select('*')->where('id', $id)->first();
-        if(!$verification){
-            return json_encode(array('status' => 0, 'message' => 'User not submit'));
-        }
-
-        $data = array();
-        $data['status'] = $request['status'];
-        $data['message'] = $request['message'];
-
-        DB::table('verification')->where('id', $id)->update($data);
-
-        if($verification->status != $request['status']){
-            DB::table('users')->where('id', $verification->user_id)->update(['verify'=> $request['status']]);
-
-            if(in_array($request['status'],['approved','declined'])){
-                $notification = new Notification();
-                $description = $request['status'] == 'approved' ? 'Verification is successfull.' : 'Verification is faild.';
-                $notificationData = array('type' => 'user_verification');
-                $notification->send($verification->user_id,"Verification of account",$description,"order_request_timeout",false,$notificationData);
-            }
-
-        }
-        return json_encode(array('status' => 1));
     }
-}
+
 
