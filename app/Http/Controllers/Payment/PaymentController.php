@@ -6,7 +6,6 @@ namespace App\Http\Controllers\Payment;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Service;
-use App\Models\UserContact;
 use App\Models\User;
 use App\Models\Payment;
 use App\Services\PaymentService;
@@ -33,14 +32,14 @@ class PaymentController extends Controller
             $lang = App::getLocale() ?? 'am';
             $user = User::where('id', Auth::user()->id)->first();
             if ($user['image_id'] == null) {
-                return redirect()->to("/$lang/passport");
+                return redirect()->to("/am/passport");
             }
-
-            $userContact=UserContact::find($user->id);
-            $service = Service::where('id', $id)->first(['file_id']);    
-            $file_id = $service->file_id;   
-       
+            $checkContract = DB::table('contract_user')->where('user_id',$user['id'])->first();
+            if(!$checkContract || ($checkContract->pay_allowed != 1)){
+                $service = Service::where('id', $id)->first(['file_id']);
+                $file_id = $service->file_id;
                 return redirect()->to("/am/contract/$file_id");
+            }
         }
         /**********Data For Service*******************/
         $service = Service::where('id', $id)->first();
@@ -162,5 +161,9 @@ class PaymentController extends Controller
     public function payment_success()
     {
         return view('payment.payment_success');
+    }
+
+    public function createServiceOrderget($id){
+        return $this->createServiceOrder($id);
     }
 }

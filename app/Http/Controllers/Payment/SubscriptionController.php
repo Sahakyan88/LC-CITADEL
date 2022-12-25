@@ -40,8 +40,11 @@ class SubscriptionController extends Controller
             if ($user['image_id'] == null) {
                 return redirect()->to("/$lang/passport");
             }
-            if($user['pay_allowed'] == 0){
-                return redirect()->to("/$lang/contract");
+            $checkContract = DB::table('contract_user')->where('user_id',$user['id'])->first();
+            if(!$checkContract || ($checkContract->pay_allowed != 1)){
+                $service = Service::where('id', $id)->first(['file_id']);
+                $file_id = $service->file_id;
+                return redirect()->to("/am/contract/$file_id");
             }
         }
         /**********Data For Order*******************/
@@ -255,5 +258,10 @@ class SubscriptionController extends Controller
             $this->paymentService->error_log('Deactivate Response', $response, 'package',$response['ResponseMessage']);
             return json_encode(array('status' => 0)) ;
         }
+    }
+
+    public function createPackageOrderget($id)
+    {
+        return $this->createPackageOrder($id);
     }
 }

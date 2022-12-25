@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Payment\SubscriptionController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
@@ -75,11 +76,10 @@ Route::get('/payment-success',[PaymentController::class, 'payment_success'])->na
 
  });
 
- Route::post('/createServiceOrder/{id}',[PaymentController::class, 'createServiceOrder']);
-
-
-Route::post('/createServiceOrder/{id}',[PaymentController::class, 'createServiceOrder']);
-Route::post('/createPackageOrder/{id}',[SubscriptionController::class, 'createPackageOrder']);
+Route::get('/createPackageOrder/{id}',[SubscriptionController::class, 'createPackageOrderget'])->name('createPackageOrderget');
+Route::get('/createServiceOrder/{id}',[PaymentController::class, 'createServiceOrderget'])->name('createServiceOrderget');
+Route::post('/createServiceOrder/{id}',[PaymentController::class, 'createServiceOrder'])->name('createServiceOrder');
+Route::post('/createPackageOrder/{id}',[SubscriptionController::class, 'createPackageOrder'])->name('createPackageOrder');
 Route::get('/payment/checkPayment',[PaymentController::class,'checkPayment']);
 Route::get('/payment/checkSubscription',[SubscriptionController::class,'checkSubscription']);
 Route::get('/billSubscription', [SubscriptionController::class,'bill']);

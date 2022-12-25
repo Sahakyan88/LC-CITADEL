@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Service;
@@ -150,19 +151,30 @@ class WelcomeController extends Controller
     public function notFound(){
         return view('notfound');
     }
-    public function contract($id){    
 
-        $file = DB::table('images')->where('id',$id)->first();   
-         return view('contract',['file_path'=>$file->filename,'id'=>$id])
-         ;
+    public function contract($id)
+    {
+        $file = DB::table('images')->where('id', $id)->first();
+        $service = Service::where('file_id', $id)->first();
+        return view('contract', ['file_path' => $file->filename, 'id' => $service['id']]);
     }
-    public function contractCheck(RequestPayAllowed $request){
 
-        $lang = App::getLocale() ?? 'en';
-        $userCotact=UserContact::where('user_id',Auth::user()->id)->first();
-        $userCotact->pay_allowed=$request->pay_allowed;
-        $userCotact->save();
-        return redirect()->to("/$lang/services");
+    public function contractCheck(RequestPayAllowed $request)
+    {
+//        $lang = App::getLocale() ?? 'en';
+        $checkContract = DB::table('contract_user')->insert([
+            'user_id' => Auth::user()->id,
+            'service_id' => $request['service_id'],
+            'pay_allowed' => 1,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+        ]);
+        $checkServiceType = Service::where('id', $request['service_id'])->first();
+        if($checkServiceType['featured'] == 1 && $checkContract){ //one time service
+            return redirect()->route('createServiceOrderget',$request['service_id'] );
+        }elseif($checkServiceType['featured'] == 0 && $checkContract) {
+            return redirect()->route('createPackageOrderget',$request['service_id'] );
+        }
     }
 
     public function send(Request $request)
@@ -173,7 +185,7 @@ class WelcomeController extends Controller
         $site_settings = json_decode($settings->value);
 
         $contact_email = $site_settings->email;
-    
+
         $data = array();
         $data['email'] = $request['email'];
         $data['name'] = isset($request['name']) ? $request['name'] : '-----';
