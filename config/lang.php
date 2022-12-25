@@ -39,7 +39,17 @@ return [
         'amd' => 'դր․',
         'must-upload-passport' => 'Խնդրում ենք ներբեռնել անձնագրի նկարը՝  ապահովագրական փաթեթ ակտիվացնելու կամ ծառայություն գնելու համար:',
         'payment_success' => 'Վճարումը կատարված է',
-        'in_touch' => 'Շուտով ձեզ հետ կապ կհաստատենք!'
+        'in_touch' => 'Շուտով ձեզ հետ կապ կհաստատենք!',
+        'no-active-services'=>'Ակտիվ ծառայություններ չկան',
+        'activate'=>'Ակտիվացնել',
+        'paid_at'=>'Վճարվել է՝',
+        'past'=>'Տեղի ունեցած',
+        'upcoming'=>'Սպասվելիք',
+        'accept-contract'=>'Ծառայությունից օգտվելու համար խնդրում ենք հաստատել, որ ծանոթացել եք պայմանագրի կետերին:',
+        'contract'=>'Պայմանագիր',
+        'no-active-packages'=>'Ակտիվ փաթեթներ չկան',
+        'got-package-at'=>'Փաթեթին միացել է՝ ',
+        'accept'=>'Հաստատել'
     ],
     'en' => [
         'get_started' => 'Learn more',
@@ -79,7 +89,17 @@ return [
         'amd' => 'AMD',
         'must-upload-passport' => 'Please upload your passport image to activate any insurance package or buy a service!',
         'payment_success' => 'Success',
-        'in_touch' => "We'll be in touch shortly!"
+        'in_touch' => "We'll be in touch shortly!",
+        'no-active-services'=>'There are no active services',
+        'activate'=>'Activate',
+        'paid_at'=>'Paid at ',
+        'past'=>'Past',
+        'upcoming'=>'Upcoming',
+        'accept-contract'=>'To use the service, please confirm that you have read the terms of the contract.',
+        'contract'=>'Contract',
+        'no-active-packages'=>'No active packages',
+        'got-package-at'=>'Joined at',
+        'accept'=>'Accept'
     ],
     'ru' => [
         'get_started' => 'Узнать больше',
@@ -119,6 +139,16 @@ return [
         'amd' => 'драм',
         'must-upload-passport' => 'Пожалуйста, загрузите изображение паспорта, чтобы активировать любой страховой пакет или купить услугу!',
         'payment_success' => 'Платеж успешно завершен',
-        'in_touch' => "Мы свяжемся с вами в ближайшее время!"
+        'in_touch' => "Мы свяжемся с вами в ближайшее время!",
+        'no-active-services'=>'Нет активных сервисов',
+        'activate'=>'Активировать',
+        'paid_at'=>'Оплачено ',
+        'past'=>'Прошлое',
+        'upcoming'=>'Предстоящий',
+        'accept-contract'=>'Чтобы воспользоваться услугой, подтвердите, что вы ознакомились с условиями договора.',
+        'contract'=>'Договор',
+        'no-active-packages'=>'Нет активных пакетов',
+        'got-package-at'=>'Присоединился ',
+        'accept'=>'Соглашаться'
     ]
 ];

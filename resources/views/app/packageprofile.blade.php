@@ -16,16 +16,14 @@
                                             {{ config()->get('lang.' . App::getLocale() . '.amd') }}</div>
                                         <div class="col-sm-2 mt-3 "></div>
                                         <hr>
-                                        <div class="col-sm-12 date-prof">Առաջին Վճարումը կատարվել է՝ {{ $package->date }}
-                                        </div>
-                                        <div class="col-sm-12 date-prof">Հաջորդ Վճարումը կատարվել է՝ {{ $package->paid }}
+                                        <div class="col-sm-12 date-prof">{{ config()->get('lang.' . App::getLocale() . '.got-package-at') }} {{ $package->date }}
                                         </div>
                                     </div>
                                 @endforeach
                             @else
                                 <div class="php-email-form text-center">
-                                    <p> Ակտիվ փաթեթներ չկան </p>
-                                    <a class="btn package-button" href="{{ route('service') }}" class="btn mt-4" type="submit">Ակտիվացնել</a>
+                                    <p> {{ config()->get('lang.' . App::getLocale() . '.no-active-packages') }} </p>
+                                    <a class="btn package-button" href="{{ route('service') }}" class="btn mt-4" type="submit">   {{ config()->get('lang.' . App::getLocale() . '.activate') }}</a>
                                 </div>
                             @endif
                         </div>
