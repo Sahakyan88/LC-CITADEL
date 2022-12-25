@@ -40,7 +40,7 @@ class SubscriptionController extends Controller
             if ($user['image_id'] == null) {
                 return redirect()->to("/$lang/passport");
             }
-            $checkContract = DB::table('contract_user')->where('user_id',$user['id'])->first();
+            $checkContract = DB::table('contract_user')->where('user_id',$user['id'])->where('service_id', $id)->first();
             if(!$checkContract || ($checkContract->pay_allowed != 1)){
                 $service = Service::where('id', $id)->first(['file_id']);
                 $file_id = $service->file_id;
@@ -97,16 +97,18 @@ class SubscriptionController extends Controller
             "Password" => $payment['AmeriaPassword'],
             "Currency" => "AMD",
             "Amount" => (int)$paymentInfo['total_amount'],
-            "OrderID" => 2910057,
+            "OrderID" => 2910061,
             "BackURL" => env('APP_URL') . '/payment/checkSubscription',
             "Description" => 'LC-CITADEL',
-            "CardHolderID" => 'ele585b2tc3cev45f5ra43pg581f70lf02aa',
+            "CardHolderID" => 'ple585b2tc3cev45f5ra43pg581f70lf02ga',
         ];
 //        /********Save card info for binding*************/
-        Card::create([
+        Card::insert([
             'user_id' => \auth()->user()->id,
-            'card_holder_id' => 'ele585b2tc3cev45f5ra43pg581f70lf02aa',
-            'service_id'=>$service_id
+            'card_holder_id' => 'ple585b2tc3cev45f5ra43pg581f70lf02ga',
+            'package_id'=>$service_id,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ]);
         $this->paymentService->action_log('Ameria Create Payment Request', $paymentInfo, $paymentInfo['type']);
         /************** ******************/

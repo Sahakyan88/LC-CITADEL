@@ -34,7 +34,7 @@ class PaymentController extends Controller
             if ($user['image_id'] == null) {
                 return redirect()->to("/am/passport");
             }
-            $checkContract = DB::table('contract_user')->where('user_id',$user['id'])->first();
+            $checkContract = DB::table('contract_user')->where('user_id',$user['id'])->where('service_id', $id)->first();
             if(!$checkContract || ($checkContract->pay_allowed != 1)){
                 $service = Service::where('id', $id)->first(['file_id']);
                 $file_id = $service->file_id;
