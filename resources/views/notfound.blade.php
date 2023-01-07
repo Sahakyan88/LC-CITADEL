@@ -137,9 +137,9 @@ body {
 				<h1>404</h1>
 			</div>
 			<h2>Oops! Nothing was found</h2>
-			
+
 		</div>
 	</div>
 
-
+</body>
 </html>
