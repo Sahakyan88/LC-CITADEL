@@ -19,7 +19,7 @@ class AdminController extends Controller
      */
     public function dashboard()
     {
-        $users      =  DB::table('users')->count();
+        $users      =  DB::table('users')->where('email_verified_at', '!=',null)->count();
         $service    =  DB::table('services')->count();
         $team       =  DB::table('teams')->count();
         $payment    =  DB::table('orders')->where('status','completed')->count();

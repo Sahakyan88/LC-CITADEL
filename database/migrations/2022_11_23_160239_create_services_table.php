@@ -15,16 +15,17 @@ return new class extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->id();
-            $table->string('title_am');
-            $table->string('title_en');
-            $table->string('title_ru');
-            $table->text('body_am');
-            $table->text('body_ru');
-            $table->text('body_en');
-            $table->longText('price');
-            $table->integer('image_id');
-            $table->integer('featured');
-            $table->integer('ordering');
+            $table->string('title_am')->nullable();
+            $table->string('title_en')->nullable();
+            $table->string('title_ru')->nullable();
+            $table->text('body_am')->nullable();
+            $table->text('body_ru')->nullable();
+            $table->text('body_en')->nullable();
+            $table->longText('price')->nullable();
+            $table->integer('image_id')->nullable();
+            $table->integer('file_id')->nullable();
+            $table->integer('featured')->nullable();
+            $table->integer('ordering')->nullable();
             $table->integer('published')->default(0);
             $table->timestamps();
         });

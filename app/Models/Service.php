@@ -12,7 +12,7 @@ class Service extends Model
         'title_am', 'title_en', 'title_ru',
         'body_am', 'body_ru', 'body_en',
         'price',
-        'image_id',
+        'image_id','file_id',
         'ordering',
         'published',
     ];
