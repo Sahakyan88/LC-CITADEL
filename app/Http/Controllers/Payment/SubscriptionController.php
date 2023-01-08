@@ -4,9 +4,7 @@
 namespace App\Http\Controllers\Payment;
 
 use App\Http\Controllers\Controller;
-use App\Models\ActionLog;
 use App\Models\Card;
-use App\Models\ErrorLog;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Models\Service;
@@ -19,7 +17,6 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Str;
 
 class SubscriptionController extends Controller
 {
@@ -32,19 +29,20 @@ class SubscriptionController extends Controller
 
     public function createPackageOrder($id)
     {
+        //TODO lezunery web.php localeov vercnel groupi mej vor langy ashxati $lang = App::getLocale() ?? 'am';
+        $lang = 'am';
         if (!Auth::check()) {
             return redirect()->to('/login');
         } else {
-            $lang = App::getLocale() ?? 'en';
             $user = User::where('id', Auth::user()->id)->first();
             if ($user['image_id'] == null) {
                 return redirect()->to("/$lang/passport");
             }
-            $checkContract = DB::table('contract_user')->where('user_id',$user['id'])->where('service_id', $id)->first();
-            if(!$checkContract || ($checkContract->pay_allowed != 1)){
+            $checkContract = DB::table('contract_user')->where('user_id', $user['id'])->where('service_id', $id)->first();
+            if (!$checkContract || ($checkContract->pay_allowed != 1)) {
                 $service = Service::where('id', $id)->first(['file_id']);
                 $file_id = $service->file_id;
-                return redirect()->to("/am/contract/$file_id");
+                return redirect()->to("/$lang/contract/$file_id");
             }
         }
         /**********Data For Order*******************/
@@ -55,7 +53,7 @@ class SubscriptionController extends Controller
         /**********Data For Payment*******************/
         $paymentInfo = $this->paymentService->takePaymentInfo((int)$service['price'], $Order->id, $user['id'], $lang, 'package');
         /************Create Payment************/
-        $response_data = $this->createPayment($paymentInfo,$id);
+        $response_data = $this->createPayment($paymentInfo, $id);
         $response = $response_data['response'];
         $pay = $response_data['pay'];
         /*********************************** */
@@ -75,7 +73,7 @@ class SubscriptionController extends Controller
         return response('Payment was rejected by AMERIA!!!', 500);
     }
 
-    private function createPayment(array $paymentInfo,$service_id)
+    private function createPayment(array $paymentInfo, $service_id)
     {
         /********Create Payment*************/
         $payment = config('app.payment');
@@ -91,22 +89,34 @@ class SubscriptionController extends Controller
             $this->paymentService->error_log('Create Payment', $paymentInfo, 'package', $e->getMessage());
             return response($e->getMessage(), 500);
         }
+        //TODO live payment dynamic orderid
+        $orderId = Order::orderBy('created_at','desc')->first(['id']);
+        if(empty($orderId)){
+            $orderId = 1;
+        }else{
+            $orderId= $orderId->id+1 ;
+        }
+
+        //TODO generate dynamic CardHolderID
+        $CardHolderID = $this->generateRandomString();
         $query = [
             "ClientID" => $payment['AmeriaClientID'],
             "Username" => $payment['AmeriaUsername'],
             "Password" => $payment['AmeriaPassword'],
             "Currency" => "AMD",
             "Amount" => (int)$paymentInfo['total_amount'],
-            "OrderID" => 2910061,
+//            "OrderID" => 2910062,
+            "OrderID" => $orderId,
             "BackURL" => env('APP_URL') . '/payment/checkSubscription',
             "Description" => 'LC-CITADEL',
-            "CardHolderID" => 'ple585b2tc3cev45f5ra43pg581f70lf02ga',
+            "CardHolderID" => $CardHolderID
+//            "CardHolderID" => 'ple585b2tc3cev45f5ra43pg581f70lf02gf',
         ];
 //        /********Save card info for binding*************/
         Card::insert([
             'user_id' => \auth()->user()->id,
-            'card_holder_id' => 'ple585b2tc3cev45f5ra43pg581f70lf02ga',
-            'package_id'=>$service_id,
+            'card_holder_id' => $CardHolderID,
+            'package_id' => $service_id,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ]);
@@ -161,6 +171,7 @@ class SubscriptionController extends Controller
                 'user_id' => $user,
                 'package_id' => $product,
                 'paid_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'last_paid_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ]);
@@ -168,30 +179,14 @@ class SubscriptionController extends Controller
                 return redirect("/$lang/payment-success");
             }
         }
-        return $response['Description'] ?? [];
+        return $response['Description'] ?? 'something went wrong! please try later';
     }
 
     public function bill()
     {
         /********Pay monthly subscription************* IT WORKS*/
         $payment = config('app.payment');
-//        $query = [
-//            "ClientID" => $payment['AmeriaClientID'],
-//            "Username" => $payment['AmeriaUsername'],
-//            "Password" => $payment['AmeriaPassword'],
-//            "Currency" => "AMD",
-//            "Amount" => 10,
-//            "OrderID" => 2910054,
-//            "BackURL" => env('APP_URL') . '/payment/checkSubscription',
-//            "Description" => 'LC-CITADEL',
-//            "CardHolderID" => 'ele585b2tc3cev45f5ra43pg521f70lf028f',
-//            "PaymentType" => 6
-//        ];
-//
-//        $response = Http::post('https://servicestest.ameriabank.am/VPOS/api/VPOS/MakeBindingPayment', $query);
-//        $response =  $response->json();
-//        /************** ******************/
-//
+
 //        /********Get binding payment history************* IT WORKS*/
 //        $query1 = [
 //            "ClientID" => $payment['AmeriaClientID'],
@@ -219,13 +214,6 @@ class SubscriptionController extends Controller
         return $response = $response->json();
         /*********************************/
     }
-
-    public function cancelRequest(Request $request)
-    {
-        dd($request->all());
-
-    }
-
     /********Deactivate binding**************/
     public function deactivate(Request $request)
     {
@@ -239,7 +227,7 @@ class SubscriptionController extends Controller
             ->join('users', 'package_user.user_id', '=', 'users.id')
             ->join('cards', 'users.id', '=', 'cards.user_id')
             ->join('services', 'package_user.package_id', '=', 'services.id')
-            ->where('cards.package_id','=', $request['package_id'])->get();
+            ->where('cards.package_id', '=', $request['package_id'])->get();
         $query1 = [
             "ClientID" => $payment['AmeriaClientID'],
             "Username" => $payment['AmeriaUsername'],
@@ -257,13 +245,23 @@ class SubscriptionController extends Controller
             $this->paymentService->action_log('Deactivate Response', $response, 'package');
             return json_encode(array('status' => 1));
         } else {
-            $this->paymentService->error_log('Deactivate Response', $response, 'package',$response['ResponseMessage']);
-            return json_encode(array('status' => 0)) ;
+            $this->paymentService->error_log('Deactivate Response', $response, 'package', $response['ResponseMessage']);
+            return json_encode(array('status' => 0));
         }
     }
 
     public function createPackageOrderget($id)
     {
         return $this->createPackageOrder($id);
+    }
+
+   public function generateRandomString($length = 36) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyz';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 }
